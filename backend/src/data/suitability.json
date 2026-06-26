@@ -1,0 +1,182 @@
+[
+  {
+    "district": "East Khasi Hills",
+    "buckwheat": 87, "buckwheatClass": "High",
+    "plum": 91, "plumClass": "High",
+    "peach": 88, "peachClass": "High",
+    "passionFruit": 58, "passionFruitClass": "Medium",
+    "overallRank": 1,
+    "aucScore": 0.89,
+    "suitableArea": {
+      "buckwheat": { "high": 1285, "medium": 842, "low": 621 },
+      "plum": { "high": 1520, "medium": 780, "low": 448 },
+      "peach": { "high": 1380, "medium": 890, "low": 478 },
+      "passionFruit": { "high": 380, "medium": 940, "low": 1428 }
+    },
+    "terrainTypology": {
+      "avgElevationM": 1350, "avgSlopeDeg": 18,
+      "dominantAspect": "Northeast / East-facing slopes",
+      "soilType": "Acidic red laterite, well-drained"
+    }
+  },
+  {
+    "district": "West Khasi Hills",
+    "buckwheat": 75, "buckwheatClass": "High",
+    "plum": 85, "plumClass": "High",
+    "peach": 82, "peachClass": "High",
+    "passionFruit": 45, "passionFruitClass": "Low",
+    "overallRank": 2,
+    "aucScore": 0.86,
+    "suitableArea": {
+      "buckwheat": { "high": 1820, "medium": 1950, "low": 1477 },
+      "plum": { "high": 2100, "medium": 1850, "low": 1297 },
+      "peach": { "high": 1950, "medium": 1980, "low": 1317 },
+      "passionFruit": { "high": 280, "medium": 1020, "low": 3947 }
+    },
+    "terrainTypology": {
+      "avgElevationM": 1200, "avgSlopeDeg": 16,
+      "dominantAspect": "Mixed, broad valley systems",
+      "soilType": "Humid forest laterite, peat-rich in valley floors"
+    }
+  },
+  {
+    "district": "West Jaintia Hills",
+    "buckwheat": 82, "buckwheatClass": "High",
+    "plum": 75, "plumClass": "High",
+    "peach": 72, "peachClass": "High",
+    "passionFruit": 72, "passionFruitClass": "High",
+    "overallRank": 3,
+    "aucScore": 0.84,
+    "suitableArea": {
+      "buckwheat": { "high": 780, "medium": 548, "low": 365 },
+      "plum": { "high": 650, "medium": 620, "low": 423 },
+      "peach": { "high": 580, "medium": 680, "low": 433 },
+      "passionFruit": { "high": 620, "medium": 680, "low": 393 }
+    },
+    "terrainTypology": {
+      "avgElevationM": 1100, "avgSlopeDeg": 14,
+      "dominantAspect": "Plateau terrain, varied aspects",
+      "soilType": "Clayey loam, moderate organic content"
+    }
+  },
+  {
+    "district": "East Jaintia Hills",
+    "buckwheat": 78, "buckwheatClass": "High",
+    "plum": 78, "plumClass": "High",
+    "peach": 75, "peachClass": "High",
+    "passionFruit": 65, "passionFruitClass": "Medium",
+    "overallRank": 4,
+    "aucScore": 0.82,
+    "suitableArea": {
+      "buckwheat": { "high": 920, "medium": 650, "low": 482 },
+      "plum": { "high": 870, "medium": 720, "low": 462 },
+      "peach": { "high": 820, "medium": 760, "low": 472 },
+      "passionFruit": { "high": 480, "medium": 820, "low": 752 }
+    },
+    "terrainTypology": {
+      "avgElevationM": 1050, "avgSlopeDeg": 15,
+      "dominantAspect": "South-southwest facing slopes",
+      "soilType": "Sandy loam over limestone substrate"
+    }
+  },
+  {
+    "district": "South West Khasi Hills",
+    "buckwheat": 68, "buckwheatClass": "Medium",
+    "plum": 65, "plumClass": "Medium",
+    "peach": 62, "peachClass": "Medium",
+    "passionFruit": 42, "passionFruitClass": "Low",
+    "overallRank": 5,
+    "aucScore": 0.78,
+    "suitableArea": {
+      "buckwheat": { "high": 320, "medium": 580, "low": 441 },
+      "plum": { "high": 280, "medium": 550, "low": 511 },
+      "peach": { "high": 240, "medium": 580, "low": 521 },
+      "passionFruit": { "high": 95, "medium": 340, "low": 906 }
+    },
+    "terrainTypology": {
+      "avgElevationM": 850, "avgSlopeDeg": 22,
+      "dominantAspect": "Steep slopes, predominantly southern",
+      "soilType": "Thin laterite on steep rocky terrain"
+    }
+  },
+  {
+    "district": "Ri Bhoi",
+    "buckwheat": 65, "buckwheatClass": "Medium",
+    "plum": 58, "plumClass": "Medium",
+    "peach": 55, "peachClass": "Medium",
+    "passionFruit": 82, "passionFruitClass": "High",
+    "overallRank": 6,
+    "aucScore": 0.80,
+    "suitableArea": {
+      "buckwheat": { "high": 420, "medium": 980, "low": 1048 },
+      "plum": { "high": 280, "medium": 820, "low": 1348 },
+      "peach": { "high": 240, "medium": 760, "low": 1448 },
+      "passionFruit": { "high": 1180, "medium": 820, "low": 448 }
+    },
+    "terrainTypology": {
+      "avgElevationM": 600, "avgSlopeDeg": 12,
+      "dominantAspect": "Rolling terrain, Assam border transition",
+      "soilType": "Deep alluvial-laterite mix"
+    }
+  },
+  {
+    "district": "East Garo Hills",
+    "buckwheat": 52, "buckwheatClass": "Medium",
+    "plum": 45, "plumClass": "Low",
+    "peach": 40, "peachClass": "Low",
+    "passionFruit": 78, "passionFruitClass": "High",
+    "overallRank": 7,
+    "aucScore": 0.75,
+    "suitableArea": {
+      "buckwheat": { "high": 210, "medium": 850, "low": 1543 },
+      "plum": { "high": 95, "medium": 420, "low": 2088 },
+      "peach": { "high": 80, "medium": 380, "low": 2143 },
+      "passionFruit": { "high": 980, "medium": 1020, "low": 603 }
+    },
+    "terrainTypology": {
+      "avgElevationM": 350, "avgSlopeDeg": 9,
+      "dominantAspect": "Gently rolling hills, east-facing valleys",
+      "soilType": "Red sandy loam, moderate fertility"
+    }
+  },
+  {
+    "district": "West Garo Hills",
+    "buckwheat": 43, "buckwheatClass": "Low",
+    "plum": 30, "plumClass": "Low",
+    "peach": 28, "peachClass": "Low",
+    "passionFruit": 68, "passionFruitClass": "Medium",
+    "overallRank": 8,
+    "aucScore": 0.73,
+    "suitableArea": {
+      "buckwheat": { "high": 120, "medium": 820, "low": 2774 },
+      "plum": { "high": 45, "medium": 280, "low": 3389 },
+      "peach": { "high": 38, "medium": 240, "low": 3436 },
+      "passionFruit": { "high": 820, "medium": 1580, "low": 1314 }
+    },
+    "terrainTypology": {
+      "avgElevationM": 300, "avgSlopeDeg": 7,
+      "dominantAspect": "Broad valley plains",
+      "soilType": "Alluvial plains, high clay content"
+    }
+  },
+  {
+    "district": "South Garo Hills",
+    "buckwheat": 38, "buckwheatClass": "Low",
+    "plum": 32, "plumClass": "Low",
+    "peach": 30, "peachClass": "Low",
+    "passionFruit": 55, "passionFruitClass": "Medium",
+    "overallRank": 9,
+    "aucScore": 0.71,
+    "suitableArea": {
+      "buckwheat": { "high": 85, "medium": 480, "low": 1285 },
+      "plum": { "high": 32, "medium": 195, "low": 1623 },
+      "peach": { "high": 28, "medium": 175, "low": 1647 },
+      "passionFruit": { "high": 520, "medium": 680, "low": 650 }
+    },
+    "terrainTypology": {
+      "avgElevationM": 200, "avgSlopeDeg": 6,
+      "dominantAspect": "Flat southern lowland plains",
+      "soilType": "Humid tropical alluvial"
+    }
+  }
+]

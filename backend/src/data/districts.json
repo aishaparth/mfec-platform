@@ -1,0 +1,146 @@
+[
+  {
+    "name": "East Khasi Hills",
+    "hq": "Shillong",
+    "area": 2748,
+    "population": 825922,
+    "elevation": { "min": 150, "max": 1961, "avg": 1350 },
+    "description": "Home to the state capital Shillong, East Khasi Hills boasts the highest average elevation and coolest temperatures in Meghalaya, making it the top-ranked district for both buckwheat and temperate fruit cultivation. Cherrapunjee (Sohra) – one of the wettest places on Earth – lies within this district.",
+    "priorityBlocks": [
+      { "rank": 1, "block": "Mawlynnong", "score": 92, "areaSqKm": 285, "suitClass": "High" },
+      { "rank": 2, "block": "Pynursla", "score": 89, "areaSqKm": 312, "suitClass": "High" },
+      { "rank": 3, "block": "Mawphlang", "score": 87, "areaSqKm": 198, "suitClass": "High" },
+      { "rank": 4, "block": "Sohra (Cherrapunjee)", "score": 84, "areaSqKm": 245, "suitClass": "High" },
+      { "rank": 5, "block": "Mairang", "score": 81, "areaSqKm": 220, "suitClass": "High" }
+    ],
+    "coordinates": { "lat": 25.57, "lng": 91.88 }
+  },
+  {
+    "name": "West Khasi Hills",
+    "hq": "Nongstoin",
+    "area": 5247,
+    "population": 385003,
+    "elevation": { "min": 200, "max": 1850, "avg": 1200 },
+    "description": "The largest district in Meghalaya, West Khasi Hills includes Mawsynram – the world's wettest place. High rainfall (up to 3,200 mm/year) and suitable temperatures across extensive high-elevation terrain support diverse crop cultivation with excellent plum and peach potential.",
+    "priorityBlocks": [
+      { "rank": 1, "block": "Nongstoin", "score": 82, "areaSqKm": 420, "suitClass": "High" },
+      { "rank": 2, "block": "Mawshynrut", "score": 79, "areaSqKm": 380, "suitClass": "High" },
+      { "rank": 3, "block": "Ranikor", "score": 76, "areaSqKm": 290, "suitClass": "High" },
+      { "rank": 4, "block": "Khyrimsaw", "score": 73, "areaSqKm": 315, "suitClass": "High" },
+      { "rank": 5, "block": "Rambrai-Jyrngam", "score": 70, "areaSqKm": 350, "suitClass": "Medium" }
+    ],
+    "coordinates": { "lat": 25.52, "lng": 91.27 }
+  },
+  {
+    "name": "West Jaintia Hills",
+    "hq": "Jowai",
+    "area": 1693,
+    "population": 397989,
+    "elevation": { "min": 300, "max": 1450, "avg": 1100 },
+    "description": "West Jaintia Hills sits on the Jaintia plateau with Jowai as its commercial hub. Its elevation and temperature profile create a unique dual suitability – excellent conditions for both buckwheat (plateau areas) and passion fruit (valley slopes).",
+    "priorityBlocks": [
+      { "rank": 1, "block": "Thadlaskein", "score": 88, "areaSqKm": 220, "suitClass": "High" },
+      { "rank": 2, "block": "Jowai", "score": 85, "areaSqKm": 195, "suitClass": "High" },
+      { "rank": 3, "block": "Amlarem", "score": 82, "areaSqKm": 210, "suitClass": "High" },
+      { "rank": 4, "block": "Mookaiaw", "score": 78, "areaSqKm": 185, "suitClass": "High" },
+      { "rank": 5, "block": "Raliang", "score": 74, "areaSqKm": 168, "suitClass": "Medium" }
+    ],
+    "coordinates": { "lat": 25.45, "lng": 92.20 }
+  },
+  {
+    "name": "East Jaintia Hills",
+    "hq": "Khliehriat",
+    "area": 2052,
+    "population": 122436,
+    "elevation": { "min": 200, "max": 1350, "avg": 1050 },
+    "description": "East Jaintia Hills has significant coal and limestone resources underlying elevated terrain that supports good buckwheat cultivation, especially in northern blocks closer to the Assam border with cooler microclimates.",
+    "priorityBlocks": [
+      { "rank": 1, "block": "Khliehriat", "score": 85, "areaSqKm": 265, "suitClass": "High" },
+      { "rank": 2, "block": "Saipung", "score": 81, "areaSqKm": 235, "suitClass": "High" },
+      { "rank": 3, "block": "Laskein", "score": 78, "areaSqKm": 210, "suitClass": "High" },
+      { "rank": 4, "block": "Amlarem-East", "score": 75, "areaSqKm": 228, "suitClass": "High" },
+      { "rank": 5, "block": "Rymbai", "score": 71, "areaSqKm": 195, "suitClass": "Medium" }
+    ],
+    "coordinates": { "lat": 25.39, "lng": 92.47 }
+  },
+  {
+    "name": "South West Khasi Hills",
+    "hq": "Mawkyrwat",
+    "area": 1341,
+    "population": 145680,
+    "elevation": { "min": 100, "max": 1450, "avg": 850 },
+    "description": "A relatively new district with diverse terrain featuring steep slopes and southern aspects. Medium suitability for buckwheat in higher elevation pockets, with high rainfall from monsoon systems providing good moisture.",
+    "priorityBlocks": [
+      { "rank": 1, "block": "Mawkyrwat", "score": 75, "areaSqKm": 180, "suitClass": "High" },
+      { "rank": 2, "block": "Borghat", "score": 71, "areaSqKm": 165, "suitClass": "Medium" },
+      { "rank": 3, "block": "Nongkynmaw", "score": 68, "areaSqKm": 142, "suitClass": "Medium" },
+      { "rank": 4, "block": "Rangblang", "score": 65, "areaSqKm": 158, "suitClass": "Medium" },
+      { "rank": 5, "block": "Maharam", "score": 62, "areaSqKm": 135, "suitClass": "Medium" }
+    ],
+    "coordinates": { "lat": 25.23, "lng": 91.38 }
+  },
+  {
+    "name": "Ri Bhoi",
+    "hq": "Nongpoh",
+    "area": 2448,
+    "population": 258380,
+    "elevation": { "min": 80, "max": 1200, "avg": 600 },
+    "description": "Acting as a transition zone between the Brahmaputra valley plains and the Shillong Plateau, Ri Bhoi has medium suitability for buckwheat but stands out as the top district for passion fruit cultivation due to warmer temperatures and lower elevation pockets.",
+    "priorityBlocks": [
+      { "rank": 1, "block": "Nongpoh", "score": 72, "areaSqKm": 310, "suitClass": "Medium" },
+      { "rank": 2, "block": "Bhoirymbong", "score": 68, "areaSqKm": 285, "suitClass": "Medium" },
+      { "rank": 3, "block": "Umling", "score": 65, "areaSqKm": 260, "suitClass": "Medium" },
+      { "rank": 4, "block": "Jirang", "score": 62, "areaSqKm": 240, "suitClass": "Medium" },
+      { "rank": 5, "block": "Umsning", "score": 59, "areaSqKm": 220, "suitClass": "Medium" }
+    ],
+    "coordinates": { "lat": 25.89, "lng": 91.87 }
+  },
+  {
+    "name": "East Garo Hills",
+    "hq": "Williamnagar",
+    "area": 2603,
+    "population": 318171,
+    "elevation": { "min": 50, "max": 900, "avg": 350 },
+    "description": "East Garo Hills has lower elevation compared to Khasi and Jaintia districts, resulting in medium-low suitability for buckwheat. However, its warmer temperatures and adequate rainfall make it excellent for passion fruit cultivation in the valley floors.",
+    "priorityBlocks": [
+      { "rank": 1, "block": "Williamnagar", "score": 61, "areaSqKm": 320, "suitClass": "Medium" },
+      { "rank": 2, "block": "Resubelpara", "score": 58, "areaSqKm": 285, "suitClass": "Medium" },
+      { "rank": 3, "block": "Samanda", "score": 55, "areaSqKm": 265, "suitClass": "Medium" },
+      { "rank": 4, "block": "Dalu", "score": 52, "areaSqKm": 245, "suitClass": "Low" },
+      { "rank": 5, "block": "Rongjeng", "score": 49, "areaSqKm": 230, "suitClass": "Low" }
+    ],
+    "coordinates": { "lat": 25.49, "lng": 90.63 }
+  },
+  {
+    "name": "West Garo Hills",
+    "hq": "Tura",
+    "area": 3714,
+    "population": 642923,
+    "elevation": { "min": 30, "max": 800, "avg": 300 },
+    "description": "The most populated Garo Hills district, West Garo Hills has lower elevation and warmer temperatures unsuitable for buckwheat but offering moderate passion fruit potential. The Tura Range provides isolated higher-elevation niches for limited cultivation.",
+    "priorityBlocks": [
+      { "rank": 1, "block": "Tura", "score": 48, "areaSqKm": 380, "suitClass": "Low" },
+      { "rank": 2, "block": "Selsella", "score": 45, "areaSqKm": 350, "suitClass": "Low" },
+      { "rank": 3, "block": "Tikrikilla", "score": 43, "areaSqKm": 320, "suitClass": "Low" },
+      { "rank": 4, "block": "Betasing", "score": 40, "areaSqKm": 295, "suitClass": "Low" },
+      { "rank": 5, "block": "Dalu-Phulbari", "score": 38, "areaSqKm": 275, "suitClass": "Low" }
+    ],
+    "coordinates": { "lat": 25.51, "lng": 90.21 }
+  },
+  {
+    "name": "South Garo Hills",
+    "hq": "Baghmara",
+    "area": 1850,
+    "population": 145828,
+    "elevation": { "min": 25, "max": 650, "avg": 200 },
+    "description": "South Garo Hills borders Bangladesh to the south with the lowest average elevation in Meghalaya. Warm temperatures and humidity restrict buckwheat viability. The district is being assessed for tropical fruit opportunities under changing climate scenarios.",
+    "priorityBlocks": [
+      { "rank": 1, "block": "Baghmara", "score": 42, "areaSqKm": 245, "suitClass": "Low" },
+      { "rank": 2, "block": "Chokpot", "score": 39, "areaSqKm": 215, "suitClass": "Low" },
+      { "rank": 3, "block": "Ampati", "score": 36, "areaSqKm": 198, "suitClass": "Low" },
+      { "rank": 4, "block": "Nongalbibra", "score": 33, "areaSqKm": 182, "suitClass": "Low" },
+      { "rank": 5, "block": "Mahendraganj", "score": 31, "areaSqKm": 168, "suitClass": "Low" }
+    ],
+    "coordinates": { "lat": 25.19, "lng": 90.67 }
+  }
+]

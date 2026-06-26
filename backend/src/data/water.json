@@ -1,0 +1,101 @@
+[
+  {
+    "district": "East Khasi Hills",
+    "annualRainfallMm": 2380,
+    "cwrBuckwheatMm": 350, "cwrPlumMm": 720, "cwrPeachMm": 680, "cwrPassionFruitMm": 1400,
+    "rainfallAdequacy": "Adequate", "irrigationRequirement": "None",
+    "waterAvailabilityClass": "High", "groundwaterDepthM": 8.5, "streamDensityKmPerSqKm": 4.8,
+    "seasonalWater": { "preMonsoon": "Moderate", "monsoon": "Abundant", "postMonsoon": "Adequate", "winter": "Low" },
+    "majorRivers": ["Umiam", "Umtrew", "Kynchiang"],
+    "reservoirs": ["Umiam Lake (Barapani)"],
+    "annualRunoffMm": 1650
+  },
+  {
+    "district": "West Khasi Hills",
+    "annualRainfallMm": 3200,
+    "cwrBuckwheatMm": 350, "cwrPlumMm": 720, "cwrPeachMm": 680, "cwrPassionFruitMm": 1400,
+    "rainfallAdequacy": "Abundant", "irrigationRequirement": "None",
+    "waterAvailabilityClass": "Very High", "groundwaterDepthM": 6.2, "streamDensityKmPerSqKm": 6.2,
+    "seasonalWater": { "preMonsoon": "Adequate", "monsoon": "Very Abundant", "postMonsoon": "Abundant", "winter": "Moderate" },
+    "majorRivers": ["Kynshi", "Simsang (upper)", "Umngi"],
+    "reservoirs": ["Myntdu-Leshka"],
+    "annualRunoffMm": 2480
+  },
+  {
+    "district": "West Jaintia Hills",
+    "annualRainfallMm": 2600,
+    "cwrBuckwheatMm": 350, "cwrPlumMm": 720, "cwrPeachMm": 680, "cwrPassionFruitMm": 1400,
+    "rainfallAdequacy": "Adequate", "irrigationRequirement": "Minimal",
+    "waterAvailabilityClass": "High", "groundwaterDepthM": 7.8, "streamDensityKmPerSqKm": 4.2,
+    "seasonalWater": { "preMonsoon": "Moderate", "monsoon": "Abundant", "postMonsoon": "Adequate", "winter": "Low" },
+    "majorRivers": ["Myntdu", "Mynriang"],
+    "reservoirs": ["Myntdu-Leshka (downstream)"],
+    "annualRunoffMm": 1920
+  },
+  {
+    "district": "East Jaintia Hills",
+    "annualRainfallMm": 2850,
+    "cwrBuckwheatMm": 350, "cwrPlumMm": 720, "cwrPeachMm": 680, "cwrPassionFruitMm": 1400,
+    "rainfallAdequacy": "Adequate", "irrigationRequirement": "Minimal",
+    "waterAvailabilityClass": "High", "groundwaterDepthM": 8.2, "streamDensityKmPerSqKm": 3.9,
+    "seasonalWater": { "preMonsoon": "Moderate", "monsoon": "Abundant", "postMonsoon": "Adequate", "winter": "Low" },
+    "majorRivers": ["Kopili (upper)", "Wah Tuber"],
+    "reservoirs": [],
+    "annualRunoffMm": 2050
+  },
+  {
+    "district": "South West Khasi Hills",
+    "annualRainfallMm": 3100,
+    "cwrBuckwheatMm": 350, "cwrPlumMm": 720, "cwrPeachMm": 680, "cwrPassionFruitMm": 1400,
+    "rainfallAdequacy": "Abundant", "irrigationRequirement": "None",
+    "waterAvailabilityClass": "Very High", "groundwaterDepthM": 7.0, "streamDensityKmPerSqKm": 5.8,
+    "seasonalWater": { "preMonsoon": "Moderate", "monsoon": "Very Abundant", "postMonsoon": "Abundant", "winter": "Moderate" },
+    "majorRivers": ["Kynchi", "Mawthlong"],
+    "reservoirs": [],
+    "annualRunoffMm": 2380
+  },
+  {
+    "district": "Ri Bhoi",
+    "annualRainfallMm": 1850,
+    "cwrBuckwheatMm": 350, "cwrPlumMm": 720, "cwrPeachMm": 680, "cwrPassionFruitMm": 1400,
+    "rainfallAdequacy": "Adequate", "irrigationRequirement": "Moderate",
+    "waterAvailabilityClass": "Medium", "groundwaterDepthM": 12.5, "streamDensityKmPerSqKm": 2.8,
+    "seasonalWater": { "preMonsoon": "Low", "monsoon": "Abundant", "postMonsoon": "Moderate", "winter": "Very Low" },
+    "majorRivers": ["Umiam", "Umtrew (lower)"],
+    "reservoirs": ["Umiam Reservoir"],
+    "annualRunoffMm": 1180
+  },
+  {
+    "district": "East Garo Hills",
+    "annualRainfallMm": 2800,
+    "cwrBuckwheatMm": 350, "cwrPlumMm": 720, "cwrPeachMm": 680, "cwrPassionFruitMm": 1400,
+    "rainfallAdequacy": "Adequate", "irrigationRequirement": "Minimal",
+    "waterAvailabilityClass": "High", "groundwaterDepthM": 9.5, "streamDensityKmPerSqKm": 3.5,
+    "seasonalWater": { "preMonsoon": "Moderate", "monsoon": "Abundant", "postMonsoon": "Moderate", "winter": "Low" },
+    "majorRivers": ["Simsang", "Daring"],
+    "reservoirs": [],
+    "annualRunoffMm": 2020
+  },
+  {
+    "district": "West Garo Hills",
+    "annualRainfallMm": 2600,
+    "cwrBuckwheatMm": 350, "cwrPlumMm": 720, "cwrPeachMm": 680, "cwrPassionFruitMm": 1400,
+    "rainfallAdequacy": "Adequate", "irrigationRequirement": "Minimal",
+    "waterAvailabilityClass": "High", "groundwaterDepthM": 10.2, "streamDensityKmPerSqKm": 3.0,
+    "seasonalWater": { "preMonsoon": "Low", "monsoon": "Abundant", "postMonsoon": "Moderate", "winter": "Very Low" },
+    "majorRivers": ["Ganol", "Sandha"],
+    "reservoirs": [],
+    "annualRunoffMm": 1820
+  },
+  {
+    "district": "South Garo Hills",
+    "annualRainfallMm": 2500,
+    "cwrBuckwheatMm": 350, "cwrPlumMm": 720, "cwrPeachMm": 680, "cwrPassionFruitMm": 1400,
+    "rainfallAdequacy": "Adequate", "irrigationRequirement": "Moderate",
+    "waterAvailabilityClass": "Medium", "groundwaterDepthM": 11.8, "streamDensityKmPerSqKm": 2.6,
+    "seasonalWater": { "preMonsoon": "Low", "monsoon": "Abundant", "postMonsoon": "Moderate", "winter": "Very Low" },
+    "majorRivers": ["Simsang (lower)", "Krishnai"],
+    "reservoirs": [],
+    "annualRunoffMm": 1680
+  }
+]

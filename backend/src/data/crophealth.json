@@ -1,0 +1,103 @@
+[
+  {
+    "district": "East Khasi Hills",
+    "ndvi": 0.72, "ndviClass": "High",
+    "ndwi": 0.38, "moistureStress": "Low",
+    "season": "Rabi 2025", "vegetationCoverPct": 82,
+    "buckwheatCoverHectares": 4250,
+    "healthStatus": "Excellent", "anomalyFlag": false,
+    "monthlyNDVI": [0.42, 0.48, 0.58, 0.65, 0.70, 0.72, 0.74, 0.75, 0.71, 0.65, 0.52, 0.44],
+    "satelliteSource": "Sentinel-2 MSI (10m resolution)",
+    "acquisitionDate": "2025-10-15"
+  },
+  {
+    "district": "West Khasi Hills",
+    "ndvi": 0.68, "ndviClass": "High",
+    "ndwi": 0.42, "moistureStress": "Low",
+    "season": "Rabi 2025", "vegetationCoverPct": 78,
+    "buckwheatCoverHectares": 6820,
+    "healthStatus": "Very Good", "anomalyFlag": false,
+    "monthlyNDVI": [0.38, 0.44, 0.54, 0.61, 0.66, 0.68, 0.70, 0.71, 0.67, 0.61, 0.48, 0.40],
+    "satelliteSource": "Sentinel-2 MSI (10m resolution)",
+    "acquisitionDate": "2025-10-15"
+  },
+  {
+    "district": "West Jaintia Hills",
+    "ndvi": 0.66, "ndviClass": "High",
+    "ndwi": 0.35, "moistureStress": "Low",
+    "season": "Rabi 2025", "vegetationCoverPct": 75,
+    "buckwheatCoverHectares": 3450,
+    "healthStatus": "Very Good", "anomalyFlag": false,
+    "monthlyNDVI": [0.40, 0.46, 0.55, 0.62, 0.65, 0.66, 0.68, 0.69, 0.65, 0.58, 0.46, 0.41],
+    "satelliteSource": "Sentinel-2 MSI (10m resolution)",
+    "acquisitionDate": "2025-10-15"
+  },
+  {
+    "district": "East Jaintia Hills",
+    "ndvi": 0.64, "ndviClass": "High",
+    "ndwi": 0.33, "moistureStress": "Low",
+    "season": "Rabi 2025", "vegetationCoverPct": 72,
+    "buckwheatCoverHectares": 2980,
+    "healthStatus": "Good", "anomalyFlag": false,
+    "monthlyNDVI": [0.38, 0.44, 0.52, 0.60, 0.63, 0.64, 0.66, 0.67, 0.63, 0.56, 0.44, 0.39],
+    "satelliteSource": "Sentinel-2 MSI (10m resolution)",
+    "acquisitionDate": "2025-10-15"
+  },
+  {
+    "district": "South West Khasi Hills",
+    "ndvi": 0.61, "ndviClass": "Medium",
+    "ndwi": 0.30, "moistureStress": "Low",
+    "season": "Rabi 2025", "vegetationCoverPct": 68,
+    "buckwheatCoverHectares": 1820,
+    "healthStatus": "Good", "anomalyFlag": false,
+    "monthlyNDVI": [0.35, 0.41, 0.50, 0.57, 0.60, 0.61, 0.63, 0.64, 0.60, 0.53, 0.41, 0.36],
+    "satelliteSource": "Sentinel-2 MSI (10m resolution)",
+    "acquisitionDate": "2025-10-15"
+  },
+  {
+    "district": "Ri Bhoi",
+    "ndvi": 0.58, "ndviClass": "Medium",
+    "ndwi": 0.28, "moistureStress": "Moderate",
+    "season": "Rabi 2025", "vegetationCoverPct": 65,
+    "buckwheatCoverHectares": 1450,
+    "healthStatus": "Moderate", "anomalyFlag": true,
+    "anomalyNote": "Dry spell in October affected pre-harvest NDVI",
+    "monthlyNDVI": [0.32, 0.38, 0.46, 0.53, 0.57, 0.58, 0.60, 0.61, 0.57, 0.50, 0.38, 0.33],
+    "satelliteSource": "Sentinel-2 MSI (10m resolution)",
+    "acquisitionDate": "2025-10-15"
+  },
+  {
+    "district": "East Garo Hills",
+    "ndvi": 0.62, "ndviClass": "Medium",
+    "ndwi": 0.31, "moistureStress": "Low",
+    "season": "Rabi 2025", "vegetationCoverPct": 70,
+    "buckwheatCoverHectares": 980,
+    "healthStatus": "Good", "anomalyFlag": false,
+    "monthlyNDVI": [0.38, 0.44, 0.52, 0.59, 0.62, 0.63, 0.65, 0.66, 0.62, 0.55, 0.43, 0.38],
+    "satelliteSource": "Sentinel-2 MSI (10m resolution)",
+    "acquisitionDate": "2025-10-15"
+  },
+  {
+    "district": "West Garo Hills",
+    "ndvi": 0.52, "ndviClass": "Medium",
+    "ndwi": 0.24, "moistureStress": "Moderate",
+    "season": "Rabi 2025", "vegetationCoverPct": 58,
+    "buckwheatCoverHectares": 620,
+    "healthStatus": "Moderate", "anomalyFlag": false,
+    "monthlyNDVI": [0.30, 0.36, 0.44, 0.50, 0.52, 0.53, 0.55, 0.56, 0.52, 0.45, 0.33, 0.28],
+    "satelliteSource": "Sentinel-2 MSI (10m resolution)",
+    "acquisitionDate": "2025-10-15"
+  },
+  {
+    "district": "South Garo Hills",
+    "ndvi": 0.48, "ndviClass": "Low",
+    "ndwi": 0.20, "moistureStress": "High",
+    "season": "Rabi 2025", "vegetationCoverPct": 52,
+    "buckwheatCoverHectares": 285,
+    "healthStatus": "Poor", "anomalyFlag": true,
+    "anomalyNote": "Below-average monsoon departure affected crop establishment",
+    "monthlyNDVI": [0.28, 0.32, 0.40, 0.46, 0.48, 0.49, 0.51, 0.52, 0.48, 0.41, 0.29, 0.24],
+    "satelliteSource": "Sentinel-2 MSI (10m resolution)",
+    "acquisitionDate": "2025-10-15"
+  }
+]

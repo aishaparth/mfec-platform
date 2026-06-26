@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MFEC GeoAI Platform – Meghalaya Farmers' Empowerment Commission</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/recharts/2.8.0/Recharts.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+  :root {
+    --forest: #1B4332;
+    --jade: #2D6A4F;
+    --sage: #40916C;
+    --moss: #52B788;
+    --mist: #95D5B2;
+    --cloud: #D8F3DC;
+    --fog: #F0FBF3;
+    --stone: #1C1917;
+    --slate: #374151;
+    --silver: #6B7280;
+    --bone: #F9F7F4;
+    --cream: #FEFCF8;
+    --amber: #D97706;
+    --saffron: #F59E0B;
+    --rust: #DC2626;
+    --gold: #B45309;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--stone);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+    background: rgba(27,67,50,0.97);
+    backdrop-filter: blur(12px);
+    padding: 0 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+    border-bottom: 1px solid rgba(149,213,178,0.2);
+  }
+  .nav-brand {
+    display: flex; align-items: center; gap: 12px;
+    font-family: 'Space Mono', monospace;
+    color: var(--mist);
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+  }
+  .nav-badge {
+    background: var(--moss);
+    color: white;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 2px;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.1em;
+  }
+  .nav-links {
+    display: flex; gap: 4px;
+  }
+  .nav-link {
+    color: rgba(149,213,178,0.7);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 4px;
+    transition: all 0.2s;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    border: none; background: none;
+  }
+  .nav-link:hover, .nav-link.active {
+    background: rgba(149,213,178,0.12);
+    color: var(--mist);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(160deg, #0D2B1E 0%, #1B4332 45%, #2D3B2A 100%);
+    display: flex; flex-direction: column;
+    position: relative; overflow: hidden;
+    padding-top: 60px;
+  }
+  .hero-grid {
+    position: absolute; inset: 0; opacity: 0.07;
+    background-image:
+      linear-gradient(rgba(149,213,178,0.5) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(149,213,178,0.5) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+  }
+  .hero-orb-1 { width: 600px; height: 600px; top: -100px; right: -100px; background: rgba(64,145,108,0.15); }
+  .hero-orb-2 { width: 400px; height: 400px; bottom: 100px; left: -80px; background: rgba(82,183,136,0.1); }
+
+  .hero-content {
+    flex: 1; display: flex; flex-direction: column; justify-content: center;
+    padding: 80px 64px 60px;
+    position: relative; z-index: 1;
+    max-width: 1400px;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--moss);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: block; width: 32px; height: 1px;
+    background: var(--moss);
+  }
+  .hero-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(52px, 6vw, 88px);
+    line-height: 0.95;
+    color: white;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--mist);
+  }
+  .hero-subtitle {
+    font-size: 18px;
+    color: rgba(149,213,178,0.7);
+    margin-top: 24px;
+    max-width: 560px;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+  .hero-meta {
+    display: flex; gap: 32px; margin-top: 48px; flex-wrap: wrap;
+  }
+  .hero-meta-item {
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .hero-meta-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--moss);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .hero-meta-value {
+    font-size: 14px;
+    color: rgba(255,255,255,0.85);
+    font-weight: 500;
+  }
+  .hero-cta {
+    display: flex; gap: 16px; margin-top: 40px;
+  }
+  .btn-primary {
+    background: var(--sage);
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.02em;
+  }
+  .btn-primary:hover { background: var(--jade); transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent;
+    color: var(--mist);
+    border: 1px solid rgba(149,213,178,0.4);
+    padding: 14px 28px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
+  .btn-outline:hover { border-color: var(--mist); background: rgba(149,213,178,0.05); }
+
+  /* Hero Stats Bar */
+  .hero-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid rgba(149,213,178,0.15);
+    position: relative; z-index: 1;
+  }
+  .hero-stat {
+    padding: 28px 40px;
+    border-right: 1px solid rgba(149,213,178,0.1);
+  }
+  .hero-stat:last-child { border-right: none; }
+  .hero-stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 42px;
+    color: var(--mist);
+    line-height: 1;
+  }
+  .hero-stat-label {
+    font-size: 12px;
+    color: rgba(149,213,178,0.55);
+    margin-top: 6px;
+    letter-spacing: 0.03em;
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    padding: 96px 64px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .section-full { max-width: none; padding: 0; }
+
+  .section-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--sage);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-eyebrow::before {
+    content: ''; display: block;
+    width: 24px; height: 1px;
+    background: var(--sage);
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(36px, 4vw, 56px);
+    line-height: 1.05;
+    color: var(--forest);
+    margin-bottom: 16px;
+  }
+  .section-lead {
+    font-size: 16px;
+    color: var(--silver);
+    max-width: 600px;
+    line-height: 1.7;
+    margin-bottom: 48px;
+  }
+
+  /* ── MAPS ── */
+  .map-section-bg {
+    background: var(--fog);
+    border-top: 1px solid var(--cloud);
+    border-bottom: 1px solid var(--cloud);
+  }
+  .map-container-outer {
+    padding: 80px 64px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .map-grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 24px;
+    margin-top: 40px;
+  }
+  .leaflet-map {
+    height: 520px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--cloud);
+    box-shadow: 0 4px 24px rgba(27,67,50,0.08);
+  }
+  .map-sidebar {
+    display: flex; flex-direction: column; gap: 12px;
+    overflow-y: auto; max-height: 520px;
+  }
+  .district-card {
+    background: white;
+    border: 1px solid var(--cloud);
+    border-radius: 6px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .district-card:hover, .district-card.selected {
+    border-color: var(--sage);
+    box-shadow: 0 0 0 2px rgba(64,145,108,0.15);
+  }
+  .district-card-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+  }
+  .district-name { font-weight: 600; font-size: 13px; color: var(--forest); }
+  .district-hq { font-size: 11px; color: var(--silver); margin-top: 2px; }
+  .suitability-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 2px;
+    font-family: 'Space Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .badge-high { background: #D1FAE5; color: #065F46; }
+  .badge-medium { background: #FEF3C7; color: #92400E; }
+  .badge-low { background: #FEE2E2; color: #991B1B; }
+  .score-bar { margin-top: 10px; }
+  .score-bar-track {
+    height: 4px; background: var(--cloud);
+    border-radius: 2px; overflow: hidden;
+  }
+  .score-bar-fill {
+    height: 100%; border-radius: 2px;
+    transition: width 0.5s ease;
+  }
+  .score-label { font-size: 10px; color: var(--silver); margin-top: 4px; display: flex; justify-content: space-between; }
+
+  /* Map Tabs */
+  .map-tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+  .map-tab {
+    padding: 8px 18px;
+    border: 1px solid var(--cloud);
+    background: white;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--slate);
+  }
+  .map-tab.active {
+    background: var(--forest);
+    color: white;
+    border-color: var(--forest);
+  }
+
+  /* ── DELIVERABLES ── */
+  .deliverables-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 20px;
+    margin-top: 40px;
+  }
+  .deliverable-card {
+    background: white;
+    border: 1px solid var(--cloud);
+    border-radius: 8px;
+    padding: 24px;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .deliverable-card::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--sage);
+  }
+  .deliverable-card:hover {
+    box-shadow: 0 8px 32px rgba(27,67,50,0.1);
+    transform: translateY(-2px);
+  }
+  .deliverable-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--sage);
+    margin-bottom: 10px;
+    letter-spacing: 0.1em;
+  }
+  .deliverable-title {
+    font-size: 15px; font-weight: 600;
+    color: var(--forest); margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .deliverable-desc {
+    font-size: 13px; color: var(--silver);
+    line-height: 1.6; margin-bottom: 14px;
+  }
+  .deliverable-date {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; color: var(--amber);
+    background: #FEF3C7;
+    padding: 4px 10px;
+    border-radius: 3px;
+    display: inline-block;
+  }
+  .deliverable-tags {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px;
+  }
+  .tag {
+    font-size: 10px; padding: 3px 8px;
+    background: var(--fog);
+    color: var(--jade);
+    border-radius: 3px;
+    border: 1px solid var(--cloud);
+    font-weight: 500;
+  }
+  .deliverable-sources {
+    margin-top: 14px; padding-top: 14px;
+    border-top: 1px solid var(--cloud);
+  }
+  .sources-label {
+    font-size: 10px; color: var(--silver);
+    text-transform: uppercase; letter-spacing: 0.1em;
+    font-family: 'Space Mono', monospace;
+    margin-bottom: 6px;
+  }
+  .source-item {
+    font-size: 11px; color: var(--slate);
+    padding: 2px 0;
+    display: flex; align-items: flex-start; gap: 6px;
+  }
+  .source-item::before { content: '→'; color: var(--moss); flex-shrink: 0; }
+
+  /* ── CROPS ── */
+  .crops-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px; margin-top: 40px;
+  }
+  .crop-card {
+    background: white;
+    border: 1px solid var(--cloud);
+    border-radius: 10px;
+    padding: 28px;
+    transition: all 0.25s;
+  }
+  .crop-card:hover { box-shadow: 0 8px 32px rgba(27,67,50,0.1); }
+  .crop-icon { font-size: 36px; margin-bottom: 16px; }
+  .crop-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px; color: var(--forest);
+    margin-bottom: 4px;
+  }
+  .crop-sci { font-style: italic; font-size: 13px; color: var(--silver); margin-bottom: 16px; }
+  .crop-attrs {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .crop-attr { }
+  .attr-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--silver);
+    margin-bottom: 3px;
+  }
+  .attr-value { font-size: 12px; color: var(--slate); font-weight: 500; }
+  .crop-districts { margin-top: 16px; }
+  .districts-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .district-chip {
+    font-size: 11px; padding: 4px 10px;
+    background: var(--cloud); color: var(--jade);
+    border-radius: 20px; font-weight: 500;
+  }
+
+  /* ── MILESTONE TIMELINE ── */
+  .timeline {
+    position: relative; padding: 20px 0;
+    margin-top: 40px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute; left: 32px; top: 0; bottom: 0;
+    width: 2px; background: var(--cloud);
+  }
+  .milestone-item {
+    display: flex; gap: 24px;
+    padding: 20px 0; position: relative;
+  }
+  .milestone-dot {
+    width: 20px; height: 20px; min-width: 20px;
+    border-radius: 50%;
+    background: var(--sage);
+    border: 3px solid white;
+    box-shadow: 0 0 0 3px var(--cloud);
+    margin-top: 4px; z-index: 1;
+    position: relative; left: 23px;
+  }
+  .milestone-content {
+    background: white;
+    border: 1px solid var(--cloud);
+    border-radius: 8px;
+    padding: 20px 24px;
+    flex: 1;
+    margin-left: 16px;
+  }
+  .milestone-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; color: var(--sage);
+    letter-spacing: 0.1em; margin-bottom: 6px;
+  }
+  .milestone-title { font-weight: 600; font-size: 15px; color: var(--forest); margin-bottom: 6px; }
+  .milestone-date {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px; color: var(--amber);
+    background: #FEF3C7; padding: 3px 10px;
+    border-radius: 3px; display: inline-block;
+  }
+  .milestone-delivs {
+    font-size: 12px; color: var(--silver);
+    margin-top: 8px;
+  }
+
+  /* ── DATA SOURCES ── */
+  .sources-section-bg {
+    background: var(--forest);
+    padding: 80px 64px;
+  }
+  .sources-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 20px; margin-top: 40px;
+    max-width: 1400px; margin-left: auto; margin-right: auto;
+  }
+  .source-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(149,213,178,0.15);
+    border-radius: 8px;
+    padding: 24px;
+  }
+  .source-category {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; color: var(--moss);
+    text-transform: uppercase; letter-spacing: 0.15em;
+    margin-bottom: 12px;
+  }
+  .source-card-title {
+    font-size: 15px; font-weight: 600; color: white;
+    margin-bottom: 4px;
+  }
+  .source-card-provider {
+    font-size: 12px; color: rgba(149,213,178,0.6);
+    margin-bottom: 12px;
+  }
+  .source-card-desc { font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+
+  /* ── DISTRICT DETAIL MODAL ── */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(0,0,0,0.6);
+    display: flex; align-items: center; justify-content: center;
+    backdrop-filter: blur(4px);
+    padding: 20px;
+  }
+  .modal {
+    background: white; border-radius: 12px;
+    max-width: 560px; width: 100%;
+    max-height: 80vh; overflow-y: auto;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.3);
+  }
+  .modal-header {
+    background: var(--forest);
+    padding: 28px 32px; border-radius: 12px 12px 0 0;
+  }
+  .modal-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px; color: white;
+  }
+  .modal-hq { font-size: 13px; color: var(--mist); margin-top: 4px; }
+  .modal-body { padding: 28px 32px; }
+  .modal-close {
+    float: right; background: rgba(255,255,255,0.1);
+    border: none; color: white; width: 32px; height: 32px;
+    border-radius: 50%; cursor: pointer; font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+  .modal-attr { }
+  .modal-attr-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--silver);
+    margin-bottom: 4px;
+  }
+  .modal-attr-value { font-size: 14px; font-weight: 600; color: var(--forest); }
+  .modal-blocks { margin-top: 20px; }
+  .block-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+  .block-item {
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--fog); padding: 10px 14px; border-radius: 4px;
+    font-size: 13px;
+  }
+  .block-rank {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; color: var(--sage);
+    background: white; width: 24px; height: 24px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+  }
+
+  /* ── CHART SECTION ── */
+  .charts-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 24px; margin-top: 40px;
+  }
+  .chart-card {
+    background: white; border: 1px solid var(--cloud);
+    border-radius: 8px; padding: 24px;
+  }
+  .chart-title {
+    font-size: 14px; font-weight: 600; color: var(--forest);
+    margin-bottom: 4px;
+  }
+  .chart-subtitle { font-size: 12px; color: var(--silver); margin-bottom: 20px; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--stone);
+    padding: 48px 64px;
+    color: rgba(255,255,255,0.4);
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 40px; max-width: 1400px; margin: 0 auto;
+  }
+  .footer-brand {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px; color: white; margin-bottom: 8px;
+  }
+  .footer-legal { font-size: 11px; line-height: 1.6; margin-top: 8px; }
+  .footer-section-title { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.6); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .footer-link { display: block; font-size: 12px; color: rgba(255,255,255,0.35); margin-bottom: 6px; text-decoration: none; }
+  .footer-link:hover { color: rgba(255,255,255,0.7); }
+  .footer-bottom {
+    margin-top: 40px; padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-size: 11px; text-align: center;
+    max-width: 1400px; margin-left: auto; margin-right: auto;
+  }
+
+  /* Utility */
+  .divider {
+    height: 1px; background: var(--cloud);
+    margin: 0;
+  }
+  .text-center { text-align: center; }
+  @media (max-width: 900px) {
+    .hero-content { padding: 60px 24px 40px; }
+    .section { padding: 60px 24px; }
+    .hero-stats { grid-template-columns: repeat(2,1fr); }
+    .map-grid { grid-template-columns: 1fr; }
+    .map-sidebar { max-height: 260px; }
+    .crops-grid { grid-template-columns: 1fr; }
+    .charts-grid { grid-template-columns: 1fr; }
+    .sources-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .map-container-outer { padding: 40px 24px; }
+    .sources-section-bg { padding: 60px 24px; }
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script>
+const { useState, useEffect, useRef } = React;
+const { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Cell, PieChart, Pie, Legend } = Recharts;
+
+// ── DATA ──────────────────────────────────────────────────────────────────
+const DISTRICTS = [
+  { id:1, name:"East Khasi Hills", hq:"Shillong", lat:25.5788, lng:91.8933, area:2748, pop:825922, buckwheat:"High", score:87, blocks:["Mawkynrew","Pynursla","Mawphlang","Mairang","Mawryngkneng"], elev:"1000–1965m", wine:["Plum","Peach"], rain:12000 },
+  { id:2, name:"West Khasi Hills", hq:"Nongstoin", lat:25.5213, lng:91.2634, area:5247, pop:385601, buckwheat:"High", score:82, blocks:["Nongstoin","Ranikor","Mairang","Kherapara","Nongkynmaw"], elev:"800–1800m", wine:["Plum","Passion Fruit"], rain:8500 },
+  { id:3, name:"South West Khasi Hills", hq:"Mawkyrwat", lat:25.1956, lng:91.2090, area:1341, pop:145054, buckwheat:"Medium", score:68, blocks:["Mawkyrwat","Balat","Nongtalang","Shella-Bholaganj","Cherrapunjee"], elev:"600–1500m", wine:["Passion Fruit"], rain:11000 },
+  { id:4, name:"Ri Bhoi", hq:"Nongpoh", lat:25.9090, lng:91.9703, area:2448, pop:258380, buckwheat:"Low", score:45, blocks:["Nongpoh","Umling","Jirang","Bhoirymbong","Umsning"], elev:"300–900m", wine:["Passion Fruit"], rain:2500 },
+  { id:5, name:"East Jaintia Hills", hq:"Khliehriat", lat:25.3121, lng:92.5267, area:2253, pop:122436, buckwheat:"High", score:79, blocks:["Khliehriat","Amlaren","Laskein","Saipung","Thadlaskein"], elev:"900–1700m", wine:["Plum","Peach"], rain:4000 },
+  { id:6, name:"West Jaintia Hills", hq:"Jowai", lat:25.4482, lng:92.2019, area:1693, pop:295692, buckwheat:"High", score:76, blocks:["Jowai","Thadlaskein","Laskein","Raliang","Rymbai"], elev:"800–1500m", wine:["Plum","Peach","Passion Fruit"], rain:3500 },
+  { id:7, name:"East Garo Hills", hq:"Williamagar", lat:25.5949, lng:90.6578, area:2603, pop:317356, buckwheat:"Medium", score:61, blocks:["Williamagar","Kharkutta","Resubelpara","Mendipathar","Bajengdoba"], elev:"200–800m", wine:["Passion Fruit"], rain:3200 },
+  { id:8, name:"West Garo Hills", hq:"Tura", lat:25.5155, lng:90.2134, area:3714, pop:643291, buckwheat:"Low", score:38, blocks:["Tura","Selsella","Dalu","Dadenggre","Garobadha"], elev:"100–600m", wine:["Passion Fruit"], rain:2800 },
+  { id:9, name:"South Garo Hills", hq:"Baghmara", lat:25.1969, lng:90.6353, area:1887, pop:142574, buckwheat:"Medium", score:55, blocks:["Baghmara","Chokpot","Mahendraganj","Siju","Rongra"], elev:"100–900m", wine:["Passion Fruit"], rain:2600 }
+];
+
+const DELIVERABLES = [
+  { id:1, title:"Habitat Suitability Modelling – Buckwheat", cat:"Crop Suitability", date:"30 Jun 2026", milestone:1, week:"3–5", desc:"MaxEnt model for Buckwheat across 9 districts. Generates High/Medium/Low suitability classifications with terrain typology (Elevation, Slope, Aspect). Ranks Top 5 priority blocks per district.", outputs:["GeoTIFF suitability maps","PDF district maps","Priority block rankings"], sources:["GBIF Occurrence Records","WorldClim v2.1 Bioclimatic Variables","SRTM DEM 30m","Meghalaya Land Records"] },
+  { id:2, title:"Habitat Suitability Modelling – Wine Fruits", cat:"Crop Suitability", date:"30 Jun 2026", milestone:1, week:"3–5", desc:"Separate MaxEnt models for Plum, Peach, and Passion Fruit with terrain characteristic overlays and priority cultivation zone identification.", outputs:["GeoTIFF rasters","PDF map reports","Priority zone analysis"], sources:["GBIF Species Occurrence","WorldClim v2.1","SRTM Elevation","SoilGrids 250m"] },
+  { id:3, title:"Model Validation Report", cat:"Crop Suitability", date:"03 Jul 2026", milestone:2, week:"6", desc:"AUC (Area Under Curve) validation for all crop models. Environmental variable contribution assessment. Validates against field survey observations. Target AUC > 0.70.", outputs:["Validation report","Accuracy assessment","Predictor importance analysis"], sources:["MFEC Field Survey Data","GPS Ground Truth Points","Sentinel-2 Verification Imagery"] },
+  { id:4, title:"Crop Presence & Area Mapping", cat:"Satellite Analytics", date:"17 Jul 2026", milestone:2, week:"7–8", desc:"Satellite-based identification of current buckwheat cultivation areas. LULC analysis and mapping of all surveyed cultivation sites.", outputs:["Vector shapefiles","Cultivation maps","Expansion opportunity maps"], sources:["Sentinel-2 MSI (ESA Copernicus)","Landsat 8/9 OLI (USGS)","Google Earth Engine"] },
+  { id:5, title:"Crop Health Assessment (NDVI & NDWI)", cat:"Satellite Analytics", date:"24 Jul 2026", milestone:3, week:"9", desc:"NDVI-based vegetation health and NDWI-based moisture stress analysis. Correlates vegetation indices with field observations.", outputs:["NDVI maps","NDWI maps","Health assessment report"], sources:["Sentinel-2 L2A (Copernicus)","USGS Earth Explorer","MODIS Vegetation Products"] },
+  { id:6, title:"Climate Suitability & Risk Analysis", cat:"Satellite Analytics", date:"31 Jul 2026", milestone:3, week:"10", desc:"Historical climate assessment with frost risk mapping for buckwheat and temperature suitability for wine fruits. Rainfall adequacy evaluation.", outputs:["Climate suitability maps","Frost risk maps","Rainfall analysis report"], sources:["WorldClim v2.1 Historical","IMD Gridded Rainfall","ERA5 Reanalysis (ECMWF)"] },
+  { id:7, title:"Water Management Insights", cat:"Satellite Analytics", date:"07 Aug 2026", milestone:3, week:"11", desc:"Crop Water Requirement (CWR) estimation using FAO Penman-Monteith. Rainfall adequacy and seasonal water availability analysis.", outputs:["Water requirement report","Water availability maps","Rain-fed cultivation assessment"], sources:["CHIRPS Rainfall Data","GRACE Groundwater","IMD District Rainfall","WorldClim Precipitation"] },
+  { id:8, title:"Priority Zone Report", cat:"Strategic Reporting", date:"14 Aug 2026", milestone:4, week:"12", desc:"District-wise Top 5 priority block ranking. Area estimation under each suitability class. Complete suitability statistics and expansion recommendations.", outputs:["Priority block report","Excel summary tables","Suitability statistics"], sources:["Aggregated Model Outputs","Meghalaya Block Boundaries (SOI)","Census 2011 Land Use"] },
+  { id:9, title:"Interactive GIS Dashboard", cat:"Strategic Reporting", date:"21 Aug 2026", milestone:4, week:"12–13", desc:"Web-based GIS Viewer with layer switching, district-level filtering, interactive map queries, and dataset download functionality.", outputs:["Web GIS Dashboard","User access documentation"], sources:["All Project GeoTIFFs","Vector Shapefiles","District Boundaries"], note:"Subject to Budget Approval" },
+  { id:10, title:"Final Deliverable Package", cat:"Strategic Reporting", date:"25 Aug 2026", milestone:5, week:"13–14", desc:"Complete compilation of all data deliverables (GeoTIFFs, shapefiles, boundaries, priority zones) and reporting deliverables.", outputs:["GeoTIFFs","Shapefiles","PDF maps","Excel summaries"], sources:["All Deliverables 1–9"] },
+  { id:11, title:"Training & Handover Support", cat:"Strategic Reporting", date:"31 Aug 2026", milestone:5, week:"14", desc:"Walkthrough of analytical outputs. Methodology explanation sessions, user guide preparation, knowledge transfer with Q&A support for MFEC team.", outputs:["User guide","Training materials","Handover report","Methodology documentation"], sources:["All Project Outputs"] }
+];
+
+const MILESTONES = [
+  { id:1, title:"Data Preparation & Suitability Modelling", deliverables:"1 & 2", date:"30 Jun 2026" },
+  { id:2, title:"Model Validation & Mapping", deliverables:"3 & 4", date:"17 Jul 2026" },
+  { id:3, title:"Crop Health & Climate Analytics", deliverables:"5, 6 & 7", date:"07 Aug 2026" },
+  { id:4, title:"Priority Zone Identification & Dashboard", deliverables:"8 & 9", date:"21 Aug 2026" },
+  { id:5, title:"Final Submission & Knowledge Transfer", deliverables:"10 & 11", date:"31 Aug 2026" }
+];
+
+const CROPS = [
+  { id:1, icon:"🌾", name:"Buckwheat", sci:"Fagopyrum esculentum", type:"Cereal Pseudo-grain", elev:"1000–2000m", temp:"10–25°C", rain:"600–1000mm/season", frost:"Moderate", soil:"Well-drained loam, pH 5.5–7.0", season:"Apr–Jul (Kharif), Sep–Nov (Rabi)", market:"High – Export demand, health foods, gluten-free", districts:["East Khasi Hills","West Khasi Hills","East Jaintia Hills","West Jaintia Hills"] },
+  { id:2, icon:"🍑", name:"Plum", sci:"Prunus domestica", type:"Stone Fruit (Wine)", elev:"800–1800m", temp:"5–22°C", rain:"700–1200mm/year", frost:"Low (cold stratification needed)", soil:"Deep loam, pH 6.0–6.5", season:"March–June (fruiting)", market:"Very High – Meghalaya Plum Wine exports growing", districts:["East Khasi Hills","West Khasi Hills","East Jaintia Hills"] },
+  { id:3, icon:"🍑", name:"Peach", sci:"Prunus persica", type:"Stone Fruit (Wine)", elev:"900–1900m", temp:"4–28°C", rain:"600–1000mm/year", frost:"Low", soil:"Sandy loam, pH 6.0–7.0", season:"February–May (fruiting)", market:"High – Local wine & fresh market", districts:["East Khasi Hills","East Jaintia Hills","West Jaintia Hills"] },
+  { id:4, icon:"🍈", name:"Passion Fruit", sci:"Passiflora edulis", type:"Tropical Vine (Wine)", elev:"500–1500m", temp:"18–30°C", rain:"900–2000mm/year", frost:"High (frost intolerant)", soil:"Loam to sandy loam, pH 6.5–7.5", season:"Year-round (peak: Jun–Oct)", market:"Very High – Premium wine & juice market", districts:["South West Khasi Hills","East Garo Hills","West Jaintia Hills"] }
+];
+
+const DATA_SOURCES = [
+  { cat:"Species Modelling", title:"GBIF Occurrence Database", provider:"Global Biodiversity Information Facility", desc:"Geo-referenced species occurrence records used as input presence points for MaxEnt habitat suitability modelling." },
+  { cat:"Climate Data", title:"WorldClim v2.1", provider:"WorldClim / University of California", desc:"High-resolution (30 arc-second) historical climate data including 19 bioclimatic variables. Primary input for temperature and rainfall suitability modelling." },
+  { cat:"Elevation & Terrain", title:"SRTM DEM 30m", provider:"NASA / USGS", desc:"Shuttle Radar Topography Mission 30m Digital Elevation Model. Source for elevation, slope, and aspect terrain typology analysis." },
+  { cat:"Satellite Imagery", title:"Sentinel-2 MSI L2A", provider:"ESA Copernicus Programme", desc:"10m multispectral imagery used for NDVI vegetation health analysis, NDWI moisture stress assessment, and land-use classification." },
+  { cat:"Satellite Imagery", title:"Landsat 8/9 OLI", provider:"USGS Earth Explorer", desc:"30m multispectral imagery for crop presence mapping, historical land-cover change analysis, and expansion zone identification." },
+  { cat:"Soil Data", title:"SoilGrids 250m", provider:"ISRIC World Soil Information", desc:"Global gridded soil property maps at 250m resolution providing soil texture, pH, organic carbon, and drainage class attributes." },
+  { cat:"Rainfall", title:"CHIRPS v2.0", provider:"Climate Hazards Group / UCSB", desc:"Climate Hazards Group InfraRed Precipitation with Station data. Daily, 5km resolution rainfall data for crop water requirement estimation." },
+  { cat:"Climate Reanalysis", title:"ERA5 Reanalysis", provider:"ECMWF Copernicus CDS", desc:"Global climate reanalysis dataset providing hourly estimates of atmospheric variables for temperature and frost risk assessment." },
+  { cat:"Rainfall", title:"IMD Gridded Rainfall", provider:"India Meteorological Department", desc:"0.25° × 0.25° gridded daily rainfall data for India (1901–present). Provides district-level rainfall adequacy assessment." },
+  { cat:"Boundaries", title:"Survey of India Boundaries", provider:"Survey of India (SOI)", desc:"Official district and block boundary shapefiles for Meghalaya's 9 districts and 39 blocks used for spatial aggregation." },
+  { cat:"Remote Sensing", title:"MODIS Vegetation Products", provider:"NASA EARTHDATA", desc:"MOD13Q1 250m NDVI and EVI products for time-series vegetation monitoring and seasonal crop health trend analysis." },
+  { cat:"Groundwater", title:"GRACE-FO Groundwater", provider:"NASA / DLR", desc:"Gravity Recovery and Climate Experiment Follow-On (GRACE-FO) satellite data for groundwater storage anomaly monitoring." }
+];
+
+// ── COLOUR HELPERS ─────────────────────────────────────────────────────────
+function suitabilityColor(s) {
+  if (s === 'High') return '#059669';
+  if (s === 'Medium') return '#D97706';
+  return '#DC2626';
+}
+function scoreGradient(score) {
+  if (score >= 75) return 'linear-gradient(90deg,#059669,#34D399)';
+  if (score >= 55) return 'linear-gradient(90deg,#D97706,#FCD34D)';
+  return 'linear-gradient(90deg,#DC2626,#F87171)';
+}
+
+// ── SUITABILITY MAP ─────────────────────────────────────────────────────────
+function SuitabilityMap({ activeLayer }) {
+  const mapRef = useRef(null);
+  const mapInstance = useRef(null);
+  const markersRef = useRef([]);
+  const [selected, setSelected] = useState(null);
+
+  useEffect(() => {
+    if (mapInstance.current) return;
+    const map = L.map('suitability-map', {
+      center: [25.45, 91.36],
+      zoom: 8,
+      zoomControl: true
+    });
+
+    // OSM base layer
+    const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap Contributors',
+      maxZoom: 18
+    });
+
+    // Satellite layer (ESRI)
+    const satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'Imagery © ESRI',
+      maxZoom: 18
+    });
+
+    // Topo layer
+    const topo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenTopoMap contributors',
+      maxZoom: 17
+    });
+
+    osm.addTo(map);
+    L.control.layers(
+      { "Street Map": osm, "Satellite": satellite, "Topographic": topo },
+      {},
+      { position: 'topright' }
+    ).addTo(map);
+
+    mapInstance.current = map;
+    mapRef.current = map;
+  }, []);
+
+  useEffect(() => {
+    if (!mapInstance.current) return;
+    const map = mapInstance.current;
+
+    // Clear old markers
+    markersRef.current.forEach(m => m.remove());
+    markersRef.current = [];
+
+    DISTRICTS.forEach(d => {
+      const col = suitabilityColor(d.buckwheat);
+      const radius = 12 + (d.score / 10);
+      const circle = L.circleMarker([d.lat, d.lng], {
+        radius,
+        fillColor: col,
+        color: 'white',
+        weight: 2,
+        opacity: 1,
+        fillOpacity: 0.85
+      });
+
+      const wineCrops = d.wine.join(', ');
+      circle.bindPopup(`
+        <div style="font-family:'Inter',sans-serif;min-width:220px">
+          <div style="background:#1B4332;color:white;padding:12px 14px;margin:-14px -14px 10px;border-radius:4px 4px 0 0">
+            <div style="font-weight:700;font-size:14px">${d.name}</div>
+            <div style="font-size:11px;opacity:0.7">HQ: ${d.hq}</div>
+          </div>
+          <div style="padding:0 2px">
+            <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+              <span style="font-size:11px;color:#6B7280">Buckwheat Suitability</span>
+              <span style="font-size:11px;font-weight:700;color:${col}">${d.buckwheat}</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+              <span style="font-size:11px;color:#6B7280">Suitability Score</span>
+              <span style="font-size:11px;font-weight:700;color:#1B4332">${d.score}/100</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+              <span style="font-size:11px;color:#6B7280">Elevation Range</span>
+              <span style="font-size:11px;color:#374151">${d.elev}</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+              <span style="font-size:11px;color:#6B7280">Avg Rainfall</span>
+              <span style="font-size:11px;color:#374151">${d.rain.toLocaleString()}mm/yr</span>
+            </div>
+            <div style="margin-top:8px;padding-top:8px;border-top:1px solid #E5E7EB">
+              <span style="font-size:10px;color:#6B7280;text-transform:uppercase;letter-spacing:0.05em">Wine Crops</span>
+              <div style="margin-top:4px;font-size:12px;color:#2D6A4F;font-weight:500">${wineCrops}</div>
+            </div>
+            <div style="margin-top:8px;padding-top:8px;border-top:1px solid #E5E7EB">
+              <span style="font-size:10px;color:#6B7280;text-transform:uppercase;letter-spacing:0.05em">Top Priority Block</span>
+              <div style="margin-top:4px;font-size:12px;color:#374151">${d.blocks[0]}</div>
+            </div>
+          </div>
+        </div>
+      `, { maxWidth: 260 });
+
+      circle.addTo(map);
+      markersRef.current.push(circle);
+    });
+
+    // Add legend
+    const oldLegend = document.getElementById('map-legend-ctrl');
+    if (oldLegend) oldLegend.remove();
+    const legend = L.control({ position: 'bottomleft' });
+    legend.onAdd = () => {
+      const div = L.DomUtil.create('div');
+      div.id = 'map-legend-ctrl';
+      div.style.cssText = 'background:white;padding:12px 16px;border-radius:6px;box-shadow:0 2px 12px rgba(0,0,0,0.15);font-family:Inter,sans-serif;font-size:12px;min-width:160px';
+      div.innerHTML = `
+        <div style="font-weight:700;color:#1B4332;margin-bottom:8px;font-size:11px;text-transform:uppercase;letter-spacing:0.08em">Buckwheat Suitability</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="width:14px;height:14px;border-radius:50%;background:#059669;display:inline-block"></span><span>High (Score ≥ 75)</span></div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="width:14px;height:14px;border-radius:50%;background:#D97706;display:inline-block"></span><span>Medium (Score 50–74)</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:14px;height:14px;border-radius:50%;background:#DC2626;display:inline-block"></span><span>Low (Score < 50)</span></div>
+        <div style="margin-top:8px;padding-top:8px;border-top:1px solid #E5E7EB;font-size:10px;color:#9CA3AF">Circle size ∝ suitability score<br>Click markers for details</div>
+      `;
+      return div;
+    };
+    legend.addTo(map);
+    markersRef.current.push({ remove: () => legend.remove() });
+
+  }, [activeLayer]);
+
+  return React.createElement('div', { id: 'suitability-map', className: 'leaflet-map' });
+}
+
+// ── WINE FRUIT MAP ─────────────────────────────────────────────────────────
+function WineFruitMap() {
+  useEffect(() => {
+    if (document.getElementById('wine-map')._leaflet_id) return;
+    const map = L.map('wine-map', { center:[25.45,91.36], zoom:8 });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution:'© OpenStreetMap Contributors'
+    }).addTo(map);
+
+    const CROP_COLORS = { Plum:'#7C3AED', Peach:'#EA580C', 'Passion Fruit':'#0891B2' };
+    const cropGroups = {};
+    Object.keys(CROP_COLORS).forEach(c => { cropGroups[c] = L.layerGroup().addTo(map); });
+
+    DISTRICTS.forEach(d => {
+      d.wine.forEach((crop, i) => {
+        const col = CROP_COLORS[crop] || '#6B7280';
+        const offset = i * 0.04;
+        L.circleMarker([d.lat + offset, d.lng + offset], {
+          radius: 9,
+          fillColor: col,
+          color:'white', weight:2,
+          fillOpacity:0.85
+        }).bindTooltip(`<b>${d.name}</b><br>${crop}`)
+          .addTo(cropGroups[crop]);
+      });
+    });
+
+    L.control.layers({}, cropGroups, { collapsed:false, position:'topright' }).addTo(map);
+
+    const legend = L.control({ position:'bottomleft' });
+    legend.onAdd = () => {
+      const div = L.DomUtil.create('div');
+      div.style.cssText = 'background:white;padding:12px 16px;border-radius:6px;box-shadow:0 2px 12px rgba(0,0,0,0.15);font-family:Inter,sans-serif;font-size:12px';
+      div.innerHTML = `
+        <div style="font-weight:700;color:#1B4332;margin-bottom:8px;font-size:11px;text-transform:uppercase;letter-spacing:0.08em">Wine Fruit Crops</div>
+        ${Object.entries(CROP_COLORS).map(([c,col]) =>
+          `<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="width:12px;height:12px;border-radius:50%;background:${col};display:inline-block"></span>
+            <span>${c}</span>
+          </div>`).join('')}
+        <div style="margin-top:8px;font-size:10px;color:#9CA3AF">Use layers control → to toggle crops</div>
+      `;
+      return div;
+    };
+    legend.addTo(map);
+  }, []);
+  return React.createElement('div', { id:'wine-map', className:'leaflet-map' });
+}
+
+// ── RAINFALL MAP ──────────────────────────────────────────────────────────
+function RainfallMap() {
+  useEffect(() => {
+    if (document.getElementById('rainfall-map')._leaflet_id) return;
+    const map = L.map('rainfall-map', { center:[25.45,91.36], zoom:8 });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution:'© OpenStreetMap Contributors', opacity:0.5
+    }).addTo(map);
+
+    DISTRICTS.forEach(d => {
+      const maxRain = 12000; const minRain = 2500;
+      const ratio = (d.rain - minRain) / (maxRain - minRain);
+      const r = Math.round(27 + (1-ratio)*200);
+      const g = Math.round(67 + ratio*140);
+      const b = Math.round(50 + (1-ratio)*50);
+      const col = `rgb(${r},${g},${b})`;
+      const radius = 14 + ratio * 22;
+
+      L.circleMarker([d.lat, d.lng], {
+        radius, fillColor:col, color:'white', weight:2, fillOpacity:0.85
+      }).bindPopup(`
+        <div style="font-family:Inter,sans-serif;padding:4px">
+          <b style="color:#1B4332">${d.name}</b><br>
+          <span style="font-size:13px">Annual Rainfall: <b>${d.rain.toLocaleString()} mm</b></span><br>
+          <span style="font-size:11px;color:#6B7280">Data Source: IMD + WorldClim v2.1</span>
+        </div>
+      `).addTo(map);
+    });
+
+    const legend = L.control({ position:'bottomleft' });
+    legend.onAdd = () => {
+      const div = L.DomUtil.create('div');
+      div.style.cssText = 'background:white;padding:12px 16px;border-radius:6px;box-shadow:0 2px 12px rgba(0,0,0,0.15);font-family:Inter,sans-serif;font-size:12px;min-width:180px';
+      div.innerHTML = `
+        <div style="font-weight:700;color:#1B4332;margin-bottom:8px;font-size:11px;text-transform:uppercase;letter-spacing:0.08em">Annual Rainfall (mm/yr)</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="width:16px;height:16px;border-radius:50%;background:#1B8732;display:inline-block"></span><span>> 8000 mm — Very High</span></div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="width:12px;height:12px;border-radius:50%;background:#52B788;display:inline-block"></span><span>4000–8000 mm — High</span></div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="width:10px;height:10px;border-radius:50%;background:#95D5B2;display:inline-block"></span><span>2500–4000 mm — Moderate</span></div>
+        <div style="margin-top:8px;font-size:10px;color:#9CA3AF">Source: IMD Gridded Data + WorldClim v2.1<br>Circle size ∝ rainfall volume</div>
+      `;
+      return div;
+    };
+    legend.addTo(map);
+  }, []);
+  return React.createElement('div', { id:'rainfall-map', className:'leaflet-map' });
+}
+
+// ── ELEVATION MAP ──────────────────────────────────────────────────────────
+function ElevationMap() {
+  useEffect(() => {
+    if (document.getElementById('elev-map')._leaflet_id) return;
+    const map = L.map('elev-map', { center:[25.45,91.36], zoom:8 });
+    L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+      attribution:'© OpenTopoMap contributors', maxZoom:17
+    }).addTo(map);
+
+    const elevData = [
+      { name:"East Khasi Hills", lat:25.5788, lng:91.8933, min:1000, max:1965, peak:"Shillong Peak" },
+      { name:"West Khasi Hills", lat:25.5213, lng:91.2634, min:800, max:1800, peak:"Mawsynram Plateau" },
+      { name:"S.W. Khasi Hills", lat:25.1956, lng:91.2090, min:600, max:1500, peak:"Cherrapunjee Escarpment" },
+      { name:"Ri Bhoi", lat:25.9090, lng:91.9703, min:300, max:900, peak:"Umiam Foothills" },
+      { name:"E. Jaintia Hills", lat:25.3121, lng:92.5267, min:900, max:1700, peak:"Jaintia Plateau" },
+      { name:"W. Jaintia Hills", lat:25.4482, lng:92.2019, min:800, max:1500, peak:"Jowai Highlands" },
+      { name:"E. Garo Hills", lat:25.5949, lng:90.6578, min:200, max:800, peak:"Tura Range (East)" },
+      { name:"W. Garo Hills", lat:25.5155, lng:90.2134, min:100, max:600, peak:"Tura Peak" },
+      { name:"S. Garo Hills", lat:25.1969, lng:90.6353, min:100, max:900, peak:"Simsang Valley" }
+    ];
+
+    elevData.forEach(d => {
+      const avgElev = (d.min + d.max) / 2;
+      const ratio = (avgElev - 100) / (1900 - 100);
+      const col = `hsl(${140 + ratio*20},${50+ratio*30}%,${55-ratio*25}%)`;
+
+      L.circleMarker([d.lat, d.lng], {
+        radius: 10 + ratio*16,
+        fillColor: col, color:'white', weight:2, fillOpacity:0.85
+      }).bindPopup(`
+        <div style="font-family:Inter,sans-serif;padding:4px">
+          <b style="color:#1B4332;font-size:14px">${d.name}</b><br>
+          <div style="margin-top:6px">
+            <span style="font-size:12px">Elevation Range: <b>${d.min}–${d.max}m</b></span><br>
+            <span style="font-size:11px;color:#6B7280">Notable: ${d.peak}</span><br>
+            <span style="font-size:10px;color:#9CA3AF">Source: NASA SRTM DEM 30m</span>
+          </div>
+        </div>
+      `).addTo(map);
+    });
+    const legend = L.control({ position:'bottomleft' });
+    legend.onAdd = () => {
+      const div = L.DomUtil.create('div');
+      div.style.cssText = 'background:white;padding:12px 16px;border-radius:6px;box-shadow:0 2px 12px rgba(0,0,0,0.15);font-family:Inter,sans-serif;font-size:12px';
+      div.innerHTML = `
+        <div style="font-weight:700;color:#1B4332;margin-bottom:8px;font-size:11px;text-transform:uppercase;letter-spacing:0.08em">Elevation Range (m)</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px"><span style="width:16px;height:16px;border-radius:50%;background:#2D6A4F;display:inline-block"></span><span>> 1500m — Alpine</span></div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px"><span style="width:13px;height:13px;border-radius:50%;background:#52B788;display:inline-block"></span><span>800–1500m — Highland</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:10px;height:10px;border-radius:50%;background:#95D5B2;display:inline-block"></span><span>< 800m — Foothill</span></div>
+        <div style="margin-top:8px;font-size:10px;color:#9CA3AF">Source: NASA SRTM DEM 30m<br>Topographic base: OpenTopoMap</div>
+      `;
+      return div;
+    };
+    legend.addTo(map);
+  }, []);
+  return React.createElement('div', { id:'elev-map', className:'leaflet-map' });
+}
+
+// ── DISTRICT MODAL ─────────────────────────────────────────────────────────
+function DistrictModal({ district, onClose }) {
+  if (!district) return null;
+  return React.createElement('div', { className:'modal-overlay', onClick:onClose },
+    React.createElement('div', { className:'modal', onClick:e => e.stopPropagation() },
+      React.createElement('div', { className:'modal-header' },
+        React.createElement('button', { className:'modal-close', onClick:onClose }, '×'),
+        React.createElement('div', { className:'modal-title' }, district.name),
+        React.createElement('div', { className:'modal-hq' }, `District Headquarters: ${district.hq}`)
+      ),
+      React.createElement('div', { className:'modal-body' },
+        React.createElement('div', { className:'modal-grid' },
+          [
+            { label:'Buckwheat Suitability', value: district.buckwheat },
+            { label:'Suitability Score', value: `${district.score}/100` },
+            { label:'Area', value:`${district.area.toLocaleString()} km²` },
+            { label:'Population', value: district.pop.toLocaleString() },
+            { label:'Elevation Range', value: district.elev },
+            { label:'Annual Rainfall', value: `${district.rain.toLocaleString()} mm` }
+          ].map(a =>
+            React.createElement('div', { className:'modal-attr', key:a.label },
+              React.createElement('div', { className:'modal-attr-label' }, a.label),
+              React.createElement('div', { className:'modal-attr-value' }, a.value)
+            )
+          )
+        ),
+        React.createElement('div', { className:'modal-blocks' },
+          React.createElement('div', { className:'modal-attr-label', style:{marginBottom:'10px'} }, 'Top 5 Priority Blocks'),
+          React.createElement('div', { className:'block-list' },
+            district.blocks.map((b, i) =>
+              React.createElement('div', { className:'block-item', key:b },
+                React.createElement('span', { className:'block-rank' }, i+1),
+                React.createElement('span', { style:{fontSize:'13px'} }, b),
+                React.createElement('span', { className:`suitability-badge badge-${i < 2 ? 'high' : i < 4 ? 'medium' : 'medium'}` },
+                  i < 2 ? 'Priority A' : 'Priority B'
+                )
+              )
+            )
+          )
+        ),
+        React.createElement('div', { style:{marginTop:'20px'} },
+          React.createElement('div', { className:'modal-attr-label', style:{marginBottom:'8px'} }, 'Wine Crop Suitability'),
+          React.createElement('div', { style:{display:'flex',gap:'8px',flexWrap:'wrap'} },
+            district.wine.map(c =>
+              React.createElement('span', { key:c, className:'district-chip' }, c)
+            )
+          )
+        )
+      )
+    )
+  );
+}
+
+// ── CHARTS ────────────────────────────────────────────────────────────────
+function ChartsSection() {
+  const barData = DISTRICTS.map(d => ({
+    name: d.name.replace('Hills','').replace('Khasi','K.').replace('Jaintia','J.').replace('Garo','G.').trim(),
+    score: d.score,
+    fill: suitabilityColor(d.buckwheat)
+  }));
+
+  const pieData = [
+    { name:'High Suitability', value: DISTRICTS.filter(d=>d.buckwheat==='High').length, fill:'#059669' },
+    { name:'Medium Suitability', value: DISTRICTS.filter(d=>d.buckwheat==='Medium').length, fill:'#D97706' },
+    { name:'Low Suitability', value: DISTRICTS.filter(d=>d.buckwheat==='Low').length, fill:'#DC2626' }
+  ];
+
+  const rainfallData = DISTRICTS.map(d => ({
+    name: d.name.replace(' Hills','').replace('West Khasi','W.Khasi').replace('East Khasi','E.Khasi').replace('South West Khasi','SW Khasi'),
+    rain: d.rain,
+    score: d.score
+  })).sort((a,b)=>b.rain-a.rain);
+
+  return React.createElement('section', { className:'section' },
+    React.createElement('div', { className:'section-eyebrow' }, 'Analytics Dashboard'),
+    React.createElement('h2', { className:'section-title' }, 'Suitability Intelligence'),
+    React.createElement('p', { className:'section-lead' }, 'Data-driven insights from MaxEnt modelling and environmental analysis across all 9 Meghalaya districts.'),
+    React.createElement('div', { className:'charts-grid' },
+      React.createElement('div', { className:'chart-card' },
+        React.createElement('div', { className:'chart-title' }, 'District Suitability Scores'),
+        React.createElement('div', { className:'chart-subtitle' }, 'Buckwheat MaxEnt Model Output Score (0–100)'),
+        React.createElement(ResponsiveContainer, { width:'100%', height:280 },
+          React.createElement(BarChart, { data:barData, margin:{left:-20,bottom:50} },
+            React.createElement(CartesianGrid, { strokeDasharray:'3 3', stroke:'#F0FBF3' }),
+            React.createElement(XAxis, { dataKey:'name', angle:-45, textAnchor:'end', tick:{fontSize:10}, interval:0 }),
+            React.createElement(YAxis, { tick:{fontSize:10}, domain:[0,100] }),
+            React.createElement(Tooltip, { formatter:(v)=>[`${v}/100`,'Score'] }),
+            React.createElement(Bar, { dataKey:'score', radius:[3,3,0,0] },
+              barData.map((d,i) => React.createElement(Cell, { key:i, fill:d.fill }))
+            )
+          )
+        )
+      ),
+      React.createElement('div', { className:'chart-card' },
+        React.createElement('div', { className:'chart-title' }, 'Suitability Distribution'),
+        React.createElement('div', { className:'chart-subtitle' }, 'Districts by Buckwheat Suitability Class'),
+        React.createElement(ResponsiveContainer, { width:'100%', height:280 },
+          React.createElement(PieChart, null,
+            React.createElement(Pie, {
+              data:pieData, cx:'50%', cy:'50%',
+              outerRadius:90, dataKey:'value',
+              label: ({name,value}) => `${name.replace(' Suitability','')} (${value})`
+            },
+              pieData.map((d,i) => React.createElement(Cell, { key:i, fill:d.fill }))
+            ),
+            React.createElement(Tooltip, null),
+            React.createElement(Legend, null)
+          )
+        )
+      ),
+      React.createElement('div', { className:'chart-card', style:{gridColumn:'1 / -1'} },
+        React.createElement('div', { className:'chart-title' }, 'Rainfall vs. Suitability Score'),
+        React.createElement('div', { className:'chart-subtitle' }, 'Annual Rainfall (mm) ranked by volume — Source: IMD + WorldClim v2.1'),
+        React.createElement(ResponsiveContainer, { width:'100%', height:200 },
+          React.createElement(BarChart, { data:rainfallData, margin:{left:10,bottom:60} },
+            React.createElement(CartesianGrid, { strokeDasharray:'3 3', stroke:'#F0FBF3' }),
+            React.createElement(XAxis, { dataKey:'name', angle:-30, textAnchor:'end', tick:{fontSize:10}, interval:0 }),
+            React.createElement(YAxis, { yAxisId:'left', tick:{fontSize:10}, label:{value:'Rainfall (mm)',angle:-90,position:'insideLeft',style:{fontSize:10}} }),
+            React.createElement(YAxis, { yAxisId:'right', orientation:'right', tick:{fontSize:10}, domain:[0,100] }),
+            React.createElement(Tooltip, null),
+            React.createElement(Bar, { yAxisId:'left', dataKey:'rain', fill:'#52B788', name:'Annual Rainfall (mm)', radius:[3,3,0,0] }),
+            React.createElement(Bar, { yAxisId:'right', dataKey:'score', fill:'#1B4332', name:'Suitability Score', radius:[3,3,0,0], opacity:0.6 })
+          )
+        )
+      )
+    )
+  );
+}
+
+// ── MAIN APP ──────────────────────────────────────────────────────────────
+function App() {
+  const [activeSection, setActiveSection] = useState('overview');
+  const [selectedDistrict, setSelectedDistrict] = useState(null);
+  const [activeMapLayer, setActiveMapLayer] = useState('suitability');
+  const [expandedDeliverable, setExpandedDeliverable] = useState(null);
+
+  const navItems = [
+    { id:'overview', label:'Overview' },
+    { id:'maps', label:'Maps' },
+    { id:'deliverables', label:'Deliverables' },
+    { id:'crops', label:'Crops' },
+    { id:'timeline', label:'Timeline' },
+    { id:'datasources', label:'Data Sources' }
+  ];
+
+  const scrollTo = (id) => {
+    setActiveSection(id);
+    document.getElementById(id)?.scrollIntoView({ behavior:'smooth', block:'start' });
+  };
+
+  const mapLayers = [
+    { id:'suitability', label:'Buckwheat Suitability' },
+    { id:'wine', label:'Wine Fruit Zones' },
+    { id:'rainfall', label:'Rainfall Analysis' },
+    { id:'elevation', label:'Terrain & Elevation' }
+  ];
+
+  return React.createElement(React.Fragment, null,
+    // NAV
+    React.createElement('nav', null,
+      React.createElement('div', { className:'nav-brand' },
+        React.createElement('span', null, 'MFEC'),
+        React.createElement('span', { className:'nav-badge' }, 'GEOAI'),
+        React.createElement('span', { style:{color:'rgba(149,213,178,0.4)',fontWeight:300} }, '/ Meghalaya Farmers\' Empowerment Commission')
+      ),
+      React.createElement('div', { className:'nav-links' },
+        navItems.map(n =>
+          React.createElement('button', {
+            key:n.id, className:`nav-link ${activeSection===n.id?'active':''}`,
+            onClick:()=>scrollTo(n.id)
+          }, n.label)
+        )
+      )
+    ),
+
+    // HERO
+    React.createElement('section', { id:'overview' },
+      React.createElement('div', { className:'hero' },
+        React.createElement('div', { className:'hero-grid' }),
+        React.createElement('div', { className:'hero-orb hero-orb-1' }),
+        React.createElement('div', { className:'hero-orb hero-orb-2' }),
+        React.createElement('div', { className:'hero-content' },
+          React.createElement('div', { className:'hero-eyebrow' }, 'PO-DS-AGRI-2026-27-01 · Government of Meghalaya'),
+          React.createElement('h1', { className:'hero-title' },
+            'Meghalaya\'s',
+            React.createElement('br'),
+            React.createElement('em', null, 'Agricultural'),
+            React.createElement('br'),
+            'Intelligence Layer'
+          ),
+          React.createElement('p', { className:'hero-subtitle' }, 'GeoAI-powered habitat suitability modelling, satellite crop analytics, and climate-risk assessment for the MFEC Buckwheat and Fruit Wine Initiatives across 9 districts of Meghalaya.'),
+          React.createElement('div', { className:'hero-meta' },
+            [
+              { label:'End Client', value:'MFEC · Govt. of Meghalaya' },
+              { label:'Contract Validity', value:'Until 31 August 2026' },
+              { label:'PO Date', value:'22 May 2026' },
+              { label:'Project Type', value:'Geospatial Analysis' }
+            ].map(m =>
+              React.createElement('div', { className:'hero-meta-item', key:m.label },
+                React.createElement('div', { className:'hero-meta-label' }, m.label),
+                React.createElement('div', { className:'hero-meta-value' }, m.value)
+              )
+            )
+          ),
+          React.createElement('div', { className:'hero-cta' },
+            React.createElement('button', { className:'btn-primary', onClick:()=>scrollTo('maps') }, 'Explore Maps →'),
+            React.createElement('button', { className:'btn-outline', onClick:()=>scrollTo('deliverables') }, 'View Deliverables')
+          )
+        ),
+        React.createElement('div', { className:'hero-stats' },
+          [
+            { num:'9', label:'Districts Covered' },
+            { num:'4', label:'Crops Modelled (MaxEnt)' },
+            { num:'11', label:'Deliverables' },
+            { num:'>0.70', label:'Target AUC Score' }
+          ].map(s =>
+            React.createElement('div', { className:'hero-stat', key:s.label },
+              React.createElement('div', { className:'hero-stat-num' }, s.num),
+              React.createElement('div', { className:'hero-stat-label' }, s.label)
+            )
+          )
+        )
+      )
+    ),
+
+    // ── MAPS SECTION ──
+    React.createElement('div', { id:'maps', className:'map-section-bg' },
+      React.createElement('div', { className:'map-container-outer' },
+        React.createElement('div', { className:'section-eyebrow' }, 'Geospatial Intelligence'),
+        React.createElement('h2', { className:'section-title' }, 'Interactive GIS Maps'),
+        React.createElement('p', { className:'section-lead' }, 'Explore suitability, wine fruit zones, rainfall patterns, and terrain across all 9 Meghalaya districts. Click map markers for district details.'),
+        React.createElement('div', { className:'map-tabs' },
+          mapLayers.map(l =>
+            React.createElement('button', {
+              key:l.id, className:`map-tab ${activeMapLayer===l.id?'active':''}`,
+              onClick:()=>setActiveMapLayer(l.id)
+            }, l.label)
+          )
+        ),
+        React.createElement('div', { className:'map-grid' },
+          React.createElement('div', null,
+            activeMapLayer === 'suitability' && React.createElement(SuitabilityMap, { activeLayer:activeMapLayer }),
+            activeMapLayer === 'wine' && React.createElement(WineFruitMap),
+            activeMapLayer === 'rainfall' && React.createElement(RainfallMap),
+            activeMapLayer === 'elevation' && React.createElement(ElevationMap),
+            React.createElement('p', { style:{fontSize:'11px',color:'#9CA3AF',marginTop:'8px'} },
+              activeMapLayer === 'suitability' ? 'Source: MaxEnt Model + WorldClim v2.1 + SRTM DEM | Base: © OpenStreetMap Contributors' :
+              activeMapLayer === 'wine' ? 'Source: GBIF Species Records + WorldClim v2.1 + SoilGrids | Base: © OpenStreetMap Contributors' :
+              activeMapLayer === 'rainfall' ? 'Source: IMD Gridded Rainfall Data + WorldClim v2.1 | Base: © OpenStreetMap Contributors' :
+              'Source: NASA SRTM DEM 30m | Base: © OpenTopoMap contributors'
+            )
+          ),
+          React.createElement('div', { className:'map-sidebar' },
+            DISTRICTS.map(d =>
+              React.createElement('div', {
+                key:d.id,
+                className:`district-card ${selectedDistrict?.id===d.id?'selected':''}`,
+                onClick:()=>setSelectedDistrict(d)
+              },
+                React.createElement('div', { className:'district-card-header' },
+                  React.createElement('div', null,
+                    React.createElement('div', { className:'district-name' }, d.name),
+                    React.createElement('div', { className:'district-hq' }, `HQ: ${d.hq}`)
+                  ),
+                  React.createElement('span', { className:`suitability-badge badge-${d.buckwheat.toLowerCase()}` }, d.buckwheat)
+                ),
+                React.createElement('div', { className:'score-bar' },
+                  React.createElement('div', { className:'score-bar-track' },
+                    React.createElement('div', {
+                      className:'score-bar-fill',
+                      style:{ width:`${d.score}%`, background:scoreGradient(d.score) }
+                    })
+                  ),
+                  React.createElement('div', { className:'score-label' },
+                    React.createElement('span', null, 'Score'),
+                    React.createElement('span', null, `${d.score}/100`)
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    ),
+
+    // ── DELIVERABLES ──
+    React.createElement('section', { id:'deliverables', className:'section' },
+      React.createElement('div', { className:'section-eyebrow' }, 'Scope of Work'),
+      React.createElement('h2', { className:'section-title' }, 'Project Deliverables'),
+      React.createElement('p', { className:'section-lead' }, 'Eleven structured deliverables across three work packages, from habitat suitability modelling to final training handover.'),
+      React.createElement('div', { className:'deliverables-grid' },
+        DELIVERABLES.map(d =>
+          React.createElement('div', {
+            key:d.id,
+            className:'deliverable-card',
+            style:{cursor:'pointer'},
+            onClick:()=>setExpandedDeliverable(expandedDeliverable===d.id?null:d.id)
+          },
+            React.createElement('div', { className:'deliverable-num' }, `DELIVERABLE ${String(d.id).padStart(2,'0')} · MILESTONE ${d.milestone} · WEEK ${d.week}`),
+            React.createElement('div', { className:'deliverable-title' }, d.title),
+            d.note && React.createElement('div', { style:{fontSize:'11px',color:'#D97706',marginBottom:'8px'} }, `⚠ ${d.note}`),
+            React.createElement('div', { className:'deliverable-desc' }, d.desc),
+            React.createElement('div', { className:'deliverable-date' }, `Submission: ${d.date}`),
+            React.createElement('div', { className:'deliverable-tags' },
+              d.outputs.map(o => React.createElement('span', { key:o, className:'tag' }, o))
+            ),
+            expandedDeliverable === d.id && React.createElement('div', { className:'deliverable-sources' },
+              React.createElement('div', { className:'sources-label' }, 'Data Sources'),
+              d.sources.map(s => React.createElement('div', { key:s, className:'source-item' }, s))
+            )
+          )
+        )
+      )
+    ),
+
+    React.createElement('div', { className:'divider' }),
+
+    // ── CHARTS ──
+    React.createElement(ChartsSection),
+
+    React.createElement('div', { className:'divider' }),
+
+    // ── CROPS ──
+    React.createElement('section', { id:'crops', className:'section' },
+      React.createElement('div', { className:'section-eyebrow' }, 'Target Crops'),
+      React.createElement('h2', { className:'section-title' }, 'Crop Intelligence Profiles'),
+      React.createElement('p', { className:'section-lead' }, 'Detailed agronomic profiles for all four crops modelled under the MFEC initiative — Buckwheat and three wine fruits.'),
+      React.createElement('div', { className:'crops-grid' },
+        CROPS.map(c =>
+          React.createElement('div', { key:c.id, className:'crop-card' },
+            React.createElement('div', { className:'crop-icon' }, c.icon),
+            React.createElement('div', { className:'crop-name' }, c.name),
+            React.createElement('div', { className:'crop-sci' }, c.sci),
+            React.createElement('div', { className:'crop-attrs' },
+              [
+                { label:'Crop Type', value:c.type },
+                { label:'Elevation', value:c.elev },
+                { label:'Temperature', value:c.temp },
+                { label:'Rainfall', value:c.rain },
+                { label:'Frost Sensitivity', value:c.frost },
+                { label:'Growing Season', value:c.season }
+              ].map(a =>
+                React.createElement('div', { key:a.label, className:'crop-attr' },
+                  React.createElement('div', { className:'attr-label' }, a.label),
+                  React.createElement('div', { className:'attr-value' }, a.value)
+                )
+              )
+            ),
+            React.createElement('div', { className:'crop-attr', style:{marginTop:'14px'} },
+              React.createElement('div', { className:'attr-label' }, 'Soil Requirements'),
+              React.createElement('div', { className:'attr-value', style:{fontSize:'12px'} }, c.soil)
+            ),
+            React.createElement('div', { className:'crop-attr', style:{marginTop:'10px'} },
+              React.createElement('div', { className:'attr-label' }, 'Market Potential'),
+              React.createElement('div', { className:'attr-value', style:{fontSize:'12px',color:'#059669'} }, c.market)
+            ),
+            React.createElement('div', { className:'crop-districts' },
+              React.createElement('div', { className:'attr-label', style:{marginTop:'14px'} }, 'Priority Districts'),
+              React.createElement('div', { className:'districts-chips' },
+                c.districts.map(dist => React.createElement('span', { key:dist, className:'district-chip' }, dist))
+              )
+            )
+          )
+        )
+      )
+    ),
+
+    React.createElement('div', { className:'divider' }),
+
+    // ── TIMELINE ──
+    React.createElement('section', { id:'timeline', className:'section' },
+      React.createElement('div', { className:'section-eyebrow' }, 'Project Schedule'),
+      React.createElement('h2', { className:'section-title' }, 'Milestone Timeline'),
+      React.createElement('p', { className:'section-lead' }, `Project Duration: 22 May 2026 – 31 August 2026. Five milestone gates across 14 weeks.`),
+      React.createElement('div', { className:'timeline' },
+        MILESTONES.map(m =>
+          React.createElement('div', { key:m.id, className:'milestone-item' },
+            React.createElement('div', { className:'milestone-dot' }),
+            React.createElement('div', { className:'milestone-content' },
+              React.createElement('div', { className:'milestone-num' }, `MILESTONE ${m.id} · DELIVERABLES ${m.deliverables}`),
+              React.createElement('div', { className:'milestone-title' }, m.title),
+              React.createElement('div', { className:'milestone-date' }, m.date)
+            )
+          )
+        )
+      )
+    ),
+
+    // ── DATA SOURCES ──
+    React.createElement('div', { id:'datasources', className:'sources-section-bg' },
+      React.createElement('div', { style:{maxWidth:'1400px',margin:'0 auto'} },
+        React.createElement('div', { className:'section-eyebrow', style:{padding:'0 64px',paddingTop:'80px',color:'var(--moss)'} }, 'Data Provenance'),
+        React.createElement('h2', { className:'section-title', style:{color:'white',padding:'0 64px',marginBottom:'8px'} }, 'Data Sources Used'),
+        React.createElement('p', { style:{color:'rgba(149,213,178,0.6)',padding:'0 64px 0',fontSize:'15px',lineHeight:'1.6',maxWidth:'620px',marginBottom:'0'} },
+          '12 authoritative geospatial and environmental datasets powering all modelling, satellite analytics, and climate assessments.'
+        )
+      ),
+      React.createElement('div', { className:'sources-grid', style:{padding:'0 64px 80px',maxWidth:'1400px',marginLeft:'auto',marginRight:'auto',marginTop:'40px'} },
+        DATA_SOURCES.map(s =>
+          React.createElement('div', { key:s.title, className:'source-card' },
+            React.createElement('div', { className:'source-category' }, s.cat),
+            React.createElement('div', { className:'source-card-title' }, s.title),
+            React.createElement('div', { className:'source-card-provider' }, s.provider),
+            React.createElement('div', { className:'source-card-desc' }, s.desc)
+          )
+        )
+      )
+    ),
+
+    // MODAL
+    selectedDistrict && React.createElement(DistrictModal, { district:selectedDistrict, onClose:()=>setSelectedDistrict(null) }),
+
+    // ── FOOTER ──
+    React.createElement('footer', null,
+      React.createElement('div', { className:'footer-grid' },
+        React.createElement('div', null,
+          React.createElement('div', { className:'footer-brand' }, 'MFEC GeoAI Platform'),
+          React.createElement('div', { className:'footer-legal' },
+            'Geospatial Analysis – Habitat Suitability & Agricultural Analytics\nPO-DS-AGRI-2026-27-01 | 22 May 2026'
+          ),
+          React.createElement('div', { className:'footer-legal', style:{marginTop:'12px',color:'rgba(255,255,255,0.25)'} },
+            'Developed by Deepspatial for the Meghalaya Farmers\' Empowerment Commission Development (MFEC), Government of Meghalaya. Contract validity: 31 August 2026.'
+          )
+        ),
+        React.createElement('div', null,
+          React.createElement('div', { className:'footer-section-title' }, 'Deliverable Groups'),
+          ['Crop Suitability & Core Modelling','Satellite Analytics & Environmental Risk','Strategic Reporting & Platforms','Training & Handover Support'].map(s =>
+            React.createElement('div', { key:s, className:'footer-link' }, s)
+          )
+        ),
+        React.createElement('div', null,
+          React.createElement('div', { className:'footer-section-title' }, 'Key Data Sources'),
+          ['WorldClim v2.1','GBIF Occurrence Data','Sentinel-2 (ESA Copernicus)','SRTM DEM 30m (NASA)','IMD Gridded Rainfall','CHIRPS v2.0'].map(s =>
+            React.createElement('div', { key:s, className:'footer-link' }, s)
+          )
+        )
+      ),
+      React.createElement('div', { className:'footer-bottom' },
+        'MFEC Buckwheat & Fruit Wine Initiatives · Meghalaya · © 2026 Deepspatial · PO-DS-AGRI-2026-27-01'
+      )
+    )
+  );
+}
+
+ReactDOM.render(React.createElement(App), document.getElementById('root'));
+</script>
+</body>
+</html>
