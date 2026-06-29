@@ -143,10 +143,10 @@ export default function WaterManagement() {
               <h3 style={{ fontFamily: 'var(--font-heading)', color: '#1565C0', marginBottom: 4 }}>Rainfall vs. Crop Water Requirements</h3>
               <p className="text-muted text-sm" style={{ marginBottom: 20 }}>Annual rainfall vs buckwheat CWR (350mm) – all districts exceed minimum requirement</p>
               <ResponsiveContainer width="100%" height={300}>
-                <ComposedChart data={chartData}>
+                <ComposedChart data={chartData} margin={{ top: 5, right: 10, bottom: 5, left: 30 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
-                  <XAxis dataKey="district" angle={-25} textAnchor="end" interval={0} tick={{ fontSize: 10 }} height={65} />
-                  <YAxis tick={{ fontSize: 11 }} />
+                  <XAxis dataKey="district" angle={-25} textAnchor="end" interval={0} tick={{ fontSize: 10 }} height={75} label={{ value: 'District', position: 'insideBottom', offset: -25, style: { fontSize: 11, fill: '#666' } }} />
+                  <YAxis tick={{ fontSize: 11 }} label={{ value: 'Rainfall (mm)', angle: -90, position: 'insideLeft', style: { textAnchor: 'middle', fontSize: 11, fill: '#666' } }} />
                   <Tooltip />
                   <Legend />
                   <ReferenceLine y={350} stroke="#C62828" strokeDasharray="6 3" label={{ value: 'Buckwheat CWR (350mm)', position: 'insideTopLeft', fill: '#C62828', fontSize: 11 }} />
@@ -161,10 +161,10 @@ export default function WaterManagement() {
               <h3 style={{ fontFamily: 'var(--font-heading)', color: '#1565C0', marginBottom: 4 }}>Rainfall Adequacy Ratio</h3>
               <p className="text-muted text-sm" style={{ marginBottom: 20 }}>Ratio of annual rainfall to buckwheat CWR – higher = more surplus water</p>
               <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={chartData}>
+                <BarChart data={chartData} margin={{ top: 5, right: 10, bottom: 5, left: 30 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
-                  <XAxis dataKey="district" angle={-25} textAnchor="end" interval={0} tick={{ fontSize: 10 }} height={65} />
-                  <YAxis tick={{ fontSize: 11 }} />
+                  <XAxis dataKey="district" angle={-25} textAnchor="end" interval={0} tick={{ fontSize: 10 }} height={75} label={{ value: 'District', position: 'insideBottom', offset: -25, style: { fontSize: 11, fill: '#666' } }} />
+                  <YAxis tick={{ fontSize: 11 }} label={{ value: 'Adequacy Ratio (×)', angle: -90, position: 'insideLeft', style: { textAnchor: 'middle', fontSize: 11, fill: '#666' } }} />
                   <Tooltip formatter={(v) => [`${v}x`, 'Adequacy Ratio']} />
                   <ReferenceLine y={1} stroke="#C62828" strokeDasharray="4 2" label={{ value: 'Minimum (1x)', position: 'insideTopLeft', fill: '#C62828', fontSize: 10 }} />
                   <Bar dataKey="adequacyRatio" name="Adequacy Ratio" radius={[4, 4, 0, 0]}>

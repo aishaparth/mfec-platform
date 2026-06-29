@@ -154,9 +154,9 @@ export default function Dashboard() {
               <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--primary)', marginBottom: 4 }}>Suitability Scores – All Crops & Districts</h3>
               <p className="text-muted text-sm" style={{ marginBottom: 16 }}>Buckwheat vs. Wine Fruits MaxEnt scores</p>
               <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={suitabilityData} margin={{ top: 5, right: 10, bottom: 65, left: 0 }}>
-                  <XAxis dataKey="district" angle={-35} textAnchor="end" interval={0} tick={{ fontSize: 9 }} />
-                  <YAxis domain={[0, 100]} tick={{ fontSize: 10 }} />
+                <BarChart data={suitabilityData} margin={{ top: 5, right: 10, bottom: 80, left: 25 }}>
+                  <XAxis dataKey="district" angle={-35} textAnchor="end" interval={0} tick={{ fontSize: 9 }} label={{ value: 'District', position: 'insideBottom', offset: -22, style: { fontSize: 11, fill: '#666' } }} />
+                  <YAxis domain={[0, 100]} tick={{ fontSize: 10 }} label={{ value: 'Suitability Score (0–100)', angle: -90, position: 'insideLeft', style: { textAnchor: 'middle', fontSize: 11, fill: '#666' } }} />
                   <Tooltip />
                   <Legend verticalAlign="top" />
                   <Bar dataKey="buckwheat" name="🌾 Buckwheat" fill="#1B5E20" radius={[2,2,0,0]} />
@@ -175,10 +175,10 @@ export default function Dashboard() {
                   name: s.district.split(' ').slice(-2).join(' '),
                   Suitability: s.buckwheat,
                   NDVI: (ndviData.find(n => n.district === s.district)?.ndvi || 0) * 100
-                }))}>
+                }))} margin={{ top: 5, right: 10, bottom: 5, left: 25 }}>
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" angle={-25} textAnchor="end" interval={0} tick={{ fontSize: 9 }} height={65} />
-                  <YAxis tick={{ fontSize: 11 }} />
+                  <XAxis dataKey="name" angle={-25} textAnchor="end" interval={0} tick={{ fontSize: 9 }} height={75} label={{ value: 'District', position: 'insideBottom', offset: -25, style: { fontSize: 11, fill: '#666' } }} />
+                  <YAxis tick={{ fontSize: 11 }} label={{ value: 'Score', angle: -90, position: 'insideLeft', style: { textAnchor: 'middle', fontSize: 11, fill: '#666' } }} />
                   <Tooltip />
                   <Legend />
                   <Line type="monotone" dataKey="Suitability" stroke="#1B5E20" strokeWidth={2.5} dot={{ r: 4 }} />

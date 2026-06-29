@@ -13,7 +13,6 @@ const NAV_LINKS = [
   { label: 'Water', path: '/water-management' },
   { label: 'Priority Zones', path: '/priority-zones' },
   { label: 'Dashboard', path: '/dashboard' },
-  { label: 'Data Sources', path: '/data-sources' },
 ];
 
 export default function Navbar() {

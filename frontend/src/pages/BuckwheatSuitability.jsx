@@ -127,9 +127,9 @@ export default function BuckwheatSuitability() {
               <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--primary)', marginBottom: 4 }}>Suitability Scores by District</h3>
               <p className="text-muted text-sm" style={{ marginBottom: 20 }}>MaxEnt habitat suitability index (0–100)</p>
               <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={sorted} margin={{ top: 5, right: 10, bottom: 60, left: 0 }}>
-                  <XAxis dataKey="district" angle={-35} textAnchor="end" interval={0} tick={{ fontSize: 11 }} />
-                  <YAxis domain={[0, 100]} tick={{ fontSize: 11 }} />
+                <BarChart data={sorted} margin={{ top: 5, right: 10, bottom: 75, left: 25 }}>
+                  <XAxis dataKey="district" angle={-35} textAnchor="end" interval={0} tick={{ fontSize: 11 }} label={{ value: 'District', position: 'insideBottom', offset: -20, style: { fontSize: 11, fill: '#666' } }} />
+                  <YAxis domain={[0, 100]} tick={{ fontSize: 11 }} label={{ value: 'Suitability Score (0–100)', angle: -90, position: 'insideLeft', style: { textAnchor: 'middle', fontSize: 11, fill: '#666' } }} />
                   <Tooltip formatter={(v) => [`${v}/100`, 'Suitability Score']} />
                   <Bar dataKey="buckwheat" radius={[4, 4, 0, 0]}>
                     {sorted.map((d) => <Cell key={d.district} fill={getSuitColor(d.buckwheat)} />)}

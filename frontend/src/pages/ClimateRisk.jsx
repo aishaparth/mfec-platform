@@ -149,9 +149,9 @@ export default function ClimateRisk() {
               <h3 style={{ fontFamily: 'var(--font-heading)', color: '#C62828', marginBottom: 4 }}>Frost Risk Days per Year</h3>
               <p className="text-muted text-sm" style={{ marginBottom: 20 }}>Number of frost events per year by district</p>
               <ResponsiveContainer width="100%" height={280}>
-                <BarChart data={climateData} margin={{ top: 5, right: 10, bottom: 60, left: 0 }}>
-                  <XAxis dataKey="district" angle={-35} textAnchor="end" interval={0} tick={{ fontSize: 10 }} />
-                  <YAxis tick={{ fontSize: 11 }} />
+                <BarChart data={climateData} margin={{ top: 5, right: 10, bottom: 75, left: 25 }}>
+                  <XAxis dataKey="district" angle={-35} textAnchor="end" interval={0} tick={{ fontSize: 10 }} label={{ value: 'District', position: 'insideBottom', offset: -20, style: { fontSize: 11, fill: '#666' } }} />
+                  <YAxis tick={{ fontSize: 11 }} label={{ value: 'Frost Risk Days / Year', angle: -90, position: 'insideLeft', style: { textAnchor: 'middle', fontSize: 11, fill: '#666' } }} />
                   <Tooltip formatter={(v) => [`${v} days/year`, 'Frost Risk Days']} />
                   <Bar dataKey="frostDays" name="Frost Risk Days" radius={[4, 4, 0, 0]}>
                     {climateData.map(d => <Cell key={d.district} fill={getFrostColor(d.frostLevel)} />)}
@@ -165,9 +165,9 @@ export default function ClimateRisk() {
               <h3 style={{ fontFamily: 'var(--font-heading)', color: '#C62828', marginBottom: 4 }}>Annual Rainfall by District</h3>
               <p className="text-muted text-sm" style={{ marginBottom: 20 }}>Total annual precipitation (mm)</p>
               <ResponsiveContainer width="100%" height={280}>
-                <BarChart data={[...climateData].sort((a, b) => b.rainfall - a.rainfall)} margin={{ top: 5, right: 10, bottom: 60, left: 0 }}>
-                  <XAxis dataKey="district" angle={-35} textAnchor="end" interval={0} tick={{ fontSize: 10 }} />
-                  <YAxis tick={{ fontSize: 11 }} />
+                <BarChart data={[...climateData].sort((a, b) => b.rainfall - a.rainfall)} margin={{ top: 5, right: 10, bottom: 75, left: 30 }}>
+                  <XAxis dataKey="district" angle={-35} textAnchor="end" interval={0} tick={{ fontSize: 10 }} label={{ value: 'District', position: 'insideBottom', offset: -20, style: { fontSize: 11, fill: '#666' } }} />
+                  <YAxis tick={{ fontSize: 11 }} label={{ value: 'Annual Rainfall (mm)', angle: -90, position: 'insideLeft', style: { textAnchor: 'middle', fontSize: 11, fill: '#666' } }} />
                   <Tooltip formatter={(v) => [`${v.toLocaleString()} mm`]} />
                   <Bar dataKey="rainfall" name="Rainfall (mm)" radius={[4, 4, 0, 0]}>
                     {[...climateData].sort((a, b) => b.rainfall - a.rainfall).map(d => (
@@ -190,10 +190,10 @@ export default function ClimateRisk() {
             <h3 style={{ fontFamily: 'var(--font-heading)', color: '#1565C0', marginBottom: 4 }}>Monthly Rainfall (mm) – Select Districts</h3>
             <p className="text-muted text-sm" style={{ marginBottom: 20 }}>Monthly distribution showing monsoon peak (June–August) and dry winter season</p>
             <ResponsiveContainer width="100%" height={320}>
-              <AreaChart data={rainfallChartData}>
+              <AreaChart data={rainfallChartData} margin={{ top: 5, right: 20, bottom: 30, left: 30 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
-                <XAxis dataKey="month" tick={{ fontSize: 11 }} />
-                <YAxis tick={{ fontSize: 11 }} />
+                <XAxis dataKey="month" tick={{ fontSize: 11 }} label={{ value: 'Month', position: 'insideBottom', offset: -10, style: { fontSize: 11, fill: '#666' } }} />
+                <YAxis tick={{ fontSize: 11 }} label={{ value: 'Rainfall (mm)', angle: -90, position: 'insideLeft', style: { textAnchor: 'middle', fontSize: 11, fill: '#666' } }} />
                 <Tooltip />
                 <Legend />
                 <Area type="monotone" dataKey="W. Khasi Hills" stroke="#0D47A1" fill="#E3F2FD" strokeWidth={2} name="W. Khasi Hills (3,200mm)" />

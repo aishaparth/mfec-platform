@@ -29,19 +29,32 @@ export const climateData = [
   { district: 'South West Garo Hills',    temp: 25.8, rainfall: 1950, frostDays: 0,  frostLevel: 'None',    waterClass: 'Medium' },
 ];
 
+// ── Crop Health Data (Sentinel-2 · Rabi 2025) ─────────────────────────────
+// Fields to fill from real analysis:
+//   ndvi               – Sentinel-2 derived NDVI (0–1)
+//   ndviClass          – 'Very High' | 'High' | 'Medium' | 'Low'
+//   ndwi               – Sentinel-2 derived NDWI (0–1)
+//   moistureStress     – 'None' | 'Low' | 'Medium' | 'High'
+//   healthStatus       – 'Excellent' | 'Good' | 'Fair' | 'Poor'
+//   anomalyFlag        – true if NDVI anomaly detected vs previous season
+//   buckwheatCoverHa   – buckwheat cultivation area in hectares (LULC classification)
+//   vegetationCoverPct – % vegetation cover in the district
+//   season             – acquisition season label e.g. 'Rabi 2025'
+//   sentinelDate       – Sentinel-2 image acquisition date e.g. 'Oct 2025'
+//   prevSeasonNDVI     – NDVI from previous season (for trend comparison)
 export const ndviData = [
-  { district: 'East Khasi Hills',         ndvi: 0.71, ndviClass: 'Very High', ndwi: 0.22, moistureStress: 'None',   healthStatus: 'Excellent', anomalyFlag: false, buckwheatCoverHectares: 8420 },
-  { district: 'West Khasi Hills',         ndvi: 0.74, ndviClass: 'Very High', ndwi: 0.28, moistureStress: 'None',   healthStatus: 'Excellent', anomalyFlag: false, buckwheatCoverHectares: 5180 },
-  { district: 'West Jaintia Hills',       ndvi: 0.68, ndviClass: 'High',      ndwi: 0.20, moistureStress: 'Low',    healthStatus: 'Good',      anomalyFlag: false, buckwheatCoverHectares: 4210 },
-  { district: 'South West Khasi Hills',   ndvi: 0.63, ndviClass: 'High',      ndwi: 0.16, moistureStress: 'Low',    healthStatus: 'Good',      anomalyFlag: false, buckwheatCoverHectares: 1850 },
-  { district: 'Eastern West Khasi Hills', ndvi: 0.65, ndviClass: 'High',      ndwi: 0.18, moistureStress: 'Low',    healthStatus: 'Good',      anomalyFlag: false, buckwheatCoverHectares: 2240 },
-  { district: 'East Jaintia Hills',       ndvi: 0.58, ndviClass: 'Medium',    ndwi: 0.12, moistureStress: 'Medium', healthStatus: 'Fair',      anomalyFlag: false, buckwheatCoverHectares: 1650 },
-  { district: 'Ri Bhoi',                  ndvi: 0.55, ndviClass: 'Medium',    ndwi: 0.10, moistureStress: 'Medium', healthStatus: 'Fair',      anomalyFlag: true,  buckwheatCoverHectares: 980  },
-  { district: 'North Garo Hills',         ndvi: 0.60, ndviClass: 'Medium',    ndwi: 0.14, moistureStress: 'Medium', healthStatus: 'Fair',      anomalyFlag: false, buckwheatCoverHectares: 620  },
-  { district: 'East Garo Hills',          ndvi: 0.53, ndviClass: 'Medium',    ndwi: 0.09, moistureStress: 'High',   healthStatus: 'Poor',      anomalyFlag: true,  buckwheatCoverHectares: 480  },
-  { district: 'West Garo Hills',          ndvi: 0.56, ndviClass: 'Medium',    ndwi: 0.11, moistureStress: 'Medium', healthStatus: 'Fair',      anomalyFlag: false, buckwheatCoverHectares: 420  },
-  { district: 'South Garo Hills',         ndvi: 0.51, ndviClass: 'Low',       ndwi: 0.07, moistureStress: 'High',   healthStatus: 'Poor',      anomalyFlag: true,  buckwheatCoverHectares: 290  },
-  { district: 'South West Garo Hills',    ndvi: 0.49, ndviClass: 'Low',       ndwi: 0.06, moistureStress: 'High',   healthStatus: 'Poor',      anomalyFlag: true,  buckwheatCoverHectares: 210  },
+  { district: 'East Khasi Hills',         ndvi: 0.71, ndviClass: 'Very High', ndwi: 0.22, moistureStress: 'None',   healthStatus: 'Excellent', anomalyFlag: false, buckwheatCoverHa: 8420, vegetationCoverPct: 71, season: 'Rabi 2025', sentinelDate: 'Oct 2025', prevSeasonNDVI: 0.68 },
+  { district: 'West Khasi Hills',         ndvi: 0.74, ndviClass: 'Very High', ndwi: 0.28, moistureStress: 'None',   healthStatus: 'Excellent', anomalyFlag: false, buckwheatCoverHa: 5180, vegetationCoverPct: 74, season: 'Rabi 2025', sentinelDate: 'Oct 2025', prevSeasonNDVI: 0.70 },
+  { district: 'West Jaintia Hills',       ndvi: 0.68, ndviClass: 'High',      ndwi: 0.20, moistureStress: 'Low',    healthStatus: 'Good',      anomalyFlag: false, buckwheatCoverHa: 4210, vegetationCoverPct: 68, season: 'Rabi 2025', sentinelDate: 'Oct 2025', prevSeasonNDVI: 0.65 },
+  { district: 'South West Khasi Hills',   ndvi: 0.63, ndviClass: 'High',      ndwi: 0.16, moistureStress: 'Low',    healthStatus: 'Good',      anomalyFlag: false, buckwheatCoverHa: 1850, vegetationCoverPct: 63, season: 'Rabi 2025', sentinelDate: 'Oct 2025', prevSeasonNDVI: 0.61 },
+  { district: 'Eastern West Khasi Hills', ndvi: 0.65, ndviClass: 'High',      ndwi: 0.18, moistureStress: 'Low',    healthStatus: 'Good',      anomalyFlag: false, buckwheatCoverHa: 2240, vegetationCoverPct: 65, season: 'Rabi 2025', sentinelDate: 'Oct 2025', prevSeasonNDVI: 0.62 },
+  { district: 'East Jaintia Hills',       ndvi: 0.58, ndviClass: 'Medium',    ndwi: 0.12, moistureStress: 'Medium', healthStatus: 'Fair',      anomalyFlag: false, buckwheatCoverHa: 1650, vegetationCoverPct: 58, season: 'Rabi 2025', sentinelDate: 'Oct 2025', prevSeasonNDVI: 0.60 },
+  { district: 'Ri Bhoi',                  ndvi: 0.55, ndviClass: 'Medium',    ndwi: 0.10, moistureStress: 'Medium', healthStatus: 'Fair',      anomalyFlag: true,  buckwheatCoverHa: 980,  vegetationCoverPct: 55, season: 'Rabi 2025', sentinelDate: 'Oct 2025', prevSeasonNDVI: 0.61 },
+  { district: 'North Garo Hills',         ndvi: 0.60, ndviClass: 'Medium',    ndwi: 0.14, moistureStress: 'Medium', healthStatus: 'Fair',      anomalyFlag: false, buckwheatCoverHa: 620,  vegetationCoverPct: 60, season: 'Rabi 2025', sentinelDate: 'Oct 2025', prevSeasonNDVI: 0.59 },
+  { district: 'East Garo Hills',          ndvi: 0.53, ndviClass: 'Medium',    ndwi: 0.09, moistureStress: 'High',   healthStatus: 'Poor',      anomalyFlag: true,  buckwheatCoverHa: 480,  vegetationCoverPct: 53, season: 'Rabi 2025', sentinelDate: 'Oct 2025', prevSeasonNDVI: 0.59 },
+  { district: 'West Garo Hills',          ndvi: 0.56, ndviClass: 'Medium',    ndwi: 0.11, moistureStress: 'Medium', healthStatus: 'Fair',      anomalyFlag: false, buckwheatCoverHa: 420,  vegetationCoverPct: 56, season: 'Rabi 2025', sentinelDate: 'Oct 2025', prevSeasonNDVI: 0.55 },
+  { district: 'South Garo Hills',         ndvi: 0.51, ndviClass: 'Low',       ndwi: 0.07, moistureStress: 'High',   healthStatus: 'Poor',      anomalyFlag: true,  buckwheatCoverHa: 290,  vegetationCoverPct: 51, season: 'Rabi 2025', sentinelDate: 'Oct 2025', prevSeasonNDVI: 0.55 },
+  { district: 'South West Garo Hills',    ndvi: 0.49, ndviClass: 'Low',       ndwi: 0.06, moistureStress: 'High',   healthStatus: 'Poor',      anomalyFlag: true,  buckwheatCoverHa: 210,  vegetationCoverPct: 49, season: 'Rabi 2025', sentinelDate: 'Oct 2025', prevSeasonNDVI: 0.52 },
 ];
 
 export const waterData = [

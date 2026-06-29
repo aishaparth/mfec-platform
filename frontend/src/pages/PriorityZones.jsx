@@ -157,9 +157,9 @@ export default function PriorityZones() {
             <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--primary)', marginBottom: 4 }}>Top 15 Priority Blocks – All Districts</h3>
             <p className="text-muted text-sm" style={{ marginBottom: 20 }}>Highest-scoring blocks across Meghalaya by buckwheat suitability index</p>
             <ResponsiveContainer width="100%" height={320}>
-              <BarChart data={allBlocks} layout="vertical" margin={{ top: 5, right: 30, bottom: 5, left: 120 }}>
-                <XAxis type="number" domain={[0, 100]} tick={{ fontSize: 11 }} />
-                <YAxis type="category" dataKey="block" tick={{ fontSize: 11 }} width={115} />
+              <BarChart data={allBlocks} layout="vertical" margin={{ top: 5, right: 30, bottom: 30, left: 120 }}>
+                <XAxis type="number" domain={[0, 100]} tick={{ fontSize: 11 }} label={{ value: 'Suitability Score (0–100)', position: 'insideBottom', offset: -10, style: { fontSize: 11, fill: '#666' } }} />
+                <YAxis type="category" dataKey="block" tick={{ fontSize: 11 }} width={115} label={{ value: 'Block', angle: -90, position: 'insideLeft', style: { textAnchor: 'middle', fontSize: 11, fill: '#666' }, offset: 10 }} />
                 <Tooltip formatter={(v, n, p) => [`${v}/100`, `${p.payload.districtShort}`]} />
                 <Bar dataKey="score" name="Priority Score" radius={[0, 4, 4, 0]}>
                   {allBlocks.map(b => <Cell key={b.block + b.district} fill={getSuitColor(b.score)} />)}

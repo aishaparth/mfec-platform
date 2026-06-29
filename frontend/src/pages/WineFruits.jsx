@@ -139,9 +139,9 @@ export default function WineFruits() {
             <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--primary)', marginBottom: 4 }}>Wine Fruits Suitability – All Districts</h3>
             <p className="text-muted text-sm" style={{ marginBottom: 20 }}>Plum, Peach, and Passion Fruit scores side-by-side</p>
             <ResponsiveContainer width="100%" height={340}>
-              <BarChart data={suitabilityData} margin={{ top: 5, right: 10, bottom: 70, left: 0 }}>
-                <XAxis dataKey="district" angle={-35} textAnchor="end" interval={0} tick={{ fontSize: 10 }} />
-                <YAxis domain={[0, 100]} tick={{ fontSize: 11 }} />
+              <BarChart data={suitabilityData} margin={{ top: 5, right: 10, bottom: 85, left: 25 }}>
+                <XAxis dataKey="district" angle={-35} textAnchor="end" interval={0} tick={{ fontSize: 10 }} label={{ value: 'District', position: 'insideBottom', offset: -22, style: { fontSize: 11, fill: '#666' } }} />
+                <YAxis domain={[0, 100]} tick={{ fontSize: 11 }} label={{ value: 'Suitability Score (0–100)', angle: -90, position: 'insideLeft', style: { textAnchor: 'middle', fontSize: 11, fill: '#666' } }} />
                 <Tooltip />
                 <Legend verticalAlign="top" />
                 <Bar dataKey="plum" name="🫐 Plum" fill="#7B1FA2" radius={[3,3,0,0]} />
