@@ -3,11 +3,11 @@
    ========================================= */
 
 :root {
-  --primary:        #1B5E20;
-  --primary-light:  #2E7D32;
-  --primary-mid:    #388E3C;
-  --accent:         #66BB6A;
-  --accent-light:   #A5D6A7;
+  --primary:        #2E7D32;
+  --primary-light:  #388E3C;
+  --primary-mid:    #4CAF50;
+  --accent:         #81C784;
+  --accent-light:   #C8E6C9;
   --gold:           #F9A825;
   --gold-light:     #FFF8E1;
   --blue:           #1565C0;
@@ -18,14 +18,14 @@
   --text-dark:      #1A2332;
   --text-mid:       #374151;
   --text-light:     #6B7280;
-  --bg-page:        #F0F7F0;
+  --bg-page:        #F7FAF7;
   --bg-white:       #FFFFFF;
   --bg-card:        #FFFFFF;
-  --border:         #E2E8F0;
-  --border-green:   #C8E6C9;
-  --shadow-sm:      0 1px 3px rgba(0,0,0,0.08);
-  --shadow-md:      0 4px 12px rgba(0,0,0,0.10);
-  --shadow-lg:      0 8px 30px rgba(0,0,0,0.12);
+  --border:         #E4EBE4;
+  --border-green:   #DCEDC8;
+  --shadow-sm:      0 1px 3px rgba(0,0,0,0.06);
+  --shadow-md:      0 4px 16px rgba(0,0,0,0.07);
+  --shadow-lg:      0 8px 30px rgba(0,0,0,0.09);
   --radius-sm:      6px;
   --radius-md:      10px;
   --radius-lg:      16px;
@@ -59,24 +59,25 @@ ul { list-style: none; }
 
 /* Page headers */
 .page-header {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 50%, #1A6B3C 100%);
-  color: #fff;
-  padding: 60px 24px;
+  background: linear-gradient(135deg, #E8F5E9 0%, #F1F8E9 60%, #FAFFF8 100%);
+  color: var(--text-dark);
+  padding: 52px 24px;
   position: relative;
   overflow: hidden;
+  border-bottom: 1px solid var(--border-green);
 }
 .page-header::before {
   content: '';
   position: absolute; inset: 0;
-  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232E7D32' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 .page-header .container { position: relative; }
-.page-header h1 { font-family: var(--font-heading); font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 12px; }
-.page-header p { font-size: 1.05rem; opacity: 0.88; max-width: 680px; line-height: 1.7; }
+.page-header h1 { font-family: var(--font-heading); font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 12px; color: var(--primary); }
+.page-header p { font-size: 1rem; color: var(--text-mid); max-width: 680px; line-height: 1.7; }
 .page-header .badge {
-  display: inline-block; background: rgba(255,255,255,0.15);
-  border: 1px solid rgba(255,255,255,0.3);
-  color: #fff; font-size: 0.78rem; font-weight: 600;
+  display: inline-block; background: rgba(46,125,50,0.10);
+  border: 1px solid rgba(46,125,50,0.25);
+  color: var(--primary); font-size: 0.78rem; font-weight: 600;
   padding: 4px 12px; border-radius: 50px;
   margin-bottom: 16px; letter-spacing: 0.5px; text-transform: uppercase;
 }
@@ -190,9 +191,9 @@ ul { list-style: none; }
 
 /* Table */
 .data-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
-.data-table th { background: var(--primary); color: #fff; padding: 12px 16px; text-align: left; font-weight: 600; font-size: 0.8rem; letter-spacing: 0.3px; }
+.data-table th { background: #E8F5E9; color: var(--primary); padding: 12px 16px; text-align: left; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.3px; border-bottom: 2px solid var(--accent-light); }
 .data-table td { padding: 12px 16px; border-bottom: 1px solid var(--border); color: var(--text-mid); }
-.data-table tr:hover td { background: #F0F7F0; }
+.data-table tr:hover td { background: #F4FAF4; }
 .data-table tr:last-child td { border-bottom: none; }
 .rank-badge { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; background: var(--primary); color: #fff; font-size: 0.78rem; font-weight: 700; }
 .rank-badge.gold { background: var(--gold); color: #1A2332; }

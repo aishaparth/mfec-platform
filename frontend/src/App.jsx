@@ -11,6 +11,7 @@ import ClimateRisk from './pages/ClimateRisk';
 import WaterManagement from './pages/WaterManagement';
 import PriorityZones from './pages/PriorityZones';
 import Dashboard from './pages/Dashboard';
+import Weather from './pages/Weather';
 
 export default function App() {
   return (
@@ -27,6 +28,7 @@ export default function App() {
             <Route path="/water-management" element={<WaterManagement />} />
             <Route path="/priority-zones" element={<PriorityZones />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/weather" element={<Weather />} />
           </Routes>
         </main>
         <Footer />

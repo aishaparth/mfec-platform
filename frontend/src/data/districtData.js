@@ -39,22 +39,27 @@ export const climateData = [
 //   anomalyFlag        – true if NDVI anomaly detected vs previous season
 //   buckwheatCoverHa   – buckwheat cultivation area in hectares (LULC classification)
 //   vegetationCoverPct – % vegetation cover in the district
-//   season             – acquisition season label e.g. 'Rabi 2025'
-//   sentinelDate       – Sentinel-2 image acquisition date e.g. 'Oct 2025'
-//   prevSeasonNDVI     – NDVI from previous season (for trend comparison)
+//   season             – acquisition season label
+//   sentinelDate       – image source & date label
+//   prevSeasonNDVI     – NDVI from previous season (Oct 2025 Rabi, for trend comparison)
+//
+//   Source: MODIS/061/MOD13Q1 · 250 m · 16-day composites · Median Jan 01 – Jun 22, 2026
+//   GEE script: NDVI_2026_JSfile.txt · Scale factor: ×0.0001
+//   Jan–Feb values (dry/winter) pull median lower vs Oct peak; May–Jun monsoon onset raises it.
+//   Garo Hills benefit from earlier monsoon arrival relative to Oct Rabi snapshot.
 export const ndviData = [
-  { district: 'East Khasi Hills',         ndvi: 0.71, ndviClass: 'Very High', ndwi: 0.22, moistureStress: 'None',   healthStatus: 'Excellent', anomalyFlag: false, buckwheatCoverHa: 8420, vegetationCoverPct: 71, season: 'Rabi 2025', sentinelDate: 'Oct 2025', prevSeasonNDVI: 0.68 },
-  { district: 'West Khasi Hills',         ndvi: 0.74, ndviClass: 'Very High', ndwi: 0.28, moistureStress: 'None',   healthStatus: 'Excellent', anomalyFlag: false, buckwheatCoverHa: 5180, vegetationCoverPct: 74, season: 'Rabi 2025', sentinelDate: 'Oct 2025', prevSeasonNDVI: 0.70 },
-  { district: 'West Jaintia Hills',       ndvi: 0.68, ndviClass: 'High',      ndwi: 0.20, moistureStress: 'Low',    healthStatus: 'Good',      anomalyFlag: false, buckwheatCoverHa: 4210, vegetationCoverPct: 68, season: 'Rabi 2025', sentinelDate: 'Oct 2025', prevSeasonNDVI: 0.65 },
-  { district: 'South West Khasi Hills',   ndvi: 0.63, ndviClass: 'High',      ndwi: 0.16, moistureStress: 'Low',    healthStatus: 'Good',      anomalyFlag: false, buckwheatCoverHa: 1850, vegetationCoverPct: 63, season: 'Rabi 2025', sentinelDate: 'Oct 2025', prevSeasonNDVI: 0.61 },
-  { district: 'Eastern West Khasi Hills', ndvi: 0.65, ndviClass: 'High',      ndwi: 0.18, moistureStress: 'Low',    healthStatus: 'Good',      anomalyFlag: false, buckwheatCoverHa: 2240, vegetationCoverPct: 65, season: 'Rabi 2025', sentinelDate: 'Oct 2025', prevSeasonNDVI: 0.62 },
-  { district: 'East Jaintia Hills',       ndvi: 0.58, ndviClass: 'Medium',    ndwi: 0.12, moistureStress: 'Medium', healthStatus: 'Fair',      anomalyFlag: false, buckwheatCoverHa: 1650, vegetationCoverPct: 58, season: 'Rabi 2025', sentinelDate: 'Oct 2025', prevSeasonNDVI: 0.60 },
-  { district: 'Ri Bhoi',                  ndvi: 0.55, ndviClass: 'Medium',    ndwi: 0.10, moistureStress: 'Medium', healthStatus: 'Fair',      anomalyFlag: true,  buckwheatCoverHa: 980,  vegetationCoverPct: 55, season: 'Rabi 2025', sentinelDate: 'Oct 2025', prevSeasonNDVI: 0.61 },
-  { district: 'North Garo Hills',         ndvi: 0.60, ndviClass: 'Medium',    ndwi: 0.14, moistureStress: 'Medium', healthStatus: 'Fair',      anomalyFlag: false, buckwheatCoverHa: 620,  vegetationCoverPct: 60, season: 'Rabi 2025', sentinelDate: 'Oct 2025', prevSeasonNDVI: 0.59 },
-  { district: 'East Garo Hills',          ndvi: 0.53, ndviClass: 'Medium',    ndwi: 0.09, moistureStress: 'High',   healthStatus: 'Poor',      anomalyFlag: true,  buckwheatCoverHa: 480,  vegetationCoverPct: 53, season: 'Rabi 2025', sentinelDate: 'Oct 2025', prevSeasonNDVI: 0.59 },
-  { district: 'West Garo Hills',          ndvi: 0.56, ndviClass: 'Medium',    ndwi: 0.11, moistureStress: 'Medium', healthStatus: 'Fair',      anomalyFlag: false, buckwheatCoverHa: 420,  vegetationCoverPct: 56, season: 'Rabi 2025', sentinelDate: 'Oct 2025', prevSeasonNDVI: 0.55 },
-  { district: 'South Garo Hills',         ndvi: 0.51, ndviClass: 'Low',       ndwi: 0.07, moistureStress: 'High',   healthStatus: 'Poor',      anomalyFlag: true,  buckwheatCoverHa: 290,  vegetationCoverPct: 51, season: 'Rabi 2025', sentinelDate: 'Oct 2025', prevSeasonNDVI: 0.55 },
-  { district: 'South West Garo Hills',    ndvi: 0.49, ndviClass: 'Low',       ndwi: 0.06, moistureStress: 'High',   healthStatus: 'Poor',      anomalyFlag: true,  buckwheatCoverHa: 210,  vegetationCoverPct: 49, season: 'Rabi 2025', sentinelDate: 'Oct 2025', prevSeasonNDVI: 0.52 },
+  { district: 'East Khasi Hills',         ndvi: 0.69, ndviClass: 'High',      ndwi: 0.25, moistureStress: 'Low',    healthStatus: 'Good',      anomalyFlag: false, buckwheatCoverHa: 5310, vegetationCoverPct: 69, season: 'Jan–Jun 2026', sentinelDate: 'MODIS Jan–Jun 2026', prevSeasonNDVI: 0.71 },
+  { district: 'West Khasi Hills',         ndvi: 0.72, ndviClass: 'Very High', ndwi: 0.30, moistureStress: 'None',   healthStatus: 'Excellent', anomalyFlag: false, buckwheatCoverHa:  170, vegetationCoverPct: 72, season: 'Jan–Jun 2026', sentinelDate: 'MODIS Jan–Jun 2026', prevSeasonNDVI: 0.74 },
+  { district: 'West Jaintia Hills',       ndvi: 0.65, ndviClass: 'High',      ndwi: 0.21, moistureStress: 'Low',    healthStatus: 'Good',      anomalyFlag: false, buckwheatCoverHa: 1040, vegetationCoverPct: 65, season: 'Jan–Jun 2026', sentinelDate: 'MODIS Jan–Jun 2026', prevSeasonNDVI: 0.68 },
+  { district: 'South West Khasi Hills',   ndvi: 0.62, ndviClass: 'High',      ndwi: 0.17, moistureStress: 'Low',    healthStatus: 'Good',      anomalyFlag: false, buckwheatCoverHa:  940, vegetationCoverPct: 62, season: 'Jan–Jun 2026', sentinelDate: 'MODIS Jan–Jun 2026', prevSeasonNDVI: 0.63 },
+  { district: 'Eastern West Khasi Hills', ndvi: 0.63, ndviClass: 'High',      ndwi: 0.19, moistureStress: 'Low',    healthStatus: 'Good',      anomalyFlag: false, buckwheatCoverHa:  500, vegetationCoverPct: 63, season: 'Jan–Jun 2026', sentinelDate: 'MODIS Jan–Jun 2026', prevSeasonNDVI: 0.65 },
+  { district: 'East Jaintia Hills',       ndvi: 0.58, ndviClass: 'Medium',    ndwi: 0.13, moistureStress: 'Medium', healthStatus: 'Fair',      anomalyFlag: false, buckwheatCoverHa:  530, vegetationCoverPct: 58, season: 'Jan–Jun 2026', sentinelDate: 'MODIS Jan–Jun 2026', prevSeasonNDVI: 0.58 },
+  { district: 'Ri Bhoi',                  ndvi: 0.57, ndviClass: 'Medium',    ndwi: 0.12, moistureStress: 'Medium', healthStatus: 'Fair',      anomalyFlag: false, buckwheatCoverHa:  460, vegetationCoverPct: 57, season: 'Jan–Jun 2026', sentinelDate: 'MODIS Jan–Jun 2026', prevSeasonNDVI: 0.55 },
+  { district: 'North Garo Hills',         ndvi: 0.59, ndviClass: 'Medium',    ndwi: 0.15, moistureStress: 'Medium', healthStatus: 'Fair',      anomalyFlag: false, buckwheatCoverHa:  190, vegetationCoverPct: 59, season: 'Jan–Jun 2026', sentinelDate: 'MODIS Jan–Jun 2026', prevSeasonNDVI: 0.60 },
+  { district: 'East Garo Hills',          ndvi: 0.52, ndviClass: 'Medium',    ndwi: 0.10, moistureStress: 'Medium', healthStatus: 'Fair',      anomalyFlag: true,  buckwheatCoverHa:   70, vegetationCoverPct: 52, season: 'Jan–Jun 2026', sentinelDate: 'MODIS Jan–Jun 2026', prevSeasonNDVI: 0.53 },
+  { district: 'West Garo Hills',          ndvi: 0.55, ndviClass: 'Medium',    ndwi: 0.12, moistureStress: 'Medium', healthStatus: 'Fair',      anomalyFlag: false, buckwheatCoverHa:  350, vegetationCoverPct: 55, season: 'Jan–Jun 2026', sentinelDate: 'MODIS Jan–Jun 2026', prevSeasonNDVI: 0.56 },
+  { district: 'South Garo Hills',         ndvi: 0.50, ndviClass: 'Medium',    ndwi: 0.08, moistureStress: 'Medium', healthStatus: 'Fair',      anomalyFlag: true,  buckwheatCoverHa:  190, vegetationCoverPct: 50, season: 'Jan–Jun 2026', sentinelDate: 'MODIS Jan–Jun 2026', prevSeasonNDVI: 0.51 },
+  { district: 'South West Garo Hills',    ndvi: 0.47, ndviClass: 'Low',       ndwi: 0.07, moistureStress: 'High',   healthStatus: 'Poor',      anomalyFlag: true,  buckwheatCoverHa:  100, vegetationCoverPct: 47, season: 'Jan–Jun 2026', sentinelDate: 'MODIS Jan–Jun 2026', prevSeasonNDVI: 0.49 },
 ];
 
 export const waterData = [
@@ -147,18 +152,25 @@ export const priorityBlocks = {
 };
 
 export function getSuitColor(score) {
-  if (score >= 80) return '#1B5E20';
-  if (score >= 65) return '#388E3C';
-  if (score >= 50) return '#8BC34A';
-  if (score >= 35) return '#FDD835';
+  if (score >= 86) return '#1B5E20';
+  if (score >= 66) return '#388E3C';
+  if (score >= 46) return '#8BC34A';
+  if (score >= 26) return '#FDD835';
   return '#E53935';
 }
 export function getSuitClass(score) {
-  if (score >= 80) return 'High';
-  if (score >= 65) return 'Medium-High';
-  if (score >= 50) return 'Medium';
-  if (score >= 35) return 'Low';
+  if (score >= 86) return 'High';
+  if (score >= 66) return 'Medium-High';
+  if (score >= 46) return 'Medium';
+  if (score >= 26) return 'Low';
   return 'Very Low';
+}
+export function getSuitBadgeStyle(score) {
+  if (score >= 86) return { background: '#E8F5E9', color: '#1B5E20', border: '1px solid #A5D6A7' };
+  if (score >= 66) return { background: '#F1F8E9', color: '#558B2F', border: '1px solid #C5E1A5' };
+  if (score >= 46) return { background: '#FFF8E1', color: '#E65100', border: '1px solid #FFD54F' };
+  if (score >= 26) return { background: '#FFF3E0', color: '#BF360C', border: '1px solid #FFCC80' };
+  return { background: '#FFEBEE', color: '#C62828', border: '1px solid #EF9A9A' };
 }
 export function getFrostColor(level) {
   if (level === 'High')    return '#B71C1C';
@@ -180,3 +192,40 @@ export function getWaterColor(cls) {
   if (cls === 'Medium')    return '#64B5F6';
   return '#FFB74D';
 }
+
+// ── Terrain (DEM) Data · SRTM · Zonal Stats per District ────────────────────
+// Source: DEM, Slope & Aspect rasters (EPSG:32646) · rasterstats.zonal_stats()
+// elevMin/Max/Mean in metres · slopeMean/Max in degrees
+// terrainClass: Optimal ≥1000m | Good ≥700m | Marginal ≥400m | Unsuitable <400m
+export const demData = [
+  { district: 'East Khasi Hills',         elevMin: 4,   elevMax: 1964, elevMean: 1105, slopeMean: 17.0, slopeMax: 72.9, slopeClass: 'Steep',    terrainClass: 'Optimal',    buckwheatElevSuit: 'High'     },
+  { district: 'West Khasi Hills',         elevMin: 60,  elevMax: 1924, elevMean: 880,  slopeMean: 12.9, slopeMax: 71.0, slopeClass: 'Moderate', terrainClass: 'Good',       buckwheatElevSuit: 'High'     },
+  { district: 'West Jaintia Hills',       elevMin: 2,   elevMax: 1525, elevMean: 1006, slopeMean: 10.9, slopeMax: 65.6, slopeClass: 'Moderate', terrainClass: 'Optimal',    buckwheatElevSuit: 'High'     },
+  { district: 'South West Khasi Hills',   elevMin: 4,   elevMax: 1703, elevMean: 819,  slopeMean: 14.7, slopeMax: 72.8, slopeClass: 'Moderate', terrainClass: 'Good',       buckwheatElevSuit: 'High'     },
+  { district: 'Eastern West Khasi Hills', elevMin: 143, elevMax: 1888, elevMean: 1217, slopeMean: 13.3, slopeMax: 66.8, slopeClass: 'Moderate', terrainClass: 'Optimal',    buckwheatElevSuit: 'High'     },
+  { district: 'East Jaintia Hills',       elevMin: 10,  elevMax: 1630, elevMean: 866,  slopeMean: 13.0, slopeMax: 76.1, slopeClass: 'Moderate', terrainClass: 'Good',       buckwheatElevSuit: 'High'     },
+  { district: 'Ri Bhoi',                  elevMin: 58,  elevMax: 1849, elevMean: 607,  slopeMean: 13.7, slopeMax: 62.7, slopeClass: 'Moderate', terrainClass: 'Marginal',   buckwheatElevSuit: 'Medium'   },
+  { district: 'North Garo Hills',         elevMin: 33,  elevMax: 789,  elevMean: 223,  slopeMean: 12.7, slopeMax: 63.1, slopeClass: 'Moderate', terrainClass: 'Unsuitable', buckwheatElevSuit: 'Low'      },
+  { district: 'East Garo Hills',          elevMin: 65,  elevMax: 1418, elevMean: 444,  slopeMean: 11.2, slopeMax: 65.1, slopeClass: 'Moderate', terrainClass: 'Marginal',   buckwheatElevSuit: 'Low'      },
+  { district: 'West Garo Hills',          elevMin: 9,   elevMax: 1379, elevMean: 222,  slopeMean: 9.0,  slopeMax: 63.2, slopeClass: 'Gentle',   terrainClass: 'Unsuitable', buckwheatElevSuit: 'Low'      },
+  { district: 'South Garo Hills',         elevMin: 8,   elevMax: 1420, elevMean: 245,  slopeMean: 13.1, slopeMax: 69.1, slopeClass: 'Moderate', terrainClass: 'Unsuitable', buckwheatElevSuit: 'Low'      },
+  { district: 'South West Garo Hills',    elevMin: 15,  elevMax: 674,  elevMean: 89,   slopeMean: 8.3,  slopeMax: 51.4, slopeClass: 'Gentle',   terrainClass: 'Unsuitable', buckwheatElevSuit: 'Very Low' },
+];
+
+// ── LULC 2025-26 · ESRI 10m Annual Land Cover · Zonal Stats per District ────
+// Source: LULC25_26 raster (EPSG:32646) · rasterstats.zonal_stats()
+// All percentages rounded to 1 dp; otherPct = water + flooded + bare + sparse
+export const lulcData = [
+  { district: 'East Khasi Hills',         evergreenForestPct: 66.3, shrublandPct: 21.3, builtupPct: 9.0, croplandPct: 2.9,  otherPct: 0.5 },
+  { district: 'West Khasi Hills',         evergreenForestPct: 81.2, shrublandPct: 15.8, builtupPct: 2.7, croplandPct: 0.1,  otherPct: 0.2 },
+  { district: 'West Jaintia Hills',       evergreenForestPct: 65.7, shrublandPct: 25.6, builtupPct: 7.2, croplandPct: 0.9,  otherPct: 0.6 },
+  { district: 'South West Khasi Hills',   evergreenForestPct: 73.6, shrublandPct: 20.7, builtupPct: 4.1, croplandPct: 1.1,  otherPct: 0.5 },
+  { district: 'Eastern West Khasi Hills', evergreenForestPct: 67.4, shrublandPct: 26.5, builtupPct: 5.3, croplandPct: 0.6,  otherPct: 0.2 },
+  { district: 'East Jaintia Hills',       evergreenForestPct: 68.7, shrublandPct: 27.1, builtupPct: 3.4, croplandPct: 0.4,  otherPct: 0.4 },
+  { district: 'Ri Bhoi',                  evergreenForestPct: 85.3, shrublandPct: 8.0,  builtupPct: 4.7, croplandPct: 1.3,  otherPct: 0.7 },
+  { district: 'North Garo Hills',         evergreenForestPct: 84.9, shrublandPct: 4.8,  builtupPct: 6.3, croplandPct: 3.6,  otherPct: 0.4 },
+  { district: 'East Garo Hills',          evergreenForestPct: 91.8, shrublandPct: 3.8,  builtupPct: 3.3, croplandPct: 0.7,  otherPct: 0.4 },
+  { district: 'West Garo Hills',          evergreenForestPct: 85.1, shrublandPct: 3.1,  builtupPct: 4.9, croplandPct: 6.4,  otherPct: 0.5 },
+  { district: 'South Garo Hills',         evergreenForestPct: 92.7, shrublandPct: 2.2,  builtupPct: 2.3, croplandPct: 1.9,  otherPct: 0.9 },
+  { district: 'South West Garo Hills',    evergreenForestPct: 79.3, shrublandPct: 2.4,  builtupPct: 4.1, croplandPct: 13.7, otherPct: 0.5 },
+];

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useWeatherData } from '../hooks/useWeatherData';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis, LineChart, Line, Legend, CartesianGrid } from 'recharts';
 import MeghalayaMap from '../components/MeghalayaMap';
 import { suitabilityData, climateData, ndviData, waterData, getSuitColor, getNDVIColor, getFrostColor, getWaterColor } from '../data/districtData';
@@ -15,8 +16,40 @@ const LAYER_OPTIONS = [
   { key: 'water', label: '💧 Water', color: '#1565C0' },
 ];
 
+function LiveWeatherStrip() {
+  const { summary, loading, lastUpdated } = useWeatherData();
+  if (loading && !summary) return null;
+  if (!summary) return null;
+  return (
+    <div style={{ background: 'linear-gradient(90deg, #E3F2FD, #E8F5E9)', borderBottom: '1px solid #C8E6C9', padding: '10px 0' }}>
+      <div className="container" style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
+        <span style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: '#1565C0', display: 'flex', alignItems: 'center', gap: 6 }}>
+          <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#2E7D32', display: 'inline-block', animation: 'pulse 2s ease-in-out infinite' }} />
+          Live Weather
+        </span>
+        {[
+          { icon: '🌡️', v: summary.avgTemp.toFixed(1) + '°C', l: 'Avg Temp' },
+          { icon: '💧', v: Math.round(summary.avgHum) + '%', l: 'Humidity' },
+          { icon: '🌧️', v: summary.maxRain.r.rain.toFixed(1) + ' mm', l: summary.maxRain.d.name },
+          { icon: '🔥', v: summary.hottest.d.name, l: summary.hottest.r.temp.toFixed(1) + '°C' },
+        ].map(s => (
+          <div key={s.l} style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: '0.82rem' }}>
+            <span>{s.icon}</span>
+            <span style={{ fontWeight: 700, color: 'var(--text-dark)' }}>{s.v}</span>
+            <span style={{ color: 'var(--text-light)', fontSize: '0.74rem' }}>{s.l}</span>
+          </div>
+        ))}
+        <Link to="/weather" style={{ marginLeft: 'auto', fontSize: '0.78rem', fontWeight: 600, color: 'var(--primary)', textDecoration: 'none' }}>
+          Full weather →
+        </Link>
+      </div>
+    </div>
+  );
+}
+
 export default function Dashboard() {
   const [activeLayer, setActiveLayer] = useState('buckwheat');
+  const [showMilestones, setShowMilestones] = useState(false);
 
   const colorFn = (feature) => {
     const name = feature.properties.district;
@@ -77,7 +110,8 @@ export default function Dashboard() {
 
   return (
     <div>
-      <div className="page-header" style={{ background: 'linear-gradient(135deg, #0D1B0E 0%, #1B3A1F 50%, #0A2614 100%)' }}>
+      <LiveWeatherStrip />
+      <div className="page-header" style={{ borderTop: '4px solid #1B5E20', background: "linear-gradient(135deg, rgba(232,245,233,0.68) 0%, rgba(241,248,233,0.68) 60%, rgba(250,255,248,0.68) 100%), url('/images/dashboard-farmers.jpg') center/cover no-repeat" }}>
         <div className="container">
           <div className="badge">Interactive GIS Dashboard · Deliverable 9</div>
           <h1>📊 Analytics Dashboard</h1>
@@ -95,7 +129,7 @@ export default function Dashboard() {
               { v: '46', l: 'Blocks Mapped', sub: 'Blocks_46 shapefile', c: '#4A148C', bg: '#F3E5F5' },
               { v: '82', l: 'Best Passion Fruit', sub: 'Ri Bhoi District', c: '#E65100', bg: '#FBE9E7' },
               { v: '0.89', l: 'Peak AUC Score', sub: 'E. Khasi Hills Model', c: '#00695C', bg: '#E0F2F1' },
-              { v: '25,030', l: 'Buckwheat Cover (ha)', sub: 'Sentinel-2 mapped · 12 districts', c: '#1565C0', bg: '#E3F2FD' },
+              { v: '9,850', l: 'Buckwheat Cover (ha)', sub: 'LULC-corrected · 12 districts', c: '#1565C0', bg: '#E3F2FD' },
               { v: '3,200mm', l: 'Highest Rainfall', sub: 'W. Khasi Hills', c: '#1565C0', bg: '#E3F2FD' },
               { v: '12', l: 'Max Frost Risk Days', sub: 'E. Khasi Hills', c: '#C62828', bg: '#FFEBEE' },
             ].map(s => (
@@ -128,17 +162,86 @@ export default function Dashboard() {
             ))}
           </div>
 
-          <div className="map-container">
-            <MeghalayaMap
-              colorFn={colorFn}
-              popupFn={popupFn}
-              height="580px"
-              showLayerControl={true}
-              defaultTile="topo"
-              legendItems={[]}
-              legendTitle=""
-            />
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 220px', gap: 20, alignItems: 'start' }}>
+            <div className="map-container">
+              <MeghalayaMap
+                colorFn={colorFn}
+                popupFn={popupFn}
+                height="500px"
+                showLayerControl={true}
+                defaultTile="topo"
+                legendItems={[]}
+                legendTitle=""
+              />
+            </div>
+
+            {/* Legend panel */}
+            <div style={{ background: 'var(--bg-page)', borderRadius: 14, padding: '16px 18px', border: '1px solid var(--border)', position: 'sticky', top: 80 }}>
+              <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#374151', marginBottom: 10, textTransform: 'uppercase', letterSpacing: '0.4px' }}>
+                {LAYER_OPTIONS.find(l => l.key === activeLayer)?.label} Legend
+              </div>
+
+              {/* Suitability layers */}
+              {['buckwheat', 'plum', 'peach', 'passionFruit'].includes(activeLayer) && [
+                { color: '#1B5E20', label: 'High (86–100)' },
+                { color: '#388E3C', label: 'Medium-High (66–85)' },
+                { color: '#8BC34A', label: 'Medium (46–65)' },
+                { color: '#FDD835', label: 'Low (26–45)' },
+                { color: '#E53935', label: 'Very Low (<26)' },
+              ].map(item => (
+                <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 7, fontSize: '0.78rem', color: '#374151' }}>
+                  <div style={{ width: 14, height: 14, borderRadius: 3, background: item.color, flexShrink: 0, border: '1px solid rgba(0,0,0,0.1)' }} />
+                  {item.label}
+                </div>
+              ))}
+
+              {/* NDVI layer */}
+              {activeLayer === 'ndvi' && [
+                { color: '#1B5E20', label: 'Dense (≥0.70)' },
+                { color: '#388E3C', label: 'Healthy (0.60–0.69)' },
+                { color: '#8BC34A', label: 'Moderate (0.50–0.59)' },
+                { color: '#FDD835', label: 'Sparse (0.40–0.49)' },
+                { color: '#E53935', label: 'Bare (<0.40)' },
+              ].map(item => (
+                <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 7, fontSize: '0.78rem', color: '#374151' }}>
+                  <div style={{ width: 14, height: 14, borderRadius: 3, background: item.color, flexShrink: 0, border: '1px solid rgba(0,0,0,0.1)' }} />
+                  {item.label}
+                </div>
+              ))}
+
+              {/* Frost layer */}
+              {activeLayer === 'frost' && [
+                { color: '#B71C1C', label: 'High Risk' },
+                { color: '#E64A19', label: 'Medium Risk' },
+                { color: '#F57F17', label: 'Low Risk' },
+                { color: '#8BC34A', label: 'Minimal Risk' },
+                { color: '#1B5E20', label: 'No Risk' },
+              ].map(item => (
+                <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 7, fontSize: '0.78rem', color: '#374151' }}>
+                  <div style={{ width: 14, height: 14, borderRadius: 3, background: item.color, flexShrink: 0, border: '1px solid rgba(0,0,0,0.1)' }} />
+                  {item.label}
+                </div>
+              ))}
+
+              {/* Water layer */}
+              {activeLayer === 'water' && [
+                { color: '#0D47A1', label: 'Very High Availability' },
+                { color: '#1976D2', label: 'High Availability' },
+                { color: '#64B5F6', label: 'Medium Availability' },
+                { color: '#FFB74D', label: 'Low Availability' },
+              ].map(item => (
+                <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 7, fontSize: '0.78rem', color: '#374151' }}>
+                  <div style={{ width: 14, height: 14, borderRadius: 3, background: item.color, flexShrink: 0, border: '1px solid rgba(0,0,0,0.1)' }} />
+                  {item.label}
+                </div>
+              ))}
+
+              <div style={{ marginTop: 12, paddingTop: 10, borderTop: '1px solid var(--border)', fontSize: '0.65rem', color: '#9CA3AF', lineHeight: 1.5 }}>
+                Click any district for full data summary
+              </div>
+            </div>
           </div>
+
           <p className="source-note" style={{ marginTop: 10, textAlign: 'center' }}>
             Data: MaxEnt v3.4.4 · Sentinel-2 (ESA) · WorldClim v2.1 · SRTM DEM (NASA) · GBIF · IMD · Survey of India
           </p>
@@ -190,26 +293,99 @@ export default function Dashboard() {
         </div>
       </section>
 
-      {/* Milestone progress */}
+      {/* Key Insights + collapsible Milestones */}
       <section className="section" style={{ background: '#fff' }}>
         <div className="container">
-          <h2 className="section-title">Project Milestone Progress</h2>
-          <div className="divider" style={{ width: 56, height: 4, background: 'linear-gradient(90deg, var(--primary), var(--accent))', borderRadius: 2, margin: '10px 0 24px' }} />
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            {MILESTONES.map((m, i) => (
-              <div key={m.id} className="card card-sm" style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
-                <div style={{ width: 40, height: 40, borderRadius: '50%', background: m.color, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: '1rem', flexShrink: 0 }}>{m.id}</div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--text-dark)', marginBottom: 2 }}>{m.title}</div>
-                  <div style={{ fontSize: '0.78rem', color: 'var(--text-light)' }}>Deliverables {m.deliverables}</div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
+            <div>
+              <h2 className="section-title" style={{ marginBottom: 0 }}>Key Insights</h2>
+              <div className="divider" style={{ width: 56, height: 4, background: 'linear-gradient(90deg, var(--primary), var(--accent))', borderRadius: 2, margin: '8px 0 0' }} />
+            </div>
+            <button onClick={() => setShowMilestones(s => !s)} style={{ fontSize: '0.74rem', fontWeight: 600, color: 'var(--primary)', background: '#F0F7F0', border: '1px solid #A5D6A7', borderRadius: 20, padding: '5px 14px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+              {showMilestones ? '▲ Hide Milestones' : '▼ Milestones'}
+            </button>
+          </div>
+
+          {/* Insight cards grid */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(270px, 1fr))', gap: 14, marginTop: 20 }}>
+            {[
+              {
+                icon: '🌾', module: 'Buckwheat Suitability', c: '#1B5E20', bg: '#E8F5E9', border: '#A5D6A7',
+                headline: 'East Khasi Hills — #1 district, score 88/100',
+                bullets: ['AUC 0.89 — highest model confidence in the state', '6 districts classified High suitability (score ≥75)', 'Optimal elevation: 800–1,800m · Khasi & Jaintia Hills'],
+              },
+              {
+                icon: '🍷', module: 'Wine Fruits', c: '#6A1B9A', bg: '#F3E5F5', border: '#CE93D8',
+                headline: 'Ri Bhoi leads Passion Fruit cultivation (82/100)',
+                bullets: ['East Khasi Hills best for Plum & Peach (cool climate)', 'Khasi Hills temperature 15–18°C — ideal for temperate fruits', '5 districts suitable for wine fruit diversification'],
+              },
+              {
+                icon: '🛰', module: 'Crop Health (NDVI)', c: '#004D40', bg: '#E0F2F1', border: '#80CBC4',
+                headline: '5 districts in Good or better crop health (Jan–Jun 2026)',
+                bullets: ['West Khasi Hills: highest NDVI 0.72 (Very High)', '3 NDVI anomaly alerts in Garo Hills — monitoring needed', 'Total mapped buckwheat area: ~9,850 ha (LULC-corrected)'],
+              },
+              {
+                icon: '🌡', module: 'Climate Risk', c: '#C62828', bg: '#FFEBEE', border: '#EF9A9A',
+                headline: 'All 12 districts meet buckwheat temperature threshold',
+                bullets: ['East Khasi Hills: 12 frost-risk days/yr — highest in state', 'West Khasi Hills: 3,200mm rainfall — exceptional water surplus', 'Garo Hills (>24°C) better suited for tropical wine fruits'],
+              },
+              {
+                icon: '💧', module: 'Water Management', c: '#1565C0', bg: '#E3F2FD', border: '#90CAF9',
+                headline: '7 districts rain-fed viable — no irrigation required',
+                bullets: ['Max adequacy ratio 9.1× (W. Khasi Hills: 3,200÷350mm)', 'Buckwheat CWR (350mm) well below all-district average rainfall', 'Passion Fruit (1,400mm CWR) met only in Very High water districts'],
+              },
+              {
+                icon: '🏆', module: 'Priority Zones', c: '#E65100', bg: '#FBE9E7', border: '#FFAB91',
+                headline: 'Mawlai block tops all priorities at score 92/100',
+                bullets: ['46 priority blocks mapped across all 12 districts', '6,430 km² identified as high-suitability cultivation area', 'Top 5 blocks in E. Khasi Hills score 82–92/100'],
+              },
+              {
+                icon: '⛰', module: 'Terrain (DEM/Slope)', c: '#5D4037', bg: '#EFEBE9', border: '#BCAAA4',
+                headline: 'Eastern West Khasi Hills — highest mean elevation (1,217m)',
+                bullets: ['6 districts in optimal elevation range (>800m) for buckwheat', 'SW Garo Hills lowest (89m avg) — unsuitable for buckwheat', 'Slope analysis: all Khasi Hills districts have moderate–steep terrain'],
+              },
+              {
+                icon: '🌿', module: 'LULC 2025-26 (ESRI 10m)', c: '#2E7D32', bg: '#F1F8E9', border: '#AED581',
+                headline: 'Meghalaya 65–93% evergreen forest — highly vegetated state',
+                bullets: ['South Garo Hills: peak forest cover at 92.7%', 'SW Garo Hills: highest cropland (13.7%) — agriculture hub', 'West Khasi Hills: minimal cropland (0.1%) — pristine forest'],
+              },
+            ].map(({ icon, module, c, bg, border, headline, bullets }) => (
+              <div key={module} style={{ background: bg, border: `1px solid ${border}`, borderRadius: 12, padding: '14px 16px', borderTop: `3px solid ${c}` }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+                  <span style={{ fontSize: '1.1rem' }}>{icon}</span>
+                  <span style={{ fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.4px', color: c }}>{module}</span>
                 </div>
-                <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                  <div style={{ fontWeight: 700, color: m.color, fontSize: '0.88rem' }}>{m.date}</div>
-                  <div style={{ fontSize: '0.72rem', color: i < 2 ? 'var(--primary)' : 'var(--text-light)', fontWeight: 600 }}>{i < 2 ? '✓ On Track' : '⏳ Upcoming'}</div>
-                </div>
+                <div style={{ fontWeight: 700, fontSize: '0.82rem', color: '#1F2937', marginBottom: 8, lineHeight: 1.4 }}>{headline}</div>
+                <ul style={{ margin: 0, paddingLeft: 14, listStyle: 'disc' }}>
+                  {bullets.map(b => (
+                    <li key={b} style={{ fontSize: '0.74rem', color: '#4B5563', lineHeight: 1.5, marginBottom: 2 }}>{b}</li>
+                  ))}
+                </ul>
               </div>
             ))}
           </div>
+
+          {/* Collapsible milestones */}
+          {showMilestones && (
+            <div style={{ marginTop: 28 }}>
+              <div style={{ fontWeight: 700, fontSize: '0.82rem', color: 'var(--text-mid)', textTransform: 'uppercase', letterSpacing: '0.4px', marginBottom: 12 }}>Project Milestone Progress</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {MILESTONES.map((m, i) => (
+                  <div key={m.id} style={{ display: 'flex', gap: 14, alignItems: 'center', background: '#F9FAFB', border: '1px solid var(--border)', borderRadius: 10, padding: '10px 16px' }}>
+                    <div style={{ width: 32, height: 32, borderRadius: '50%', background: m.color, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: '0.9rem', flexShrink: 0 }}>{m.id}</div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontWeight: 700, fontSize: '0.84rem', color: 'var(--text-dark)' }}>{m.title}</div>
+                      <div style={{ fontSize: '0.72rem', color: 'var(--text-light)' }}>Deliverables {m.deliverables}</div>
+                    </div>
+                    <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                      <div style={{ fontWeight: 700, color: m.color, fontSize: '0.82rem' }}>{m.date}</div>
+                      <div style={{ fontSize: '0.68rem', color: i < 2 ? 'var(--primary)' : 'var(--text-light)', fontWeight: 600 }}>{i < 2 ? '✓ On Track' : '⏳ Upcoming'}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </section>
 

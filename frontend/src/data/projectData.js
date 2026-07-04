@@ -7,7 +7,7 @@ export const PROJECT_INFO = {
   poDate: '22 May 2026',
   contractValidity: '31 August 2026',
   targetAUC: '> 0.70',
-  districts: 9,
+  districts: 12,
   crops: ['Buckwheat', 'Plum', 'Peach', 'Passion Fruit'],
 };
 
@@ -18,7 +18,7 @@ export const DELIVERABLES = [
     week: 'Week 3–5', planned: '30 Jun 2026',
     milestone: 1,
     outputs: ['GeoTIFF suitability maps', 'PDF maps', 'District-wise rankings'],
-    description: 'MaxEnt habitat suitability model for Buckwheat across 9 districts, generating High/Medium/Low classifications, terrain typology analysis, and Top 5 priority blocks per district.',
+    description: 'MaxEnt habitat suitability model for Buckwheat across 12 districts, generating High/Medium/Low classifications, terrain typology analysis, and Top 5 priority blocks per district.',
     route: '/buckwheat-suitability'
   },
   {

@@ -59,6 +59,7 @@ export default function MeghalayaMap({
   defaultTile = 'topo',
   legendItems = [],
   legendTitle = 'Legend',
+  onDistrictClick,
 }) {
   const districts = useGeoJSON('/geojson/districts.json');
   const blocks    = useGeoJSON(showBlocks ? '/geojson/blocks.json' : null);
@@ -85,7 +86,10 @@ export default function MeghalayaMap({
     layer.on({
       mouseover: e => { e.target.setStyle({ weight: 3, fillOpacity: 0.95 }); e.target.bringToFront(); },
       mouseout:  e => { e.target.setStyle({ weight: 1.8, fillOpacity: 0.78 }); },
-      click:     e => { e.target._map.fitBounds(e.target.getBounds(), { padding: [40, 40] }); },
+      click:     e => {
+        e.target._map.fitBounds(e.target.getBounds(), { padding: [40, 40] });
+        if (onDistrictClick) onDistrictClick(p.district || p.name);
+      },
     });
     const html = popupFn
       ? popupFn(feature)

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import MeghalayaMap from '../components/MeghalayaMap';
-import StatsCard from '../components/StatsCard';
 import { suitabilityData, getSuitColor } from '../data/districtData';
 import { DELIVERABLES, MILESTONES, PROJECT_INFO } from '../data/projectData';
 
@@ -90,9 +89,9 @@ export default function Home() {
             {/* Quick stats */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginTop: 52 }}>
               {[
-                { v: '9', l: 'Districts Analysed' },
+                { v: '12', l: 'Districts Analysed' },
                 { v: '4', l: 'Crops Modelled' },
-                { v: '45', l: 'Priority Blocks' },
+                { v: '46', l: 'Priority Blocks' },
                 { v: '>0.70', l: 'Target AUC Score' },
               ].map(s => (
                 <div key={s.l} style={{ borderLeft: '3px solid rgba(102,187,106,0.4)', paddingLeft: 14 }}>
@@ -105,74 +104,151 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== OVERVIEW MAP ===== */}
+      {/* ===== OVERVIEW MAP + STATS (single-shot view) ===== */}
       <section className="section" style={{ background: '#fff' }}>
         <div className="container">
-          <div className="section-header">
-            <div className="badge" style={{ background: '#E8F5E9', color: 'var(--primary)', border: '1px solid #A5D6A7', padding: '4px 14px', borderRadius: 50, fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.4px', display: 'inline-block', marginBottom: 10 }}>Interactive Map</div>
-            <h2 className="section-title">District Suitability Overview</h2>
-            <div className="divider" style={{ width: 56, height: 4, background: 'linear-gradient(90deg, var(--primary), var(--accent))', borderRadius: 2, margin: '10px 0 12px' }} />
-            <p className="section-subtitle">Click any district to zoom in. Switch the crop layer below to explore suitability across Buckwheat, Plum, Peach, and Passion Fruit.</p>
+          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap', marginBottom: 16 }}>
+            <div>
+              <div className="badge" style={{ background: '#E8F5E9', color: 'var(--primary)', border: '1px solid #A5D6A7', padding: '4px 14px', borderRadius: 50, fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.4px', display: 'inline-block', marginBottom: 8 }}>Interactive Map</div>
+              <h2 className="section-title" style={{ marginBottom: 6 }}>District Suitability Overview</h2>
+              <div className="divider" style={{ width: 56, height: 4, background: 'linear-gradient(90deg, var(--primary), var(--accent))', borderRadius: 2, margin: '8px 0 10px' }} />
+              <p className="section-subtitle" style={{ marginBottom: 0 }}>Click any district to zoom in. Switch the crop layer to explore suitability across Buckwheat, Plum, Peach, and Passion Fruit.</p>
+            </div>
+            {/* Crop tabs inline with header */}
+            <div className="tab-bar" style={{ flexShrink: 0, alignSelf: 'flex-end', marginBottom: 0 }}>
+              {[['buckwheat', '🌾 Buckwheat'], ['plum', '🫐 Plum'], ['peach', '🍑 Peach'], ['passionFruit', '🥭 Passion Fruit']].map(([key, label]) => (
+                <button key={key} className={`tab-btn${activeTab === key ? ' active' : ''}`} onClick={() => setActiveTab(key)}>{label}</button>
+              ))}
+            </div>
           </div>
 
-          {/* Crop tabs */}
-          <div className="tab-bar" style={{ maxWidth: 520 }}>
-            {[['buckwheat', '🌾 Buckwheat'], ['plum', '🫐 Plum'], ['peach', '🍑 Peach'], ['passionFruit', '🥭 Passion Fruit']].map(([key, label]) => (
-              <button key={key} className={`tab-btn${activeTab === key ? ' active' : ''}`} onClick={() => setActiveTab(key)}>{label}</button>
-            ))}
-          </div>
+          {/* Map + Stats side-by-side */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 290px', gap: 20, alignItems: 'start' }}>
 
-          <div className="map-container">
-            <MeghalayaMap
-              colorFn={colorFn}
-              popupFn={popupFn}
-              height="560px"
-              legendItems={legendItems}
-              legendTitle="Suitability Score"
-              defaultTile="topo"
-            />
-          </div>
-          <p className="source-note" style={{ textAlign: 'center', marginTop: 10 }}>
-            Data: MaxEnt Habitat Suitability Model · Boundary source: Survey of India (simplified for visualization) · Satellite: Sentinel-2, ESA Copernicus
-          </p>
-        </div>
-      </section>
+            {/* LEFT: Map */}
+            <div>
+              <div className="map-container">
+                <MeghalayaMap
+                  colorFn={colorFn}
+                  popupFn={popupFn}
+                  height="490px"
+                  legendItems={legendItems}
+                  legendTitle="Suitability Score"
+                  defaultTile="topo"
+                />
+              </div>
+              <p className="source-note" style={{ marginTop: 8 }}>
+                MaxEnt Habitat Suitability Model · Survey of India boundaries · Sentinel-2, ESA Copernicus
+              </p>
+            </div>
 
-      {/* ===== KEY STATS ===== */}
-      <section className="section-sm" style={{ background: 'var(--bg-page)' }}>
-        <div className="container">
-          <div className="stats-row">
-            <StatsCard value="22,429" label="Total Area (km²)" note="Meghalaya state" icon="🗺" color="#1565C0" bg="#E3F2FD" />
-            <StatsCard value="87%" label="Top Buckwheat Score" note="East Khasi Hills" icon="🌾" />
-            <StatsCard value="91%" label="Top Plum Score" note="East Khasi Hills" icon="🫐" color="#4A148C" bg="#F3E5F5" />
-            <StatsCard value="82%" label="Top Passion Fruit Score" note="Ri Bhoi District" icon="🥭" color="#E65100" bg="#FBE9E7" />
-            <StatsCard value="0.89" label="Highest AUC Score" note="E. Khasi Hills model" icon="📈" color="#1565C0" bg="#E3F2FD" />
-            <StatsCard value="3,200mm" label="Highest Annual Rainfall" note="West Khasi Hills" icon="🌧" color="#00838F" bg="#E0F7FA" />
-          </div>
-        </div>
-      </section>
+            {/* RIGHT: Stats + Glossary */}
+            <div style={{ position: 'sticky', top: 76 }}>
 
-      {/* ===== CROP CARDS ===== */}
-      <section className="section" style={{ background: '#fff' }}>
-        <div className="container">
-          <div className="section-header">
-            <h2 className="section-title">Crops Under Analysis</h2>
-            <div className="divider" style={{ width: 56, height: 4, background: 'linear-gradient(90deg, var(--primary), var(--accent))', borderRadius: 2, margin: '10px 0 12px' }} />
-            <p className="section-subtitle">Four crops modelled using MaxEnt, with terrain typology, climate suitability, and satellite health assessment.</p>
-          </div>
-          <div className="grid-2">
-            {CROP_CARDS.map(c => (
-              <div key={c.name} className="card" style={{ display: 'flex', gap: 20, borderLeft: `5px solid ${c.color}` }}>
-                <div style={{ fontSize: '2.8rem', flexShrink: 0 }}>{c.emoji}</div>
-                <div>
-                  <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.2rem', color: c.color, marginBottom: 4 }}>{c.name}</h3>
-                  <span style={{ fontSize: '0.72rem', fontWeight: 700, background: '#E8F5E9', color: 'var(--primary)', border: '1px solid #A5D6A7', borderRadius: 50, padding: '2px 10px', display: 'inline-block', marginBottom: 8 }}>{c.districts}</span>
-                  <p style={{ fontSize: '0.88rem', color: 'var(--text-mid)', lineHeight: 1.7 }}>{c.desc}</p>
-                  <Link to={c.path} style={{ display: 'inline-flex', alignItems: 'center', gap: 5, marginTop: 12, color: c.color, fontWeight: 600, fontSize: '0.85rem', textDecoration: 'none' }}>
-                    Explore map →
-                  </Link>
+              {/* 2×4 stat grid */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 7, marginBottom: 10 }}>
+                {[
+                  { v: '22,429',    l: 'Total Area (km²)',        note: 'Meghalaya state',      icon: '🗺', color: '#1565C0', bg: '#E3F2FD' },
+                  { v: '87%',       l: 'Top Buckwheat Score',     note: 'East Khasi Hills',     icon: '🌾', color: '#1B5E20', bg: '#E8F5E9' },
+                  { v: '91%',       l: 'Top Plum Score',          note: 'East Khasi Hills',     icon: '🫐', color: '#4A148C', bg: '#F3E5F5' },
+                  { v: '88%',       l: 'Top Peach Score',         note: 'East Khasi Hills',     icon: '🍑', color: '#BF360C', bg: '#FBE9E7' },
+                  { v: '82%',       l: 'Top Passion Fruit Score', note: 'Ri Bhoi District',     icon: '🥭', color: '#E65100', bg: '#FFF3E0' },
+                  { v: '0.89',      l: 'Highest AUC Score',       note: 'E. Khasi Hills model', icon: '📈', color: '#1565C0', bg: '#E3F2FD' },
+                  { v: '52,200 ha', l: 'Total Cropland Area',     note: 'ESRI LULC 2025-26',   icon: '🌱', color: '#558B2F', bg: '#F1F8E9', split: '~42K cultivable · ~10K wasteland' },
+                  { v: '3,200mm',   l: 'Highest Annual Rainfall', note: 'West Khasi Hills',     icon: '🌧', color: '#00838F', bg: '#E0F7FA' },
+                ].map(s => (
+                  <div key={s.l} style={{ background: s.bg, borderRadius: 9, padding: '8px 10px', border: `1px solid ${s.color}22` }}>
+                    <div style={{ fontSize: '0.92rem', marginBottom: 2 }}>{s.icon}</div>
+                    <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, color: s.color, fontSize: '1.05rem', lineHeight: 1.1 }}>{s.v}</div>
+                    <div style={{ fontSize: '0.6rem', fontWeight: 600, color: '#374151', marginTop: 2, lineHeight: 1.3 }}>{s.l}</div>
+                    <div style={{ fontSize: '0.56rem', color: '#6B7280', marginTop: 1 }}>{s.note}</div>
+                    {s.split && <div style={{ fontSize: '0.55rem', color: s.color, fontWeight: 600, marginTop: 3, borderTop: `1px solid ${s.color}22`, paddingTop: 3 }}>{s.split}</div>}
+                  </div>
+                ))}
+              </div>
+
+              {/* Glossary / layman note */}
+              <div style={{ background: '#F0FDF4', border: '1px solid #BBF7D0', borderRadius: 10, padding: '13px 15px' }}>
+                <div style={{ fontSize: '0.67rem', fontWeight: 700, color: '#065F46', textTransform: 'uppercase', letterSpacing: '0.4px', marginBottom: 10 }}>📖 What do these numbers mean?</div>
+                {[
+                  {
+                    icon: '🎯',
+                    term: 'Suitability Score (0–100)',
+                    def: 'How well a district matches ideal growing conditions — climate, elevation and rainfall. 90+ means near-perfect fit. Think of it as a "crop happiness index" for that area.',
+                  },
+                  {
+                    icon: '📊',
+                    term: 'AUC Score (0–1)',
+                    def: 'How accurate our AI prediction model is. 0.89 = 89% correct at predicting where crops grow vs. where they don\'t. Anything above 0.70 is considered scientifically reliable.',
+                  },
+                  {
+                    icon: '🏆',
+                    term: 'Top District Score',
+                    def: 'The highest suitability score any single district achieved for that crop — showing where farmers and policymakers should prioritise investment first.',
+                  },
+                ].map(({ icon, term, def }, i, arr) => (
+                  <div key={term} style={{ marginBottom: i < arr.length - 1 ? 8 : 0, paddingBottom: i < arr.length - 1 ? 8 : 0, borderBottom: i < arr.length - 1 ? '1px solid #D1FAE5' : 'none' }}>
+                    <div style={{ fontWeight: 700, fontSize: '0.68rem', color: '#065F46', marginBottom: 2 }}>{icon} {term}</div>
+                    <div style={{ fontSize: '0.66rem', color: '#374151', lineHeight: 1.55 }}>{def}</div>
+                  </div>
+                ))}
+                <div style={{ marginTop: 10, fontSize: '0.6rem', color: '#6B7280', fontStyle: 'italic', borderTop: '1px solid #D1FAE5', paddingTop: 8 }}>
+                  Model: MaxEnt v3.4.4 · Climate data: WorldClim v2.1 bioclim variables · Satellite: MODIS MOD13Q1, Sentinel-2
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== CROP FEATURE BAND ===== */}
+      <section style={{ background: 'linear-gradient(160deg, #0D1B0E 0%, #1B3A1F 50%, #0A2614 100%)', padding: '52px 0' }}>
+        <div className="container">
+          {/* Header row */}
+          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 32, flexWrap: 'wrap', gap: 12 }}>
+            <div>
+              <div style={{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', color: '#A5D6A7', marginBottom: 8 }}>MaxEnt · WorldClim v2.1 · GBIF Occurrences</div>
+              <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(1.6rem, 3vw, 2.2rem)', color: '#fff', margin: 0, lineHeight: 1.2 }}>
+                Crops Under <span style={{ color: '#66BB6A' }}>Analysis</span>
+              </h2>
+            </div>
+            <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: '0.88rem', maxWidth: 400, lineHeight: 1.6, margin: 0 }}>
+              Four crops modelled using habitat suitability analysis — terrain, climate and satellite health assessment across all 12 districts.
+            </p>
+          </div>
+
+          {/* 4-column crop cards */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
+            {CROP_CARDS.map(c => (
+              <Link key={c.name} to={c.path} style={{ textDecoration: 'none' }}>
+                <div style={{
+                  background: 'rgba(255,255,255,0.05)', border: `1px solid ${c.color}44`,
+                  borderTop: `4px solid ${c.color}`, borderRadius: 14, padding: '24px 20px',
+                  height: '100%', display: 'flex', flexDirection: 'column',
+                  transition: 'transform 0.2s, background 0.2s, box-shadow 0.2s', cursor: 'pointer',
+                }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.background = 'rgba(255,255,255,0.09)'; e.currentTarget.style.boxShadow = `0 12px 32px ${c.color}33`; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.boxShadow = 'none'; }}
+                >
+                  {/* Emoji + suitability badge */}
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
+                    <span style={{ fontSize: '2.4rem', lineHeight: 1 }}>{c.emoji}</span>
+                    <span style={{ fontSize: '0.68rem', fontWeight: 700, padding: '3px 10px', borderRadius: 20, background: `${c.color}22`, color: c.color, border: `1px solid ${c.color}44` }}>{c.districts}</span>
+                  </div>
+
+                  {/* Crop name */}
+                  <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.15rem', color: '#fff', marginBottom: 10, lineHeight: 1.2 }}>{c.name}</h3>
+
+                  {/* Description */}
+                  <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.65, flex: 1, marginBottom: 18 }}>{c.desc}</p>
+
+                  {/* Explore link */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: c.color, fontWeight: 700, fontSize: '0.82rem' }}>
+                    Explore suitability map
+                    <span style={{ fontSize: '1rem', lineHeight: 1 }}>→</span>
+                  </div>
+                </div>
+              </Link>
             ))}
           </div>
         </div>

@@ -5,6 +5,8 @@ import { waterData, getWaterColor } from '../data/districtData';
 
 export default function WaterManagement() {
   const [view, setView] = useState('availability');
+  const [selectedDistrict, setSelectedDistrict] = useState('West Khasi Hills');
+  const selectedWater = waterData.find(d => d.district === selectedDistrict);
 
   const chartData = waterData.map(d => ({
     district: d.district.split(' ').slice(-2).join(' '),
@@ -56,7 +58,7 @@ export default function WaterManagement() {
 
   return (
     <div>
-      <div className="page-header" style={{ background: 'linear-gradient(135deg, #01579B 0%, #0277BD 50%, #0288D1 100%)' }}>
+      <div className="page-header" style={{ borderTop: '4px solid #0277BD', background: "linear-gradient(135deg, rgba(225,245,254,0.70) 0%, rgba(232,245,233,0.70) 60%, rgba(240,248,255,0.70) 100%), url('/images/water-stream.jpg') center/cover no-repeat" }}>
         <div className="container">
           <div className="badge">Deliverable 7 · Water Management</div>
           <h1>💧 Water Management Insights</h1>
@@ -71,6 +73,11 @@ export default function WaterManagement() {
               <div className="stat-value" style={{ color: '#0D47A1' }}>350mm</div>
               <div className="stat-label">Buckwheat CWR / Season</div>
               <div className="stat-note">Well below state average rainfall</div>
+            </div>
+            <div className="stat-card" style={{ borderTop: '4px solid #0288D1', background: '#E1F5FE' }}>
+              <div className="stat-value" style={{ color: '#0288D1' }}>680mm</div>
+              <div className="stat-label">Peach CWR / Season</div>
+              <div className="stat-note">Met in most Khasi districts</div>
             </div>
             <div className="stat-card" style={{ borderTop: '4px solid #1565C0', background: '#E3F2FD' }}>
               <div className="stat-value" style={{ color: '#1565C0' }}>720mm</div>
@@ -99,37 +106,91 @@ export default function WaterManagement() {
             </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: 28 }}>
+          <h2 className="section-title" style={{ marginBottom: 4 }}>Water Availability Map</h2>
+          <p className="section-subtitle" style={{ marginBottom: 12 }}>District-level water availability based on annual rainfall and crop water requirements.</p>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: 20, alignItems: 'start' }}>
             <div>
-              <h2 className="section-title" style={{ marginBottom: 8 }}>Water Availability Map</h2>
-              <p className="section-subtitle" style={{ marginBottom: 16 }}>District-level water availability based on annual rainfall and crop water requirements.</p>
               <div className="map-container">
                 <MeghalayaMap
                   colorFn={colorFn}
                   popupFn={popupFn}
-                  height="480px"
+                  height="520px"
                   legendItems={legend}
                   legendTitle="Water Availability"
                   defaultTile="topo"
+                  onDistrictClick={d => setSelectedDistrict(d)}
                 />
               </div>
-              <p className="source-note">Data: IMD rainfall stations · Survey of India stream networks · WorldClim precipitation layers</p>
+              <p className="source-note">IMD rainfall stations · Survey of India stream networks · WorldClim precipitation layers · Click district to select</p>
             </div>
 
-            <div>
-              <h3 style={{ fontFamily: 'var(--font-heading)', color: '#1565C0', marginBottom: 14 }}>District Water Profile</h3>
-              {waterData.map(d => (
-                <div key={d.district} className="card card-sm" style={{ borderLeft: `4px solid ${getWaterColor(d.waterClass)}`, padding: '10px 14px', marginBottom: 8 }}>
-                  <div style={{ fontWeight: 600, fontSize: '0.83rem', marginBottom: 4 }}>{d.district}</div>
-                  <div style={{ display: 'flex', gap: 8, fontSize: '0.75rem', flexWrap: 'wrap' }}>
-                    <span style={{ color: '#1565C0', fontWeight: 600 }}>{d.rainfall.toLocaleString()}mm</span>
-                    <span style={{ color: 'var(--text-light)' }}>·</span>
-                    <span style={{ fontWeight: 600, color: getWaterColor(d.waterClass) }}>{d.waterClass}</span>
-                    <span style={{ color: 'var(--text-light)' }}>·</span>
-                    <span style={{ color: d.irrigation === 'None' ? 'var(--primary)' : '#E65100', fontWeight: 600 }}>Irrig: {d.irrigation}</span>
+            <div style={{ position: 'sticky', top: 70 }}>
+              <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#1565C0', textTransform: 'uppercase', letterSpacing: '0.4px', marginBottom: 6 }}>District Water Profile</div>
+
+              <div style={{ maxHeight: 240, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 3, paddingRight: 2 }}>
+                {[...waterData].sort((a, b) => b.rainfall - a.rainfall).map(d => (
+                  <div key={d.district}
+                    onClick={() => setSelectedDistrict(d.district)}
+                    style={{
+                      borderLeft: `3px solid ${getWaterColor(d.waterClass)}`,
+                      padding: '6px 10px', cursor: 'pointer', borderRadius: '0 6px 6px 0',
+                      background: selectedDistrict === d.district ? '#E3F2FD' : '#F9FAFB',
+                      display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                      transition: 'background 0.15s',
+                    }}>
+                    <span style={{ fontWeight: selectedDistrict === d.district ? 700 : 500, fontSize: '0.76rem', color: '#1F2937' }}>{d.district}</span>
+                    <div style={{ display: 'flex', gap: 6, alignItems: 'center', flexShrink: 0 }}>
+                      <span style={{ fontSize: '0.67rem', fontWeight: 600, color: '#1565C0' }}>{d.rainfall.toLocaleString()}mm</span>
+                      <span style={{ fontSize: '0.62rem', fontWeight: 600, color: d.irrigation === 'None' ? '#1B5E20' : '#E65100' }}>{d.irrigation === 'None' ? '✓' : 'Irr'}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {selectedWater && (
+                <div style={{ marginTop: 12, borderTop: '2px solid #BBDEFB', paddingTop: 12 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
+                    <div>
+                      <div style={{ fontSize: '0.62rem', color: '#9CA3AF', textTransform: 'uppercase' }}>Selected</div>
+                      <div style={{ fontWeight: 700, color: '#0D47A1', fontSize: '0.88rem' }}>{selectedWater.district}</div>
+                    </div>
+                    <span style={{ fontSize: '0.65rem', fontWeight: 700, padding: '3px 8px', borderRadius: 20, color: getWaterColor(selectedWater.waterClass), background: getWaterColor(selectedWater.waterClass) + '18', border: `1px solid ${getWaterColor(selectedWater.waterClass)}` }}>{selectedWater.waterClass}</span>
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6, marginBottom: 8 }}>
+                    {[
+                      { label: 'Rainfall',  value: `${selectedWater.rainfall.toLocaleString()} mm`, color: '#1565C0' },
+                      { label: 'Adequacy',  value: `${(selectedWater.rainfall / selectedWater.cwrBuckwheat).toFixed(1)}×`,  color: '#1B5E20' },
+                      { label: 'Irrigation', value: selectedWater.irrigation,                        color: selectedWater.irrigation === 'None' ? '#1B5E20' : '#E65100' },
+                      { label: 'Adequacy',   value: selectedWater.adequacy,                          color: '#0277BD' },
+                    ].map(({ label, value, color }) => (
+                      <div key={label} style={{ background: '#EFF6FF', borderRadius: 7, padding: '7px 8px', textAlign: 'center', border: '1px solid #BFDBFE' }}>
+                        <div style={{ fontSize: '0.58rem', color: '#6B7280', textTransform: 'uppercase', marginBottom: 2 }}>{label}</div>
+                        <div style={{ fontSize: '0.82rem', fontWeight: 800, color }}>{value}</div>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ background: '#F0F9FF', borderRadius: 8, padding: '8px 10px' }}>
+                    <div style={{ fontSize: '0.62rem', color: '#6B7280', marginBottom: 4 }}>CWR vs Rainfall comparison</div>
+                    {[
+                      { crop: 'Buckwheat',    cwr: selectedWater.cwrBuckwheat,    color: '#1B5E20' },
+                      { crop: 'Peach',        cwr: selectedWater.cwrPeach,        color: '#0288D1' },
+                      { crop: 'Plum',         cwr: selectedWater.cwrPlum,         color: '#7B1FA2' },
+                      { crop: 'Passion Fruit', cwr: selectedWater.cwrPassionFruit, color: '#E65100' },
+                    ].map(({ crop, cwr, color }) => {
+                      const pct = Math.min(100, (cwr / selectedWater.rainfall) * 100);
+                      return (
+                        <div key={crop} style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 3 }}>
+                          <div style={{ width: 62, fontSize: '0.6rem', color, fontWeight: 600, textAlign: 'right', flexShrink: 0 }}>{crop}</div>
+                          <div style={{ flex: 1, height: 5, background: '#E0E7FF', borderRadius: 3 }}>
+                            <div style={{ height: '100%', width: `${pct}%`, background: color, borderRadius: 3 }} />
+                          </div>
+                          <div style={{ width: 34, fontSize: '0.6rem', color, fontWeight: 700, textAlign: 'right', flexShrink: 0 }}>{cwr}mm</div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
-              ))}
+              )}
             </div>
           </div>
         </div>
@@ -189,6 +250,7 @@ export default function WaterManagement() {
                   <th>District</th>
                   <th>Rainfall (mm)</th>
                   <th>CWR Buckwheat</th>
+                  <th>CWR Peach</th>
                   <th>CWR Plum</th>
                   <th>CWR Passion Fruit</th>
                   <th>Adequacy</th>
@@ -202,6 +264,7 @@ export default function WaterManagement() {
                     <td style={{ fontWeight: 600 }}>{d.district}</td>
                     <td style={{ fontWeight: 700, color: '#1565C0' }}>{d.rainfall.toLocaleString()} mm</td>
                     <td>350 mm</td>
+                    <td>680 mm</td>
                     <td>720 mm</td>
                     <td>1,400 mm</td>
                     <td><span className="suit-badge" style={{ background: '#E8F5E9', color: 'var(--primary)', border: '1px solid #A5D6A7' }}>{d.adequacy}</span></td>

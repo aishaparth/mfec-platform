@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import MeghalayaMap from '../components/MeghalayaMap';
-import { suitabilityData, priorityBlocks, getSuitColor, getSuitClass } from '../data/districtData';
+import { suitabilityData, priorityBlocks, getSuitColor, getSuitClass, getSuitBadgeStyle } from '../data/districtData';
 
 const DISTRICT_ORDER = ['East Khasi Hills', 'West Khasi Hills', 'West Jaintia Hills', 'South West Khasi Hills', 'Eastern West Khasi Hills', 'East Jaintia Hills', 'Ri Bhoi', 'North Garo Hills', 'East Garo Hills', 'West Garo Hills', 'South Garo Hills', 'South West Garo Hills'];
 
@@ -45,7 +45,7 @@ export default function PriorityZones() {
 
   return (
     <div>
-      <div className="page-header" style={{ background: 'linear-gradient(135deg, #E65100 0%, #F57C00 50%, #FF8F00 100%)' }}>
+      <div className="page-header" style={{ borderTop: '4px solid #F57C00', background: "linear-gradient(135deg, rgba(232,245,233,0.84) 0%, rgba(241,248,233,0.84) 60%, rgba(250,255,248,0.84) 100%), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1600&q=60&fit=crop&crop=center') center/cover no-repeat" }}>
         <div className="container">
           <div className="badge">Deliverable 8 · Priority Zone Report</div>
           <h1>🏆 Priority Zone Identification</h1>
@@ -83,11 +83,11 @@ export default function PriorityZones() {
 
       <section className="section" style={{ background: '#fff' }}>
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: 28 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: 20, alignItems: 'start' }}>
             {/* Map */}
             <div>
-              <h2 className="section-title" style={{ marginBottom: 8 }}>Priority Zones Map</h2>
-              <p className="section-subtitle" style={{ marginBottom: 16 }}>Click any district to view its blocks in the panel. Toggle block overlay to see all 46 blocks. Color = buckwheat suitability.</p>
+              <h2 className="section-title" style={{ marginBottom: 6 }}>Priority Zones Map</h2>
+              <p className="section-subtitle" style={{ marginBottom: 12 }}>Click any district on the map or list to view its blocks. Color = buckwheat suitability.</p>
               <div className="map-container">
                 <MeghalayaMap
                   colorFn={colorFn}
@@ -97,51 +97,58 @@ export default function PriorityZones() {
                   legendItems={legend}
                   legendTitle="Priority Level"
                   defaultTile="topo"
+                  onDistrictClick={d => setSelectedDistrict(d)}
                 />
               </div>
-              <p className="source-note">Boundaries: Blocks_46 shapefile · Districts_12 shapefile · State_Boundary shapefile · Analysis: MaxEnt v3.4.4</p>
+              <p className="source-note">Blocks_46 · Districts_12 · State_Boundary shapefiles · MaxEnt v3.4.4 · Click district to select</p>
             </div>
 
             {/* District selector + block list */}
-            <div>
-              <h3 style={{ fontFamily: 'var(--font-heading)', color: 'var(--primary)', marginBottom: 14 }}>Select District</h3>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 20 }}>
+            <div style={{ position: 'sticky', top: 70 }}>
+              <div style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--primary)', textTransform: 'uppercase', letterSpacing: '0.4px', marginBottom: 6 }}>Select District</div>
+
+              <div style={{ maxHeight: 220, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 3, paddingRight: 2, marginBottom: 12 }}>
                 {DISTRICT_ORDER.map(d => {
                   const suit = suitabilityData.find(s => s.district === d);
                   return (
-                    <button key={d} onClick={() => setSelectedDistrict(d)}
-                      style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 14px', borderRadius: 8, border: `2px solid ${selectedDistrict === d ? getSuitColor(suit?.buckwheat || 50) : 'var(--border)'}`, background: selectedDistrict === d ? '#F0F7F0' : '#fff', cursor: 'pointer', textAlign: 'left' }}>
-                      <span style={{ fontSize: '0.85rem', fontWeight: selectedDistrict === d ? 700 : 500, color: 'var(--text-dark)' }}>{d}</span>
-                      <span style={{ fontSize: '0.85rem', fontWeight: 700, color: getSuitColor(suit?.buckwheat || 50) }}>{suit?.buckwheat}</span>
-                    </button>
+                    <div key={d} onClick={() => setSelectedDistrict(d)}
+                      style={{
+                        borderLeft: `3px solid ${getSuitColor(suit?.buckwheat || 50)}`,
+                        padding: '6px 10px', cursor: 'pointer', borderRadius: '0 6px 6px 0',
+                        background: selectedDistrict === d ? '#F0F7F0' : '#F9FAFB',
+                        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                        transition: 'background 0.15s',
+                      }}>
+                      <span style={{ fontWeight: selectedDistrict === d ? 700 : 500, fontSize: '0.76rem', color: '#1F2937' }}>{d}</span>
+                      <span style={{ fontWeight: 800, color: getSuitColor(suit?.buckwheat || 50), fontSize: '0.82rem' }}>{suit?.buckwheat}</span>
+                    </div>
                   );
                 })}
               </div>
 
               {/* All blocks for selected district */}
-              <div style={{ background: '#F0F7F0', borderRadius: 12, padding: 16 }}>
-                <h4 style={{ fontFamily: 'var(--font-heading)', color: 'var(--primary)', marginBottom: 12, fontSize: '0.95rem' }}>
-                  All Blocks – {selectedDistrict} ({blocks.length})
-                </h4>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              <div style={{ background: '#F0F7F0', borderRadius: 10, padding: '12px 14px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                  <div style={{ fontWeight: 700, color: 'var(--primary)', fontSize: '0.82rem' }}>All Blocks – {selectedDistrict}</div>
+                  <span style={{ fontSize: '0.65rem', background: '#E8F5E9', color: '#1B5E20', padding: '2px 7px', borderRadius: 20, fontWeight: 600 }}>{blocks.length} blocks</span>
+                </div>
+                <div style={{ maxHeight: 260, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 4 }}>
                   {blocks.map((b, i) => (
-                    <div key={b.block} style={{ background: '#fff', borderRadius: 8, padding: '10px 12px', display: 'flex', alignItems: 'center', gap: 10 }}>
-                      <span className={`rank-badge${i === 0 ? ' gold' : i === 1 ? ' silver' : i === 2 ? ' bronze' : ''}`} style={{ flexShrink: 0 }}>{i + 1}</span>
-                      <div style={{ flex: 1 }}>
-                        <div style={{ fontWeight: 600, fontSize: '0.85rem' }}>{b.block}</div>
-                        <div className="score-bar-wrap" style={{ marginTop: 4 }}>
-                          <div className="score-bar" style={{ height: 6 }}>
-                            <div className="score-bar-fill" style={{ width: `${b.score}%`, background: getSuitColor(b.score), height: '100%' }} />
-                          </div>
+                    <div key={b.block} style={{ background: '#fff', borderRadius: 7, padding: '7px 10px', display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <span className={`rank-badge${i === 0 ? ' gold' : i === 1 ? ' silver' : i === 2 ? ' bronze' : ''}`} style={{ flexShrink: 0, fontSize: '0.6rem', width: 18, height: 18, lineHeight: '18px' }}>{i + 1}</span>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontWeight: 600, fontSize: '0.78rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{b.block}</div>
+                        <div style={{ height: 4, background: '#F3F4F6', borderRadius: 2, marginTop: 3 }}>
+                          <div style={{ height: '100%', width: `${b.score}%`, background: getSuitColor(b.score), borderRadius: 2 }} />
                         </div>
                       </div>
-                      <span style={{ fontWeight: 700, color: getSuitColor(b.score), fontSize: '0.95rem' }}>{b.score}</span>
+                      <span style={{ fontWeight: 700, color: getSuitColor(b.score), fontSize: '0.85rem', flexShrink: 0 }}>{b.score}</span>
                     </div>
                   ))}
                 </div>
                 {selectedSuit && (
-                  <div style={{ marginTop: 12, padding: 10, background: 'rgba(27,94,32,0.06)', borderRadius: 8, fontSize: '0.78rem', color: 'var(--text-mid)', lineHeight: 1.6 }}>
-                    <strong>District Overview:</strong> Overall Rank #{selectedSuit.overallRank} · Buckwheat {selectedSuit.buckwheat}/100 · AUC {selectedSuit.aucScore}
+                  <div style={{ marginTop: 8, paddingTop: 8, borderTop: '1px solid #C8E6C9', fontSize: '0.68rem', color: 'var(--text-mid)', lineHeight: 1.6 }}>
+                    Rank #{selectedSuit.overallRank} · Score {selectedSuit.buckwheat}/100 · AUC {selectedSuit.aucScore}
                   </div>
                 )}
               </div>
@@ -192,7 +199,7 @@ export default function PriorityZones() {
                       <td>{b.block}</td>
                       <td style={{ color: 'var(--text-light)', fontSize: '0.85rem' }}>{b.areaSqKm?.toFixed(0)} km²</td>
                       <td><span style={{ fontWeight: 700, color: getSuitColor(b.score) }}>{b.score}/100</span></td>
-                      <td><span className="suit-badge" style={{ background: b.score >= 70 ? '#E8F5E9' : b.score >= 50 ? '#FFF8E1' : '#FFEBEE', color: b.score >= 70 ? 'var(--primary)' : b.score >= 50 ? '#E65100' : '#C62828', border: '1px solid currentColor' }}>{getSuitClass(b.score)}</span></td>
+                      <td><span className="suit-badge" style={getSuitBadgeStyle(b.score)}>{getSuitClass(b.score)}</span></td>
                     </tr>
                   ));
                 })}

@@ -12,6 +12,7 @@ const NAV_LINKS = [
   { label: 'Climate Risk', path: '/climate-risk' },
   { label: 'Water', path: '/water-management' },
   { label: 'Priority Zones', path: '/priority-zones' },
+  { label: 'Live Weather', path: '/weather' },
   { label: 'Dashboard', path: '/dashboard' },
 ];
 
@@ -43,10 +44,10 @@ export default function Navbar() {
   }, []);
 
   const linkStyle = (active) => ({
-    color: active ? '#fff' : 'rgba(255,255,255,0.75)',
+    color: active ? '#2E7D32' : '#374151',
     fontWeight: active ? 600 : 400,
     fontSize: '0.82rem', padding: '6px 11px', borderRadius: 6,
-    background: active ? 'rgba(255,255,255,0.18)' : 'transparent',
+    background: active ? '#E8F5E9' : 'transparent',
     transition: 'all 0.2s', textDecoration: 'none', cursor: 'pointer',
   });
 
@@ -54,20 +55,20 @@ export default function Navbar() {
     <header style={{
       position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000,
       height: 'var(--nav-height)',
-      background: scrolled ? 'rgba(27,94,32,0.97)' : '#1B5E20',
+      background: 'rgba(255,255,255,0.97)',
       backdropFilter: 'blur(10px)',
-      boxShadow: scrolled ? '0 2px 20px rgba(0,0,0,0.25)' : 'none',
+      boxShadow: scrolled ? '0 2px 16px rgba(0,0,0,0.08)' : '0 1px 0 #E4EBE4',
       transition: 'all 0.3s ease',
     }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         {/* Logo */}
         <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
-          <div style={{ width: 38, height: 38, borderRadius: 10, background: 'rgba(255,255,255,0.18)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem' }}>
+          <div style={{ width: 38, height: 38, borderRadius: 10, background: '#E8F5E9', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem' }}>
             🌿
           </div>
           <div>
-            <div style={{ color: '#fff', fontWeight: 700, fontSize: '0.95rem', fontFamily: 'var(--font-heading)', lineHeight: 1.2 }}>MFEC Meghalaya</div>
-            <div style={{ color: 'rgba(255,255,255,0.65)', fontSize: '0.68rem', letterSpacing: '0.5px', textTransform: 'uppercase' }}>Agricultural Analytics</div>
+            <div style={{ color: '#2E7D32', fontWeight: 700, fontSize: '0.95rem', fontFamily: 'var(--font-heading)', lineHeight: 1.2 }}>MFEC Meghalaya</div>
+            <div style={{ color: '#6B7280', fontSize: '0.68rem', letterSpacing: '0.5px', textTransform: 'uppercase' }}>Agricultural Analytics</div>
           </div>
         </Link>
 
@@ -81,7 +82,7 @@ export default function Navbar() {
               onClick={() => setCropsOpen(o => !o)}
               style={{
                 ...linkStyle(isCropActive),
-                border: 'none', background: isCropActive ? 'rgba(255,255,255,0.18)' : 'transparent',
+                border: 'none', background: isCropActive ? '#E8F5E9' : 'transparent',
                 display: 'flex', alignItems: 'center', gap: 4,
               }}
             >
@@ -91,9 +92,9 @@ export default function Navbar() {
             {cropsOpen && (
               <div style={{
                 position: 'absolute', top: 'calc(100% + 6px)', left: 0,
-                background: '#1B5E20', borderRadius: 8, minWidth: 160,
-                boxShadow: '0 8px 24px rgba(0,0,0,0.35)',
-                border: '1px solid rgba(255,255,255,0.12)',
+                background: '#fff', borderRadius: 8, minWidth: 160,
+                boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+                border: '1px solid #E4EBE4',
                 overflow: 'hidden', zIndex: 10,
               }}>
                 {CROP_LINKS.map(link => (
@@ -102,13 +103,13 @@ export default function Navbar() {
                     to={link.path}
                     style={{
                       display: 'block',
-                      color: location.pathname === link.path ? '#fff' : 'rgba(255,255,255,0.8)',
+                      color: location.pathname === link.path ? '#2E7D32' : '#374151',
                       fontWeight: location.pathname === link.path ? 600 : 400,
                       fontSize: '0.82rem', padding: '10px 16px',
-                      background: location.pathname === link.path ? 'rgba(255,255,255,0.15)' : 'transparent',
+                      background: location.pathname === link.path ? '#E8F5E9' : 'transparent',
                       textDecoration: 'none', transition: 'background 0.15s',
                     }}
-                    onMouseEnter={e => { if (location.pathname !== link.path) e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; }}
+                    onMouseEnter={e => { if (location.pathname !== link.path) e.currentTarget.style.background = '#F7FAF7'; }}
                     onMouseLeave={e => { if (location.pathname !== link.path) e.currentTarget.style.background = 'transparent'; }}
                   >
                     {link.label}
@@ -128,7 +129,7 @@ export default function Navbar() {
         {/* Hamburger */}
         <button
           onClick={() => setMenuOpen(m => !m)}
-          style={{ display: 'none', background: 'none', border: 'none', color: '#fff', fontSize: '1.5rem', cursor: 'pointer' }}
+          style={{ display: 'none', background: 'none', border: 'none', color: '#2E7D32', fontSize: '1.5rem', cursor: 'pointer' }}
           className="hamburger"
           aria-label="Toggle menu"
         >
@@ -140,36 +141,37 @@ export default function Navbar() {
       {menuOpen && (
         <div style={{
           position: 'absolute', top: 'var(--nav-height)', left: 0, right: 0,
-          background: '#1B5E20', padding: '12px 24px 20px',
-          boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
+          background: '#fff', padding: '12px 24px 20px',
+          boxShadow: '0 8px 24px rgba(0,0,0,0.10)',
+          borderTop: '1px solid #E4EBE4',
           display: 'flex', flexDirection: 'column', gap: 4,
         }}>
           <Link to="/" style={{
-            color: location.pathname === '/' ? '#fff' : 'rgba(255,255,255,0.8)',
+            color: location.pathname === '/' ? '#2E7D32' : '#374151',
             fontWeight: location.pathname === '/' ? 600 : 400,
             fontSize: '0.9rem', padding: '10px 12px', borderRadius: 8,
-            background: location.pathname === '/' ? 'rgba(255,255,255,0.15)' : 'transparent',
+            background: location.pathname === '/' ? '#E8F5E9' : 'transparent',
             textDecoration: 'none', display: 'block',
           }}>Home</Link>
 
           {/* Crops section in mobile */}
-          <div style={{ padding: '6px 12px 2px', fontSize: '0.7rem', color: 'rgba(255,255,255,0.45)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Crops</div>
+          <div style={{ padding: '6px 12px 2px', fontSize: '0.7rem', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Crops</div>
           {CROP_LINKS.map(link => (
             <Link key={link.path} to={link.path} style={{
-              color: location.pathname === link.path ? '#fff' : 'rgba(255,255,255,0.8)',
+              color: location.pathname === link.path ? '#2E7D32' : '#374151',
               fontWeight: location.pathname === link.path ? 600 : 400,
               fontSize: '0.9rem', padding: '10px 12px 10px 24px', borderRadius: 8,
-              background: location.pathname === link.path ? 'rgba(255,255,255,0.15)' : 'transparent',
+              background: location.pathname === link.path ? '#E8F5E9' : 'transparent',
               textDecoration: 'none', display: 'block',
             }}>{link.label}</Link>
           ))}
 
           {NAV_LINKS.filter(l => l.path !== '/').map(link => (
             <Link key={link.path} to={link.path} style={{
-              color: location.pathname === link.path ? '#fff' : 'rgba(255,255,255,0.8)',
+              color: location.pathname === link.path ? '#2E7D32' : '#374151',
               fontWeight: location.pathname === link.path ? 600 : 400,
               fontSize: '0.9rem', padding: '10px 12px', borderRadius: 8,
-              background: location.pathname === link.path ? 'rgba(255,255,255,0.15)' : 'transparent',
+              background: location.pathname === link.path ? '#E8F5E9' : 'transparent',
               textDecoration: 'none', display: 'block',
             }}>{link.label}</Link>
           ))}

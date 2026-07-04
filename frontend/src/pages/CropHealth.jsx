@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, BarChart, Bar, Cell, Legend, CartesianGrid } from 'recharts';
 import MeghalayaMap from '../components/MeghalayaMap';
-import { ndviData, getNDVIColor } from '../data/districtData';
+import { ndviData, getNDVIColor, lulcData } from '../data/districtData';
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 const MONTHLY_NDVI = {
-  'East Khasi Hills':       [0.42, 0.48, 0.58, 0.65, 0.70, 0.72, 0.74, 0.75, 0.71, 0.65, 0.52, 0.44],
-  'West Khasi Hills':       [0.38, 0.44, 0.54, 0.61, 0.66, 0.68, 0.70, 0.71, 0.67, 0.61, 0.48, 0.40],
-  'West Jaintia Hills':     [0.40, 0.46, 0.55, 0.62, 0.65, 0.66, 0.68, 0.69, 0.65, 0.58, 0.46, 0.41],
-  'East Jaintia Hills':     [0.38, 0.44, 0.52, 0.60, 0.63, 0.64, 0.66, 0.67, 0.63, 0.56, 0.44, 0.39],
-  'South West Khasi Hills': [0.35, 0.41, 0.50, 0.57, 0.60, 0.61, 0.63, 0.64, 0.60, 0.53, 0.41, 0.36],
+  'E. Khasi Hills':  [0.42, 0.48, 0.58, 0.65, 0.70, 0.72, 0.74, 0.75, 0.71, 0.65, 0.52, 0.44],
+  'W. Khasi Hills':  [0.38, 0.44, 0.54, 0.61, 0.66, 0.68, 0.70, 0.71, 0.67, 0.61, 0.48, 0.40],
+  'W. Jaintia Hills':[0.40, 0.46, 0.55, 0.62, 0.65, 0.66, 0.68, 0.69, 0.65, 0.58, 0.46, 0.41],
+  'E. Jaintia Hills':[0.38, 0.44, 0.52, 0.60, 0.63, 0.64, 0.66, 0.67, 0.63, 0.56, 0.44, 0.39],
+  'SW Khasi Hills':  [0.35, 0.41, 0.50, 0.57, 0.60, 0.61, 0.63, 0.64, 0.60, 0.53, 0.41, 0.36],
 };
 
 const STRESS_COLORS = { None: '#1B5E20', Low: '#388E3C', Medium: '#F9A825', High: '#C62828' };
@@ -60,21 +60,22 @@ export default function CropHealth() {
 
   const monthlyData = MONTHS.map((m, i) => {
     const row = { month: m };
-    Object.keys(MONTHLY_NDVI).forEach(d => { row[d.split(' ').slice(-2).join(' ')] = MONTHLY_NDVI[d][i]; });
+    Object.keys(MONTHLY_NDVI).forEach(d => { row[d] = MONTHLY_NDVI[d][i]; });
     return row;
   });
-  const districtKeys = Object.keys(MONTHLY_NDVI).map(d => d.split(' ').slice(-2).join(' '));
+  const districtKeys = Object.keys(MONTHLY_NDVI);
 
-  const selectedData = ndviData.find(d => d.district === selectedDistrict);
+  const selectedData  = ndviData.find(d => d.district === selectedDistrict);
+  const selectedLulc  = lulcData.find(d => d.district === selectedDistrict);
   const anomalyDistricts = ndviData.filter(d => d.anomalyFlag);
   const totalCoverHa = ndviData.reduce((sum, d) => sum + d.buckwheatCoverHa, 0);
-  const excellentCount = ndviData.filter(d => d.healthStatus === 'Excellent').length;
+  const goodOrBetterCount = ndviData.filter(d => d.healthStatus === 'Excellent' || d.healthStatus === 'Good').length;
   const highStressCount = ndviData.filter(d => d.moistureStress === 'High').length;
 
   return (
     <div>
       {/* ── Page Header ─────────────────────────────────────── */}
-      <div className="page-header" style={{ background: 'linear-gradient(135deg, #004D40 0%, #00695C 50%, #00897B 100%)' }}>
+      <div className="page-header" style={{ borderTop: '4px solid #00897B', background: "linear-gradient(135deg, rgba(232,245,233,0.70) 0%, rgba(241,248,233,0.70) 60%, rgba(250,255,248,0.70) 100%), url('/images/crop-health-aerial.jpg') center/cover no-repeat" }}>
         <div className="container">
           <div className="badge">Deliverable 5 · Sentinel-2 · {ndviData[0]?.season}</div>
           <h1>🛰 Crop Health Assessment (NDVI & NDWI)</h1>
@@ -88,7 +89,7 @@ export default function CropHealth() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 16 }}>
             {[
               { v: totalCoverHa.toLocaleString(), l: 'Total Buckwheat Cover (ha)', c: '#1B5E20', bg: '#E8F5E9' },
-              { v: excellentCount, l: 'Districts — Excellent Health', c: '#00695C', bg: '#E0F2F1' },
+              { v: goodOrBetterCount, l: 'Districts — Good Health', c: '#00695C', bg: '#E0F2F1' },
               { v: anomalyDistricts.length, l: 'NDVI Anomaly Alerts', c: '#C62828', bg: '#FFEBEE' },
               { v: highStressCount, l: 'High Moisture Stress Districts', c: '#E65100', bg: '#FFF3E0' },
             ].map(({ v, l, c, bg }) => (
@@ -101,85 +102,145 @@ export default function CropHealth() {
         </div>
       </section>
 
-      {/* ── Map + District Sidebar ──────────────────────────── */}
+      {/* ── Map + District Panel ────────────────────────────── */}
       <section className="section" style={{ background: '#fff' }}>
         <div className="container">
-          <div style={{ display: 'flex', gap: 12, marginBottom: 24, flexWrap: 'wrap', alignItems: 'center' }}>
-            <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-mid)' }}>Map Layer:</span>
-            {[['ndvi', '🌿 NDVI – Vegetation Health'], ['ndwi', '💧 NDWI – Moisture Stress']].map(([key, label]) => (
+          <div style={{ display: 'flex', gap: 10, marginBottom: 16, flexWrap: 'wrap', alignItems: 'center' }}>
+            <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-mid)' }}>Layer:</span>
+            {[['ndvi', '🌿 NDVI'], ['ndwi', '💧 NDWI']].map(([key, label]) => (
               <button key={key} onClick={() => setActiveLayer(key)} style={{
-                padding: '8px 18px', borderRadius: 8,
+                padding: '6px 14px', borderRadius: 8,
                 border: `2px solid ${activeLayer === key ? '#00695C' : 'var(--border)'}`,
                 background: activeLayer === key ? '#E0F2F1' : '#fff',
                 color: activeLayer === key ? '#004D40' : 'var(--text-mid)',
                 fontWeight: activeLayer === key ? 700 : 500,
-                fontSize: '0.88rem', cursor: 'pointer', transition: 'all 0.2s',
+                fontSize: '0.82rem', cursor: 'pointer', transition: 'all 0.2s',
               }}>{label}</button>
             ))}
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: 28 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: 20, alignItems: 'start' }}>
+            {/* Map */}
             <div>
               <div className="map-container">
                 <MeghalayaMap
                   colorFn={colorFn}
                   popupFn={popupFn}
-                  height="500px"
+                  height="520px"
                   legendItems={activeLayer === 'ndvi' ? ndviLegend : ndwiLegend}
                   legendTitle={activeLayer === 'ndvi' ? 'NDVI Index' : 'NDWI (Moisture)'}
                   defaultTile="satellite"
+                  onDistrictClick={d => setSelectedDistrict(d)}
                 />
               </div>
-              <p className="source-note">Sentinel-2 MSI Level-2A · 10m resolution · Google Earth Engine · {ndviData[0]?.sentinelDate}</p>
+              <p className="source-note">Sentinel-2 MSI · 10m · Google Earth Engine · {ndviData[0]?.sentinelDate} · Click district to select</p>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              <h3 style={{ fontFamily: 'var(--font-heading)', color: '#00695C', marginBottom: 4 }}>District Health Status</h3>
-              {[...ndviData].sort((a, b) => b.ndvi - a.ndvi).map(d => (
-                <div key={d.district} className="card card-sm"
-                  style={{ borderLeft: `4px solid ${getNDVIColor(d.ndvi)}`, padding: '10px 14px', cursor: 'pointer', background: selectedDistrict === d.district ? '#E0F2F1' : '#fff' }}
-                  onClick={() => setSelectedDistrict(d.district)}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
-                    <span style={{ fontWeight: 600, fontSize: '0.82rem' }}>{d.district}</span>
-                    <span style={{ fontWeight: 700, color: getNDVIColor(d.ndvi), fontSize: '0.9rem' }}>{d.ndvi}</span>
+            {/* Right panel — sticky, district list + inline detail */}
+            <div style={{ position: 'sticky', top: 70, display: 'flex', flexDirection: 'column', gap: 0 }}>
+
+              {/* District list — compact, scrollable */}
+              <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#00695C', textTransform: 'uppercase', letterSpacing: '0.4px', marginBottom: 6 }}>District Health Status</div>
+              <div style={{ maxHeight: 220, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 3, paddingRight: 2 }}>
+                {[...ndviData].sort((a, b) => b.ndvi - a.ndvi).map(d => (
+                  <div key={d.district}
+                    onClick={() => setSelectedDistrict(d.district)}
+                    style={{
+                      borderLeft: `3px solid ${getNDVIColor(d.ndvi)}`,
+                      padding: '6px 10px', cursor: 'pointer', borderRadius: '0 6px 6px 0',
+                      background: selectedDistrict === d.district ? '#E0F2F1' : '#F9FAFB',
+                      display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                      transition: 'background 0.15s',
+                    }}>
+                    <span style={{ fontWeight: selectedDistrict === d.district ? 700 : 500, fontSize: '0.76rem', color: '#1F2937' }}>{d.district}</span>
+                    <div style={{ display: 'flex', gap: 5, alignItems: 'center', flexShrink: 0 }}>
+                      {d.anomalyFlag && <span style={{ fontSize: '0.6rem', color: '#C62828' }}>⚠</span>}
+                      <span style={{ fontSize: '0.62rem', padding: '1px 5px', borderRadius: 20, background: (STRESS_COLORS[d.moistureStress] || '#999') + '22', color: STRESS_COLORS[d.moistureStress] || '#999', fontWeight: 600 }}>{d.moistureStress}</span>
+                      <span style={{ fontWeight: 800, color: getNDVIColor(d.ndvi), fontSize: '0.82rem', minWidth: 28, textAlign: 'right' }}>{d.ndvi}</span>
+                    </div>
                   </div>
-                  <div style={{ display: 'flex', gap: 6, fontSize: '0.72rem', flexWrap: 'wrap' }}>
-                    <span style={{ background: '#E0F2F1', color: '#004D40', padding: '1px 6px', borderRadius: 50, fontWeight: 600 }}>{d.healthStatus}</span>
-                    <span style={{ background: (STRESS_COLORS[d.moistureStress] || '#333') + '20', color: STRESS_COLORS[d.moistureStress] || '#333', padding: '1px 6px', borderRadius: 50, fontWeight: 600 }}>{d.moistureStress} Stress</span>
-                    {d.anomalyFlag && <span style={{ background: '#FFEBEE', color: '#C62828', padding: '1px 6px', borderRadius: 50, fontWeight: 600 }}>⚠ Anomaly</span>}
+                ))}
+              </div>
+
+              {/* Inline district detail */}
+              {selectedData ? (
+                <div style={{ marginTop: 12, borderTop: '2px solid #E0F2F1', paddingTop: 12 }}>
+                  {/* District name + health badge */}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
+                    <div>
+                      <div style={{ fontSize: '0.62rem', color: '#9CA3AF', textTransform: 'uppercase', letterSpacing: '0.3px' }}>Selected</div>
+                      <div style={{ fontWeight: 700, color: '#004D40', fontSize: '0.88rem', lineHeight: 1.2 }}>{selectedData.district}</div>
+                    </div>
+                    <span style={{
+                      fontSize: '0.65rem', fontWeight: 700, padding: '3px 8px', borderRadius: 20,
+                      background: selectedData.healthStatus === 'Excellent' ? '#E8F5E9' : selectedData.healthStatus === 'Good' ? '#FFF8E1' : '#FFEBEE',
+                      color: selectedData.healthStatus === 'Excellent' ? '#1B5E20' : selectedData.healthStatus === 'Good' ? '#E65100' : '#C62828',
+                      border: '1px solid currentColor',
+                    }}>{selectedData.healthStatus}{selectedData.anomalyFlag ? ' ⚠' : ''}</span>
                   </div>
+
+                  {/* 3×2 metric tiles */}
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 6, marginBottom: 12 }}>
+                    {[
+                      { label: 'NDVI',     value: selectedData.ndvi,                                         color: getNDVIColor(selectedData.ndvi) },
+                      { label: 'NDWI',     value: selectedData.ndwi,                                         color: '#1565C0' },
+                      { label: 'Stress',   value: selectedData.moistureStress,                               color: STRESS_COLORS[selectedData.moistureStress] || '#333' },
+                      { label: 'Veg %',    value: `${selectedData.vegetationCoverPct}%`,                     color: '#2E7D32' },
+                      { label: 'Crop ha',  value: selectedData.buckwheatCoverHa >= 1000
+                                                    ? `${(selectedData.buckwheatCoverHa/1000).toFixed(1)}k`
+                                                    : selectedData.buckwheatCoverHa,                          color: '#E65100' },
+                      { label: 'Δ Season', value: `${selectedData.ndvi >= selectedData.prevSeasonNDVI ? '+' : ''}${(selectedData.ndvi - selectedData.prevSeasonNDVI).toFixed(2)}`,
+                                                                                                              color: selectedData.ndvi >= selectedData.prevSeasonNDVI ? '#2E7D32' : '#C62828' },
+                    ].map(({ label, value, color }) => (
+                      <div key={label} style={{ background: '#F0FAF0', borderRadius: 7, padding: '6px 6px', textAlign: 'center', border: '1px solid #D1FAE5' }}>
+                        <div style={{ fontSize: '0.58rem', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '0.2px', marginBottom: 2 }}>{label}</div>
+                        <div style={{ fontSize: '0.85rem', fontWeight: 800, color, lineHeight: 1 }}>{value}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* LULC 2025-26 */}
+                  {selectedLulc && (
+                    <div>
+                      <div style={{ fontSize: '0.65rem', fontWeight: 700, color: '#374151', textTransform: 'uppercase', letterSpacing: '0.3px', marginBottom: 7 }}>LULC 2025-26 · ESRI 10m</div>
+                      {[
+                        { label: 'Forest',    value: selectedLulc.evergreenForestPct, color: '#2E7D32' },
+                        { label: 'Shrubland', value: selectedLulc.shrublandPct,       color: '#8BC34A' },
+                        { label: 'Cropland',  value: selectedLulc.croplandPct,        color: '#F9A825' },
+                        { label: 'Built-up',  value: selectedLulc.builtupPct,         color: '#78909C' },
+                      ].map(({ label, value, color }) => (
+                        <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+                          <div style={{ width: 52, fontSize: '0.62rem', color: '#374151', fontWeight: 600, textAlign: 'right', flexShrink: 0 }}>{label}</div>
+                          <div style={{ flex: 1, height: 6, background: '#F3F4F6', borderRadius: 3 }}>
+                            <div style={{ height: '100%', width: `${value}%`, background: color, borderRadius: 3, transition: 'width 0.4s' }} />
+                          </div>
+                          <div style={{ width: 34, fontSize: '0.62rem', color, fontWeight: 700, textAlign: 'right', flexShrink: 0 }}>{value}%</div>
+                        </div>
+                      ))}
+                      {/* Stacked bar */}
+                      <div style={{ display: 'flex', height: 7, borderRadius: 4, overflow: 'hidden', marginTop: 6 }}>
+                        {[
+                          { value: selectedLulc.evergreenForestPct, color: '#2E7D32' },
+                          { value: selectedLulc.shrublandPct,       color: '#8BC34A' },
+                          { value: selectedLulc.croplandPct,        color: '#F9A825' },
+                          { value: selectedLulc.builtupPct,         color: '#78909C' },
+                          { value: selectedLulc.otherPct,           color: '#BDBDBD' },
+                        ].map(({ value, color }, i) => (
+                          <div key={i} title={`${value}%`} style={{ width: `${value}%`, background: color }} />
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
-              ))}
+              ) : (
+                <div style={{ marginTop: 12, borderTop: '2px solid #E0F2F1', paddingTop: 14, textAlign: 'center', color: '#9CA3AF', fontSize: '0.76rem' }}>
+                  Click a district on the map or list to see details
+                </div>
+              )}
             </div>
           </div>
         </div>
       </section>
-
-      {/* ── Selected District Detail ────────────────────────── */}
-      {selectedData && (
-        <section className="section-sm" style={{ background: '#F1F8E9' }}>
-          <div className="container">
-            <h2 className="section-title" style={{ color: '#1B5E20' }}>{selectedData.district} — Detailed View</h2>
-            <div className="divider" style={{ width: 56, height: 4, background: 'linear-gradient(90deg, #1B5E20, #66BB6A)', borderRadius: 2, margin: '10px 0 24px' }} />
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 14 }}>
-              {[
-                { label: 'NDVI', value: selectedData.ndvi, sub: selectedData.ndviClass },
-                { label: 'NDWI', value: selectedData.ndwi, sub: `${selectedData.moistureStress} Stress` },
-                { label: 'Veg. Cover', value: `${selectedData.vegetationCoverPct}%`, sub: 'of district area' },
-                { label: 'Buckwheat Area', value: `${selectedData.buckwheatCoverHa.toLocaleString()} ha`, sub: 'satellite-mapped' },
-                { label: 'vs Last Season', value: selectedData.prevSeasonNDVI, sub: `Δ ${(selectedData.ndvi - selectedData.prevSeasonNDVI).toFixed(2)}` },
-                { label: 'Health Status', value: selectedData.healthStatus, sub: selectedData.anomalyFlag ? '⚠ Anomaly detected' : '✓ Normal' },
-              ].map(({ label, value, sub }) => (
-                <div key={label} className="card" style={{ padding: '14px 16px', textAlign: 'center' }}>
-                  <div style={{ fontSize: '0.7rem', color: 'var(--text-mid)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 6 }}>{label}</div>
-                  <div style={{ fontSize: '1.3rem', fontWeight: 700, color: '#1B5E20', fontFamily: 'var(--font-heading)' }}>{value}</div>
-                  <div style={{ fontSize: '0.72rem', color: 'var(--text-mid)', marginTop: 4 }}>{sub}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
 
       {/* ── Anomaly Alerts ──────────────────────────────────── */}
       {anomalyDistricts.length > 0 && (
@@ -215,7 +276,7 @@ export default function CropHealth() {
           <div className="grid-2">
             <div className="card">
               <h3 style={{ fontFamily: 'var(--font-heading)', color: '#004D40', marginBottom: 4 }}>Seasonal NDVI Trend – Top 5 Districts</h3>
-              <p className="text-muted text-sm" style={{ marginBottom: 20 }}>Monthly NDVI variation (2025) · Sentinel-2 derived</p>
+              <p className="text-muted text-sm" style={{ marginBottom: 20 }}>Monthly NDVI variation · 2025-26 · MODIS MOD13Q1</p>
               {/* TODO: replace MONTHLY_NDVI above with actual GEE time-series data per district */}
               <ResponsiveContainer width="100%" height={280}>
                 <LineChart data={monthlyData} margin={{ top: 5, right: 20, bottom: 30, left: 30 }}>
