@@ -1,0 +1,44 @@
+{
+  "baseline": {
+    "East Khasi Hills": 87,
+    "West Khasi Hills": 82,
+    "West Jaintia Hills": 78,
+    "South West Khasi Hills": 72,
+    "Eastern West Khasi Hills": 68,
+    "East Jaintia Hills": 65,
+    "Ri Bhoi": 58,
+    "North Garo Hills": 48,
+    "East Garo Hills": 42,
+    "West Garo Hills": 38,
+    "South Garo Hills": 35,
+    "South West Garo Hills": 32
+  },
+  "ssp126": {
+    "East Khasi Hills": 84,
+    "West Khasi Hills": 79,
+    "West Jaintia Hills": 75,
+    "South West Khasi Hills": 68,
+    "Eastern West Khasi Hills": 64,
+    "East Jaintia Hills": 61,
+    "Ri Bhoi": 53,
+    "North Garo Hills": 43,
+    "East Garo Hills": 37,
+    "West Garo Hills": 33,
+    "South Garo Hills": 30,
+    "South West Garo Hills": 27
+  },
+  "ssp585": {
+    "East Khasi Hills": 71,
+    "West Khasi Hills": 66,
+    "West Jaintia Hills": 62,
+    "South West Khasi Hills": 54,
+    "Eastern West Khasi Hills": 50,
+    "East Jaintia Hills": 46,
+    "Ri Bhoi": 37,
+    "North Garo Hills": 28,
+    "East Garo Hills": 23,
+    "West Garo Hills": 19,
+    "South Garo Hills": 17,
+    "South West Garo Hills": 14
+  }
+}

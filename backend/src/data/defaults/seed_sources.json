@@ -1,0 +1,30 @@
+[
+  {
+    "source": "Own saved seed (unimproved)",
+    "farmersPct": 62,
+    "color": "#92400E",
+    "risk": "high",
+    "riskNote": "Progressive genetic erosion over seasons — yield decline ~8% per season without varietal renewal"
+  },
+  {
+    "source": "Neighbour / community exchange",
+    "farmersPct": 24,
+    "color": "#D97706",
+    "risk": "medium",
+    "riskNote": "Variable seed quality; disease transmission risk if source farm had infection"
+  },
+  {
+    "source": "MFEC / government supply (improved)",
+    "farmersPct": 10,
+    "color": "#16A34A",
+    "risk": "low",
+    "riskNote": "Certified, improved varieties (VL-7, PRB-1). Yield potential 2–3× own-saved seed."
+  },
+  {
+    "source": "Purchased from market",
+    "farmersPct": 4,
+    "color": "#2563EB",
+    "risk": "medium",
+    "riskNote": "Unverified source; potential counterfeit or off-type seed"
+  }
+]

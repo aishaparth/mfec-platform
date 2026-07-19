@@ -1,0 +1,110 @@
+[
+  {
+    "district": "East Khasi Hills",
+    "buckwheat": 87,
+    "plum": 91,
+    "peach": 88,
+    "passionFruit": 75,
+    "overallRank": 1,
+    "aucScore": 0.89
+  },
+  {
+    "district": "West Khasi Hills",
+    "buckwheat": 82,
+    "plum": 86,
+    "peach": 83,
+    "passionFruit": 70,
+    "overallRank": 2,
+    "aucScore": 0.86
+  },
+  {
+    "district": "West Jaintia Hills",
+    "buckwheat": 78,
+    "plum": 80,
+    "peach": 76,
+    "passionFruit": 72,
+    "overallRank": 3,
+    "aucScore": 0.83
+  },
+  {
+    "district": "South West Khasi Hills",
+    "buckwheat": 72,
+    "plum": 75,
+    "peach": 71,
+    "passionFruit": 65,
+    "overallRank": 4,
+    "aucScore": 0.8
+  },
+  {
+    "district": "Eastern West Khasi Hills",
+    "buckwheat": 68,
+    "plum": 70,
+    "peach": 67,
+    "passionFruit": 68,
+    "overallRank": 5,
+    "aucScore": 0.78
+  },
+  {
+    "district": "East Jaintia Hills",
+    "buckwheat": 65,
+    "plum": 68,
+    "peach": 63,
+    "passionFruit": 78,
+    "overallRank": 6,
+    "aucScore": 0.76
+  },
+  {
+    "district": "Ri Bhoi",
+    "buckwheat": 58,
+    "plum": 55,
+    "peach": 52,
+    "passionFruit": 82,
+    "overallRank": 7,
+    "aucScore": 0.74
+  },
+  {
+    "district": "North Garo Hills",
+    "buckwheat": 48,
+    "plum": 42,
+    "peach": 40,
+    "passionFruit": 72,
+    "overallRank": 8,
+    "aucScore": 0.72
+  },
+  {
+    "district": "East Garo Hills",
+    "buckwheat": 42,
+    "plum": 38,
+    "peach": 36,
+    "passionFruit": 78,
+    "overallRank": 9,
+    "aucScore": 0.71
+  },
+  {
+    "district": "West Garo Hills",
+    "buckwheat": 38,
+    "plum": 35,
+    "peach": 33,
+    "passionFruit": 80,
+    "overallRank": 10,
+    "aucScore": 0.7
+  },
+  {
+    "district": "South Garo Hills",
+    "buckwheat": 35,
+    "plum": 30,
+    "peach": 28,
+    "passionFruit": 73,
+    "overallRank": 11,
+    "aucScore": 0.72
+  },
+  {
+    "district": "South West Garo Hills",
+    "buckwheat": 32,
+    "plum": 28,
+    "peach": 26,
+    "passionFruit": 75,
+    "overallRank": 12,
+    "aucScore": 0.71
+  }
+]

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const CROP_LINKS = [
   { label: 'Buckwheat', path: '/buckwheat-suitability' },
@@ -18,6 +19,8 @@ const NAV_LINKS = [
 
 export default function Navbar() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { session, logout } = useAuth();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [cropsOpen, setCropsOpen] = useState(false);
@@ -124,6 +127,25 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
+
+          {session && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginLeft: 10, paddingLeft: 10, borderLeft: '1px solid #E4EBE4' }}>
+              {session.role === 'admin' && (
+                <Link to="/admin/dashboard" style={{ ...linkStyle(location.pathname === '/admin/dashboard'), fontWeight: 600 }}>
+                  Admin Panel
+                </Link>
+              )}
+              <span style={{ fontSize: '0.72rem', color: '#6B7280', background: '#F0FDF4', border: '1px solid #BBF7D0', borderRadius: 20, padding: '4px 10px', whiteSpace: 'nowrap' }}>
+                {session.name} · {session.role === 'admin' ? 'Admin' : 'Governance'}
+              </span>
+              <button
+                onClick={() => { logout(); navigate('/login'); }}
+                style={{ fontSize: '0.78rem', fontWeight: 600, color: '#C62828', background: 'none', border: 'none', cursor: 'pointer', padding: '6px 8px' }}
+              >
+                Sign Out
+              </button>
+            </div>
+          )}
         </nav>
 
         {/* Hamburger */}
@@ -175,6 +197,25 @@ export default function Navbar() {
               textDecoration: 'none', display: 'block',
             }}>{link.label}</Link>
           ))}
+
+          {session && (
+            <div style={{ marginTop: 8, paddingTop: 12, borderTop: '1px solid #E4EBE4' }}>
+              {session.role === 'admin' && (
+                <Link to="/admin/dashboard" style={{ color: '#2E7D32', fontWeight: 600, fontSize: '0.9rem', padding: '10px 12px', display: 'block', textDecoration: 'none' }}>
+                  Admin Panel
+                </Link>
+              )}
+              <div style={{ fontSize: '0.78rem', color: '#6B7280', padding: '4px 12px' }}>
+                {session.name} · {session.role === 'admin' ? 'Admin' : 'Governance'}
+              </div>
+              <button
+                onClick={() => { logout(); navigate('/login'); }}
+                style={{ fontSize: '0.9rem', fontWeight: 600, color: '#C62828', background: 'none', border: 'none', cursor: 'pointer', padding: '10px 12px', textAlign: 'left', width: '100%' }}
+              >
+                Sign Out
+              </button>
+            </div>
+          )}
         </div>
       )}
 

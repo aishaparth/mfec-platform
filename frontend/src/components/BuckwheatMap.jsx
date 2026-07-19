@@ -38,12 +38,16 @@ export default function BuckwheatMap({
   segmentMeta = {},
   showBRIC = false,
   bricHubs = [],
+  showVillages = false,
+  showRoads = false,
   height = '540px',
   onDistrictClick,
   selectedDistrict: highlightedDistrict,
 }) {
   const districts = useGeoJSON('/geojson/districts.json');
   const state     = useGeoJSON('/geojson/state.json');
+  const villages  = useGeoJSON(showVillages ? '/geojson/villages.json' : null);
+  const roads     = useGeoJSON(showRoads    ? '/geojson/roads.json'    : null);
 
   const distKey = `${scenarioKey}-${colorFn?.toString().slice(0, 50)}`;
 
@@ -59,6 +63,13 @@ export default function BuckwheatMap({
     };
   };
   const styleState = () => ({ fill: false, weight: 3, color: '#1B5E20', opacity: 0.9 });
+  const styleVillage = () => ({ fillColor: '#FFF9C4', fillOpacity: 0.45, weight: 0.5, color: '#F9A825', opacity: 0.65 });
+  const styleRoad = (f) => {
+    const hw = f?.properties?.highway || '';
+    const c = { trunk: '#C62828', primary: '#E65100', secondary: '#F9A825', tertiary: '#4CAF50', trunk_link: '#C62828', primary_link: '#E65100', secondary_link: '#F9A825', tertiary_link: '#4CAF50' };
+    const w = { trunk: 3, primary: 2.5, secondary: 2, tertiary: 1.5, trunk_link: 2, primary_link: 2, secondary_link: 1.5, tertiary_link: 1 };
+    return { fill: false, weight: w[hw] || 1.5, color: c[hw] || '#9CA3AF', opacity: 0.85 };
+  };
 
   const onEachDistrict = (feature, layer) => {
     const p = feature.properties;
@@ -97,6 +108,19 @@ export default function BuckwheatMap({
 
         {state     && <GeoJSON key="state"    data={state}     style={styleState} />}
         {districts && <GeoJSON key={distKey}  data={districts} style={styleDistrict} onEachFeature={onEachDistrict} />}
+        {showVillages && villages && (
+          <GeoJSON key="villages" data={villages} style={styleVillage}
+            onEachFeature={(f, l) => l.bindTooltip(f.properties?.name || 'Village', { sticky: true, className: 'district-tooltip' })}
+          />
+        )}
+        {showRoads && roads && (
+          <GeoJSON key="roads" data={roads} style={styleRoad}
+            onEachFeature={(f, l) => {
+              const p = f.properties || {};
+              l.bindTooltip(`${(p.highway || 'road').toUpperCase()}${p.ref ? ' · ' + p.ref : ''}`, { sticky: true, className: 'district-tooltip' });
+            }}
+          />
+        )}
 
         {/* ── BRIC Hub-and-Spoke overlay ───────────────────────────────── */}
         {showBRIC && bricHubs.map(hub => (

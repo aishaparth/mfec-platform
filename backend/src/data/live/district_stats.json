@@ -1,0 +1,134 @@
+[
+  {
+    "district": "East Khasi Hills",
+    "activeFarmers": 14,
+    "dropoutFarmers": 18,
+    "totalFarmers": 32,
+    "revivalWilling": 15,
+    "medianYield_kg": 18,
+    "avgArea_ha": 0.22,
+    "primaryDropoutReason": "No guaranteed buyer",
+    "interventionPriority": 1
+  },
+  {
+    "district": "West Khasi Hills",
+    "activeFarmers": 35,
+    "dropoutFarmers": 22,
+    "totalFarmers": 57,
+    "revivalWilling": 18,
+    "medianYield_kg": 22,
+    "avgArea_ha": 0.28,
+    "primaryDropoutReason": "Low price realisation",
+    "interventionPriority": 1
+  },
+  {
+    "district": "West Jaintia Hills",
+    "activeFarmers": 4,
+    "dropoutFarmers": 81,
+    "totalFarmers": 85,
+    "revivalWilling": 69,
+    "medianYield_kg": 8,
+    "avgArea_ha": 0.14,
+    "primaryDropoutReason": "No guidance / technical support",
+    "interventionPriority": 1
+  },
+  {
+    "district": "South West Khasi Hills",
+    "activeFarmers": 2,
+    "dropoutFarmers": 18,
+    "totalFarmers": 20,
+    "revivalWilling": 15,
+    "medianYield_kg": 11,
+    "avgArea_ha": 0.16,
+    "primaryDropoutReason": "No guidance / technical support",
+    "interventionPriority": 2
+  },
+  {
+    "district": "Eastern West Khasi Hills",
+    "activeFarmers": 0,
+    "dropoutFarmers": 11,
+    "totalFarmers": 11,
+    "revivalWilling": 9,
+    "medianYield_kg": 0,
+    "avgArea_ha": 0,
+    "primaryDropoutReason": "No guidance / technical support",
+    "interventionPriority": 2
+  },
+  {
+    "district": "East Jaintia Hills",
+    "activeFarmers": 0,
+    "dropoutFarmers": 9,
+    "totalFarmers": 9,
+    "revivalWilling": 8,
+    "medianYield_kg": 0,
+    "avgArea_ha": 0,
+    "primaryDropoutReason": "Weather/crop loss",
+    "interventionPriority": 2
+  },
+  {
+    "district": "Ri Bhoi",
+    "activeFarmers": 0,
+    "dropoutFarmers": 8,
+    "totalFarmers": 8,
+    "revivalWilling": 6,
+    "medianYield_kg": 0,
+    "avgArea_ha": 0,
+    "primaryDropoutReason": "No guaranteed buyer",
+    "interventionPriority": 3
+  },
+  {
+    "district": "North Garo Hills",
+    "activeFarmers": 0,
+    "dropoutFarmers": 5,
+    "totalFarmers": 5,
+    "revivalWilling": 3,
+    "medianYield_kg": 0,
+    "avgArea_ha": 0,
+    "primaryDropoutReason": "No suitable crop variety",
+    "interventionPriority": 3
+  },
+  {
+    "district": "East Garo Hills",
+    "activeFarmers": 0,
+    "dropoutFarmers": 3,
+    "totalFarmers": 3,
+    "revivalWilling": 2,
+    "medianYield_kg": 0,
+    "avgArea_ha": 0,
+    "primaryDropoutReason": "No suitable crop variety",
+    "interventionPriority": 3
+  },
+  {
+    "district": "West Garo Hills",
+    "activeFarmers": 0,
+    "dropoutFarmers": 2,
+    "totalFarmers": 2,
+    "revivalWilling": 1,
+    "medianYield_kg": 0,
+    "avgArea_ha": 0,
+    "primaryDropoutReason": "No suitable crop variety",
+    "interventionPriority": 3
+  },
+  {
+    "district": "South Garo Hills",
+    "activeFarmers": 0,
+    "dropoutFarmers": 2,
+    "totalFarmers": 2,
+    "revivalWilling": 1,
+    "medianYield_kg": 0,
+    "avgArea_ha": 0,
+    "primaryDropoutReason": "No suitable crop variety",
+    "interventionPriority": 3
+  },
+  {
+    "district": "South West Garo Hills",
+    "activeFarmers": 0,
+    "dropoutFarmers": 1,
+    "totalFarmers": 1,
+    "revivalWilling": 1,
+    "medianYield_kg": 0,
+    "avgArea_ha": 0,
+    "primaryDropoutReason": "No suitable crop variety",
+    "interventionPriority": 3
+  }
+]

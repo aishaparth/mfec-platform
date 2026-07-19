@@ -1,4 +1,4 @@
-// ── 12 Real Meghalaya Districts (from Districts_12 shapefile) ─────────────
+// ── 12 Real Meghalaya Districts (from data/Districts_12 shapefile) ─────────────
 export const suitabilityData = [
   { district: 'East Khasi Hills',         buckwheat: 87, plum: 91, peach: 88, passionFruit: 75, overallRank: 1,  aucScore: 0.89 },
   { district: 'West Khasi Hills',         buckwheat: 82, plum: 86, peach: 83, passionFruit: 70, overallRank: 2,  aucScore: 0.86 },
@@ -77,7 +77,7 @@ export const waterData = [
   { district: 'South West Garo Hills',    rainfall: 1950, cwrBuckwheat: 350, cwrPlum: 720, cwrPeach: 680, cwrPassionFruit: 1400, waterClass: 'Medium',    irrigation: 'Minimal', adequacy: 'High'      },
 ];
 
-// ── 46 Real Blocks (from Blocks_46 shapefile) ─────────────────────────────
+// ── 46 Real Blocks (from data/Blocks_46 shapefile) ─────────────────────────────
 export const priorityBlocks = {
   'East Khasi Hills': [
     { block: 'Mawlai',                score: 92, areaSqKm: 32   },
@@ -194,7 +194,7 @@ export function getWaterColor(cls) {
 }
 
 // ── Terrain (DEM) Data · SRTM · Zonal Stats per District ────────────────────
-// Source: DEM, Slope & Aspect rasters (EPSG:32646) · rasterstats.zonal_stats()
+// Source: data/DEM, Slope & Aspect rasters (EPSG:32646) · rasterstats.zonal_stats()
 // elevMin/Max/Mean in metres · slopeMean/Max in degrees
 // terrainClass: Optimal ≥1000m | Good ≥700m | Marginal ≥400m | Unsuitable <400m
 export const demData = [
@@ -213,7 +213,7 @@ export const demData = [
 ];
 
 // ── LULC 2025-26 · ESRI 10m Annual Land Cover · Zonal Stats per District ────
-// Source: LULC25_26 raster (EPSG:32646) · rasterstats.zonal_stats()
+// Source: data/LULC25_26 raster (EPSG:32646) · rasterstats.zonal_stats()
 // All percentages rounded to 1 dp; otherPct = water + flooded + bare + sparse
 export const lulcData = [
   { district: 'East Khasi Hills',         evergreenForestPct: 66.3, shrublandPct: 21.3, builtupPct: 9.0, croplandPct: 2.9,  otherPct: 0.5 },

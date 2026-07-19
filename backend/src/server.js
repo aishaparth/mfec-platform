@@ -7,6 +7,8 @@ const suitabilityRoutes = require('./routes/suitability');
 const climateRoutes = require('./routes/climate');
 const cropHealthRoutes = require('./routes/crophealth');
 const waterRoutes = require('./routes/water');
+const authRoutes = require('./routes/auth');
+const datasetsRoutes = require('./routes/datasets');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -19,6 +21,8 @@ app.use('/api/suitability', suitabilityRoutes);
 app.use('/api/climate', climateRoutes);
 app.use('/api/crophealth', cropHealthRoutes);
 app.use('/api/water', waterRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/datasets', datasetsRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({

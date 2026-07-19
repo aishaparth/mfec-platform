@@ -41,6 +41,8 @@ function useGeoJSON(url) {
  *   blockPopupFn(feature) → string optional block popup
  *   showBlocks    – show Blocks_46 overlay (default false)
  *   showState     – show State_Boundary outline (default true)
+ *   showVillages  – show meghalaya_Village overlay (default false, lazy-loaded)
+ *   showRoads     – show Roads_OSM major roads overlay (default false, lazy-loaded)
  *   height        – CSS height (default '520px')
  *   showLayerControl – tile switcher (default true)
  *   defaultTile   – 'topo'|'streets'|'carto'|'satellite'
@@ -52,8 +54,10 @@ export default function MeghalayaMap({
   popupFn,
   blockColorFn,
   blockPopupFn,
-  showBlocks = false,
-  showState  = true,
+  showBlocks    = false,
+  showState     = true,
+  showVillages  = false,
+  showRoads     = false,
   height = '520px',
   showLayerControl = true,
   defaultTile = 'topo',
@@ -62,8 +66,10 @@ export default function MeghalayaMap({
   onDistrictClick,
 }) {
   const districts = useGeoJSON('/geojson/districts.json');
-  const blocks    = useGeoJSON(showBlocks ? '/geojson/blocks.json' : null);
-  const state     = useGeoJSON(showState  ? '/geojson/state.json'  : null);
+  const blocks    = useGeoJSON(showBlocks   ? '/geojson/blocks.json'   : null);
+  const state     = useGeoJSON(showState    ? '/geojson/state.json'    : null);
+  const villages  = useGeoJSON(showVillages ? '/geojson/villages.json' : null);
+  const roads     = useGeoJSON(showRoads    ? '/geojson/roads.json'    : null);
 
   const districtKey = colorFn ? colorFn.toString().slice(0, 60) : 'default';
 
@@ -80,6 +86,18 @@ export default function MeghalayaMap({
   const styleState = () => ({
     fill: false, weight: 3, color: '#1B5E20', opacity: 0.9,
   });
+
+  const styleVillage = () => ({
+    fillColor: '#FFF9C4', fillOpacity: 0.5,
+    weight: 0.5, color: '#F9A825', opacity: 0.7,
+  });
+
+  const styleRoad = (f) => {
+    const hw = f?.properties?.highway || '';
+    const colors = { trunk: '#C62828', primary: '#E65100', secondary: '#F9A825', tertiary: '#4CAF50', trunk_link: '#C62828', primary_link: '#E65100', secondary_link: '#F9A825', tertiary_link: '#4CAF50' };
+    const widths = { trunk: 3, primary: 2.5, secondary: 2, tertiary: 1.5, trunk_link: 2, primary_link: 2, secondary_link: 1.5, tertiary_link: 1 };
+    return { fill: false, weight: widths[hw] || 1.5, color: colors[hw] || '#9CA3AF', opacity: 0.85 };
+  };
 
   const onEachDistrict = (feature, layer) => {
     const p = feature.properties;
@@ -142,6 +160,23 @@ export default function MeghalayaMap({
         {/* Block overlay */}
         {showBlocks && blocks && (
           <GeoJSON key={`blk-${districtKey}`} data={blocks} style={styleBlock} onEachFeature={onEachBlock} />
+        )}
+
+        {/* Village overlay (lazy-loaded on toggle) */}
+        {showVillages && villages && (
+          <GeoJSON key="villages" data={villages} style={styleVillage}
+            onEachFeature={(f, l) => l.bindTooltip(f.properties?.name || f.properties?.villagenam || 'Village', { sticky: true, className: 'district-tooltip' })}
+          />
+        )}
+
+        {/* Roads overlay — major roads only (lazy-loaded on toggle) */}
+        {showRoads && roads && (
+          <GeoJSON key="roads" data={roads} style={styleRoad}
+            onEachFeature={(f, l) => {
+              const p = f.properties || {};
+              l.bindTooltip(`${p.highway?.toUpperCase() || 'ROAD'}${p.ref ? ' · ' + p.ref : ''}`, { sticky: true, className: 'district-tooltip' });
+            }}
+          />
         )}
 
         {!districts && (

@@ -1,0 +1,80 @@
+// Synthetic data — replace with real KoboToolbox export when available
+// Source: Final_Report_Buckwheat_v9.0_22_06_2026 · n=180 dropout farmers
+// Multi-select question: "Why did you stop growing buckwheat?"
+// count = number of farmers who cited this reason (multiple reasons allowed per farmer)
+// When real data arrives: update count values; labels should remain the same
+
+export const dropoutReasons = [
+  {
+    reason: 'No technical guidance / extension support',
+    count: 141,
+    pct: 78.3,
+    category: 'support',
+    color: '#DC2626',
+    actionable: true,
+    action: 'Deploy crop-stage technical visits in Priority 1 districts',
+  },
+  {
+    reason: 'No guaranteed buyer / offtake',
+    count: 128,
+    pct: 71.1,
+    category: 'market',
+    color: '#D97706',
+    actionable: true,
+    action: 'Secure committed buyers and communicate MSP before restarting seed supply',
+  },
+  {
+    reason: 'Low price realisation',
+    count: 97,
+    pct: 53.9,
+    category: 'market',
+    color: '#F59E0B',
+    actionable: true,
+    action: 'Establish transparent price discovery mechanism and aggregation through BRIC hubs',
+  },
+  {
+    reason: 'Crop loss / weather damage',
+    count: 72,
+    pct: 40.0,
+    category: 'climate',
+    color: '#7C3AED',
+    actionable: true,
+    action: 'Introduce crop insurance and climate-resilient variety trials',
+  },
+  {
+    reason: 'Lack of improved seed varieties',
+    count: 54,
+    pct: 30.0,
+    category: 'inputs',
+    color: '#0891B2',
+    actionable: true,
+    action: 'Prioritise improved variety distribution (VL-7, PRB-1) through BRIC seed banks',
+  },
+  {
+    reason: 'Shifted to other crops (substitution)',
+    count: 43,
+    pct: 23.9,
+    category: 'substitution',
+    color: '#059669',
+    actionable: false,
+    action: 'Demonstrate comparative economics — buckwheat vs broom grass vs potato',
+  },
+  {
+    reason: 'No collective / group farming support',
+    count: 38,
+    pct: 21.1,
+    category: 'support',
+    color: '#BE185D',
+    actionable: true,
+    action: 'Form Farmer Interest Groups (FIGs) as BRIC spoke coordinators',
+  },
+  {
+    reason: 'Pest and disease pressure',
+    count: 22,
+    pct: 12.2,
+    category: 'inputs',
+    color: '#92400E',
+    actionable: false,
+    action: 'Include IPM training in technical visit curriculum',
+  },
+];

@@ -1,0 +1,38 @@
+[
+  {
+    "crop": "Broom grass",
+    "farmers": 61,
+    "pct": 33.9,
+    "color": "#16A34A"
+  },
+  {
+    "crop": "Potato",
+    "farmers": 47,
+    "pct": 26.1,
+    "color": "#D97706"
+  },
+  {
+    "crop": "Maize",
+    "farmers": 31,
+    "pct": 17.2,
+    "color": "#F59E0B"
+  },
+  {
+    "crop": "Ginger",
+    "farmers": 22,
+    "pct": 12.2,
+    "color": "#7C3AED"
+  },
+  {
+    "crop": "Vegetables (mixed)",
+    "farmers": 14,
+    "pct": 7.8,
+    "color": "#059669"
+  },
+  {
+    "crop": "Left field fallow",
+    "farmers": 5,
+    "pct": 2.8,
+    "color": "#9CA3AF"
+  }
+]
