@@ -18,13 +18,14 @@ const FIELD_TO_KEY = {
   scenarioScores:      'scenario_scores',
   activeFarmers:       'active_farmers',
   dropoutFarmers:      'dropout_farmers',
+  groundwaterStations: 'groundwater_stations',
 };
 
 const EMPTY_STATE = {
   suitabilityData: [], dropoutReasons: [], returnConditions: [], yieldBands: [],
   seedSources: [], cropSubstitution: [], districtStats: [], blockLevel: [],
   winemakers: [], scenarioScores: { baseline: {}, ssp126: {}, ssp585: {} },
-  activeFarmers: [], dropoutFarmers: [],
+  activeFarmers: [], dropoutFarmers: [], groundwaterStations: [],
 };
 
 export function DataProvider({ children }) {
@@ -116,6 +117,7 @@ export function DataProvider({ children }) {
     setScenarioScores:   (d) => update('scenarioScores', d),
     setActiveFarmers:    (d) => update('activeFarmers', d),
     setDropoutFarmers:   (d) => update('dropoutFarmers', d),
+    setGroundwaterStations: (d) => update('groundwaterStations', d),
 
     resetSuitabilityData:  () => reset('suitabilityData'),
     resetDropoutReasons:   () => reset('dropoutReasons'),
@@ -129,6 +131,7 @@ export function DataProvider({ children }) {
     resetScenarioScores:   () => reset('scenarioScores'),
     resetActiveFarmers:    () => reset('activeFarmers'),
     resetDropoutFarmers:   () => reset('dropoutFarmers'),
+    resetGroundwaterStations: () => reset('groundwaterStations'),
   };
 
   return <DataContext.Provider value={ctx}>{children}</DataContext.Provider>;

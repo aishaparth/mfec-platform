@@ -95,7 +95,7 @@ export default function ClimateRisk() {
     <div>
       <div className="page-header" style={{ borderTop: '4px solid #C62828', background: "linear-gradient(135deg, rgba(232,245,233,0.72) 0%, rgba(241,248,233,0.72) 60%, rgba(250,255,248,0.72) 100%), url('/images/climate-earth.jpg') center/cover no-repeat" }}>
         <div className="container">
-          <div className="badge">Deliverable 6 · WorldClim · IMD</div>
+          <div className="badge">WorldClim · IMD</div>
           <h1>🌡 Climate Suitability & Risk Analysis</h1>
           <p>Historical climate assessment including frost risk mapping for buckwheat, temperature suitability for wine fruits, and rainfall adequacy evaluation using WorldClim v2.1 and IMD station data.</p>
         </div>

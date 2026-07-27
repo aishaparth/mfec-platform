@@ -47,7 +47,7 @@ export default function PriorityZones() {
     <div>
       <div className="page-header" style={{ borderTop: '4px solid #F57C00', background: "linear-gradient(135deg, rgba(232,245,233,0.84) 0%, rgba(241,248,233,0.84) 60%, rgba(250,255,248,0.84) 100%), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1600&q=60&fit=crop&crop=center') center/cover no-repeat" }}>
         <div className="container">
-          <div className="badge">Deliverable 8 · Priority Zone Report</div>
+          <div className="badge">Priority Zone Report</div>
           <h1>🏆 Priority Zone Identification</h1>
           <p>Top 5 priority cultivation blocks per district ranked by buckwheat suitability potential. Area estimation under each suitability class. District-wise ranking based on MaxEnt model outputs and terrain analysis.</p>
         </div>

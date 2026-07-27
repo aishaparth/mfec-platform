@@ -2,11 +2,18 @@ import React, { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, ComposedChart, Line, Legend, CartesianGrid, ReferenceLine } from 'recharts';
 import MeghalayaMap from '../components/MeghalayaMap';
 import { waterData, getWaterColor } from '../data/districtData';
+import { useData } from '../context/DataContext';
+import { GROUNDWATER_AGENCY_COLORS } from '../components/mapOverlays';
 
 export default function WaterManagement() {
-  const [view, setView] = useState('availability');
+  const { groundwaterStations } = useData();
   const [selectedDistrict, setSelectedDistrict] = useState('West Khasi Hills');
   const selectedWater = waterData.find(d => d.district === selectedDistrict);
+
+  const gwStations = Array.isArray(groundwaterStations) ? groundwaterStations : [];
+  const gwCGWB = gwStations.filter(g => g.agency === 'CGWB').length;
+  const gwTelemetric = gwStations.filter(g => g.telemetric).length;
+  const gwDistrictsCovered = new Set(gwStations.map(g => g.district)).size;
 
   const chartData = waterData.map(d => ({
     district: d.district.split(' ').slice(-2).join(' '),
@@ -60,7 +67,7 @@ export default function WaterManagement() {
     <div>
       <div className="page-header" style={{ borderTop: '4px solid #0277BD', background: "linear-gradient(135deg, rgba(225,245,254,0.70) 0%, rgba(232,245,233,0.70) 60%, rgba(240,248,255,0.70) 100%), url('/images/water-stream.jpg') center/cover no-repeat" }}>
         <div className="container">
-          <div className="badge">Deliverable 7 · Water Management</div>
+          <div className="badge">Water Management</div>
           <h1>💧 Water Management Insights</h1>
           <p>Crop Water Requirement (CWR) estimation, rainfall adequacy assessment, and seasonal water availability analysis for buckwheat and wine fruit cultivation across Meghalaya.</p>
         </div>
@@ -68,42 +75,25 @@ export default function WaterManagement() {
 
       <section className="section" style={{ background: '#fff' }}>
         <div className="container">
-          <div className="stats-row">
-            <div className="stat-card" style={{ borderTop: '4px solid #0D47A1', background: '#E3F2FD' }}>
-              <div className="stat-value" style={{ color: '#0D47A1' }}>350mm</div>
-              <div className="stat-label">Buckwheat CWR / Season</div>
-              <div className="stat-note">Well below state average rainfall</div>
-            </div>
-            <div className="stat-card" style={{ borderTop: '4px solid #0288D1', background: '#E1F5FE' }}>
-              <div className="stat-value" style={{ color: '#0288D1' }}>680mm</div>
-              <div className="stat-label">Peach CWR / Season</div>
-              <div className="stat-note">Met in most Khasi districts</div>
-            </div>
-            <div className="stat-card" style={{ borderTop: '4px solid #1565C0', background: '#E3F2FD' }}>
-              <div className="stat-value" style={{ color: '#1565C0' }}>720mm</div>
-              <div className="stat-label">Plum CWR / Season</div>
-              <div className="stat-note">Met in Khasi & Jaintia Hills</div>
-            </div>
-            <div className="stat-card" style={{ borderTop: '4px solid #7B1FA2', background: '#F3E5F5' }}>
-              <div className="stat-value" style={{ color: '#7B1FA2' }}>1,400mm</div>
-              <div className="stat-label">Passion Fruit CWR / Year</div>
-              <div className="stat-note">Requires consistent moisture</div>
-            </div>
-            <div className="stat-card" style={{ borderTop: '4px solid #1B5E20', background: '#E8F5E9' }}>
-              <div className="stat-value" style={{ color: '#1B5E20' }}>9.1x</div>
-              <div className="stat-label">Max Adequacy Ratio</div>
-              <div className="stat-note">W. Khasi Hills (3,200÷350)</div>
-            </div>
-            <div className="stat-card" style={{ borderTop: '4px solid #E65100', background: '#FBE9E7' }}>
-              <div className="stat-value" style={{ color: '#E65100' }}>5.3x</div>
-              <div className="stat-label">Min Adequacy Ratio</div>
-              <div className="stat-note">Ri Bhoi (1,850÷350)</div>
-            </div>
-            <div className="stat-card" style={{ borderTop: '4px solid #00695C', background: '#E0F2F1' }}>
-              <div className="stat-value" style={{ color: '#00695C' }}>7</div>
-              <div className="stat-label">Districts – No Irrigation</div>
-              <div className="stat-note">Rain-fed cultivation viable</div>
-            </div>
+          <div style={{ display: 'flex', gap: 8, marginBottom: 10, flexWrap: 'nowrap', overflowX: 'auto' }}>
+            {[
+              { v: '350mm',   l: 'Buckwheat CWR / Season',    c: '#0D47A1', bg: '#E3F2FD' },
+              { v: '680mm',   l: 'Peach CWR / Season',        c: '#0288D1', bg: '#E1F5FE' },
+              { v: '720mm',   l: 'Plum CWR / Season',         c: '#1565C0', bg: '#E3F2FD' },
+              { v: '1,400mm', l: 'Passion Fruit CWR / Year',  c: '#7B1FA2', bg: '#F3E5F5' },
+              { v: '9.1x',    l: 'Max Adequacy Ratio',        c: '#1B5E20', bg: '#E8F5E9' },
+              { v: '5.3x',    l: 'Min Adequacy Ratio',        c: '#E65100', bg: '#FBE9E7' },
+              { v: '7',       l: 'Districts – No Irrigation', c: '#00695C', bg: '#E0F2F1' },
+            ].map(s => (
+              <div key={s.l} style={{ flex: '1 1 0', minWidth: 118, borderTop: `3px solid ${s.c}`, background: s.bg, borderRadius: 8, padding: '9px 10px' }}>
+                <div style={{ fontSize: '1.15rem', fontWeight: 800, color: s.c, fontFamily: 'var(--font-heading)', lineHeight: 1.1 }}>{s.v}</div>
+                <div style={{ fontSize: '0.66rem', color: 'var(--text-mid)', fontWeight: 500, marginTop: 3, lineHeight: 1.25 }}>{s.l}</div>
+              </div>
+            ))}
+          </div>
+          <div style={{ background: '#F7FAF7', border: '1px solid var(--border)', borderRadius: 8, padding: '10px 14px', marginBottom: 24, fontSize: '0.78rem', color: 'var(--text-mid)', lineHeight: 1.6 }}>
+            <strong style={{ color: 'var(--text-dark)' }}>How to read these: </strong>
+            The first four figures are each crop's <strong>Crop Water Requirement (CWR)</strong> — how much rainfall it needs across a season, calculated using the Penman-Monteith method. The <strong>Adequacy Ratio</strong> is a district's annual rainfall divided by buckwheat's 350mm requirement — e.g. West Khasi Hills gets 9.1× what buckwheat needs, so water is never the limiting factor there, while Ri Bhoi's 5.3× is the state's tightest margin (still well above the 1× minimum). <strong>7 districts need no irrigation at all</strong> for buckwheat, since their rainfall alone clears the requirement.
           </div>
 
           <h2 className="section-title" style={{ marginBottom: 4 }}>Water Availability Map</h2>
@@ -119,9 +109,10 @@ export default function WaterManagement() {
                   legendTitle="Water Availability"
                   defaultTile="topo"
                   onDistrictClick={d => setSelectedDistrict(d)}
+                  groundwaterStations={gwStations}
                 />
               </div>
-              <p className="source-note">IMD rainfall stations · Survey of India stream networks · WorldClim precipitation layers · Click district to select</p>
+              <p className="source-note">IMD rainfall stations · Survey of India stream networks · WorldClim precipitation layers · India-WRIS/CGWB groundwater station registry (real locations, see note below) · Click district to select</p>
             </div>
 
             <div style={{ position: 'sticky', top: 70 }}>
@@ -235,6 +226,75 @@ export default function WaterManagement() {
               </ResponsiveContainer>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Groundwater Monitoring */}
+      <section className="section-sm" style={{ background: 'var(--bg-page)' }}>
+        <div className="container">
+          <h2 className="section-title" style={{ marginBottom: 4 }}>Groundwater Monitoring</h2>
+          <p className="section-subtitle" style={{ marginBottom: 16 }}>Real CGWB / India-WRIS groundwater station registry — shown as the “💧 Groundwater Stations” layer on the map above (toggle it on via the layers icon).</p>
+
+          <div className="stats-row" style={{ marginBottom: 24 }}>
+            <div className="stat-card" style={{ borderTop: '4px solid #1565C0', background: '#E3F2FD' }}>
+              <div className="stat-value" style={{ color: '#1565C0' }}>{gwStations.length}</div>
+              <div className="stat-label">Monitoring Stations</div>
+              <div className="stat-note">India-WRIS / CGWB registry</div>
+            </div>
+            <div className="stat-card" style={{ borderTop: '4px solid #0288D1', background: '#E1F5FE' }}>
+              <div className="stat-value" style={{ color: '#0288D1' }}>{gwDistrictsCovered}</div>
+              <div className="stat-label">Districts Covered</div>
+              <div className="stat-note">of 12 Meghalaya districts</div>
+            </div>
+            <div className="stat-card" style={{ borderTop: '4px solid #1565C0', background: '#E3F2FD' }}>
+              <div className="stat-value" style={{ color: '#1565C0' }}>{gwCGWB}</div>
+              <div className="stat-label">CGWB Stations</div>
+              <div className="stat-note">Central Ground Water Board</div>
+            </div>
+            <div className="stat-card" style={{ borderTop: '4px solid #8E24AA', background: '#F3E5F5' }}>
+              <div className="stat-value" style={{ color: '#8E24AA' }}>{gwStations.length - gwCGWB}</div>
+              <div className="stat-label">State (Meghalaya) Stations</div>
+              <div className="stat-note">Meghalaya state agency</div>
+            </div>
+            <div className="stat-card" style={{ borderTop: '4px solid #F9A825', background: '#FFF8E1' }}>
+              <div className="stat-value" style={{ color: '#B8860B' }}>{gwTelemetric}</div>
+              <div className="stat-label">Telemetric Stations</div>
+              <div className="stat-note">real-time automated monitoring</div>
+            </div>
+          </div>
+
+          <div style={{ overflowX: 'auto' }}>
+            <table className="data-table">
+              <thead>
+                <tr>
+                  <th>Station</th>
+                  <th>District</th>
+                  <th>Block</th>
+                  <th>Agency</th>
+                  <th>Monitoring Mode</th>
+                  <th>River Basin</th>
+                  <th>Established</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[...gwStations].sort((a, b) => (a.district || '').localeCompare(b.district || '')).map(st => (
+                  <tr key={st.id}>
+                    <td style={{ fontWeight: 600 }}>{st.name}</td>
+                    <td>{st.district}</td>
+                    <td>{st.block || '—'}</td>
+                    <td><span style={{ fontWeight: 700, color: GROUNDWATER_AGENCY_COLORS[st.agency] || '#374151' }}>{st.agency}</span></td>
+                    <td>{st.telemetric ? '📡 Telemetric' : 'Manual'}</td>
+                    <td style={{ fontSize: '0.78rem', color: 'var(--text-light)' }}>{st.basin || '—'}</td>
+                    <td style={{ fontSize: '0.78rem', color: 'var(--text-light)' }}>{st.established || '—'}</td>
+                  </tr>
+                ))}
+                {gwStations.length === 0 && (
+                  <tr><td colSpan={7} style={{ textAlign: 'center', color: 'var(--text-light)', padding: 20 }}>No groundwater stations loaded.</td></tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+          <p className="source-note" style={{ marginTop: 12 }}>Real station registry: 70 groundwater monitoring stations from the India-WRIS / Central Ground Water Board (CGWB) network for Meghalaya, including station location, operating agency, telemetry status, river basin, and CGWB hydrogeology classification codes. This registry does not include water-level readings or quality results (a separate WRIS time-series dataset, not yet integrated) — add or update stations, or attach reading data as it becomes available, via the Admin panel's Groundwater Stations tab.</p>
         </div>
       </section>
 

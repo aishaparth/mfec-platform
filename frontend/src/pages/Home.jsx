@@ -167,7 +167,7 @@ ${INSIGHTS.map(ins => `
 </div>
 
 <div class="footer">
-MFEC GeoAI Platform · PO-DS-AGRI-2026-27-01 · 22 May – 31 August 2026 · MaxEnt v3.4.4 · WorldClim v2.1 · MODIS MOD13Q1 · Sentinel-2 · ESRI LULC 2025-26
+MFEC GeoAI Platform · 22 May – 31 August 2026 · MaxEnt v3.4.4 · WorldClim v2.1 · MODIS MOD13Q1 · Sentinel-2 · ESRI LULC 2025-26
 </div>
 </body></html>`;
 }
@@ -214,7 +214,7 @@ export default function Home() {
   };
 
   const legendItems = [
-    { color: '#1B5E20', label: 'High (75–100)' },
+    { color: '#5F7D68', label: 'High (75–100)' },
     { color: '#388E3C', label: 'Good (60–74)' },
     { color: '#8BC34A', label: 'Medium (50–59)' },
     { color: '#FDD835', label: 'Low (40–49)' },
@@ -229,19 +229,19 @@ export default function Home() {
       {/* HERO — two-column: headline + right intelligence panel             */}
       {/* ═══════════════════════════════════════════════════════════════════ */}
       <section style={{
-        minHeight: '100vh', display: 'flex', alignItems: 'center',
-        background: 'linear-gradient(160deg, #0D1B0E 0%, #1B3A1F 40%, #0A2614 70%, #122B15 100%)',
+        display: 'flex', alignItems: 'center',
+        background: 'linear-gradient(160deg, #1E2420 0%, #2C362E 40%, #1A231C 70%, #212B22 100%)',
         position: 'relative', overflow: 'hidden',
       }}>
-        <div style={{ position: 'absolute', top: -120, right: -120, width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle, rgba(102,187,106,0.07) 0%, transparent 70%)' }} />
+        <div style={{ position: 'absolute', top: -120, right: -120, width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle, rgba(140,168,147,0.07) 0%, transparent 70%)' }} />
         <div style={{ position: 'absolute', bottom: -80, left: -80, width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(249,168,37,0.05) 0%, transparent 70%)' }} />
 
         {/* Download button — top right */}
         <button onClick={downloadReport} style={{
           position: 'absolute', top: 24, right: 24, zIndex: 10,
           display: 'flex', alignItems: 'center', gap: 7,
-          background: 'rgba(255,255,255,0.1)', border: '1.5px solid rgba(165,214,167,0.4)',
-          color: '#A5D6A7', borderRadius: 8, padding: '8px 16px', fontSize: '0.78rem',
+          background: 'rgba(255,255,255,0.1)', border: '1.5px solid rgba(183,201,187,0.4)',
+          color: '#B7C9BB', borderRadius: 8, padding: '8px 16px', fontSize: '0.78rem',
           fontWeight: 600, cursor: 'pointer', backdropFilter: 'blur(6px)',
           transition: 'background 0.2s',
         }}
@@ -251,23 +251,22 @@ export default function Home() {
           ↓ Download Executive Brief
         </button>
 
-        <div className="container" style={{ padding: '100px 24px 80px', width: '100%' }}>
+        <div className="container" style={{ padding: '52px 24px 44px', width: '100%' }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 310px', gap: 52, alignItems: 'center' }}>
 
             {/* LEFT: headline + CTAs + quick stats */}
             <div>
               <div style={{ display: 'flex', gap: 8, marginBottom: 22, flexWrap: 'wrap' }}>
-                <span style={{ background: 'rgba(102,187,106,0.15)', border: '1px solid rgba(102,187,106,0.3)', color: '#A5D6A7', fontSize: '0.72rem', fontWeight: 600, padding: '5px 14px', borderRadius: 50, letterSpacing: '0.6px', textTransform: 'uppercase' }}>PO-DS-AGRI-2026-27-01</span>
                 <span style={{ background: 'rgba(249,168,37,0.12)', border: '1px solid rgba(249,168,37,0.25)', color: '#FFD54F', fontSize: '0.72rem', fontWeight: 600, padding: '5px 14px', borderRadius: 50, letterSpacing: '0.6px', textTransform: 'uppercase' }}>MaxEnt · AUC 0.992</span>
               </div>
 
               <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(2.2rem, 5.5vw, 3.8rem)', color: '#fff', lineHeight: 1.2, marginBottom: 18 }}>
                 Meghalaya Agricultural<br />
-                <span style={{ color: '#66BB6A' }}>Intelligence Platform</span>
+                <span style={{ color: '#8CA893' }}>Intelligence Platform</span>
               </h1>
 
               <p style={{ fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', color: 'rgba(255,255,255,0.7)', lineHeight: 1.8, marginBottom: 12, maxWidth: 600 }}>
-                Advanced geospatial analysis supporting the <strong style={{ color: '#A5D6A7' }}>MFEC Buckwheat and Fruit Wine Initiatives</strong>. Habitat suitability modelling, satellite crop health, and climate-risk analytics across all 12 districts.
+                Advanced geospatial analysis supporting the <strong style={{ color: '#B7C9BB' }}>MFEC Buckwheat and Fruit Wine Initiatives</strong>. Habitat suitability modelling, satellite crop health, and climate-risk analytics across all 12 districts.
               </p>
               <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.4)', marginBottom: 32 }}>
                 Client: Meghalaya Farmers' Empowerment Commission Development (MFEC) · Government of Meghalaya
@@ -277,7 +276,7 @@ export default function Home() {
                 <Link to="/dashboard" className="btn btn-primary" style={{ background: '#2E7D32', fontSize: '0.9rem', padding: '12px 26px' }}>
                   📊 Open Dashboard
                 </Link>
-                <Link to="/buckwheat-suitability" className="btn btn-outline" style={{ color: '#A5D6A7', border: '2px solid rgba(165,214,167,0.4)', padding: '12px 26px', fontSize: '0.9rem' }}>
+                <Link to="/buckwheat-suitability" className="btn btn-outline" style={{ color: '#B7C9BB', border: '2px solid rgba(183,201,187,0.4)', padding: '12px 26px', fontSize: '0.9rem' }}>
                   🗺 Suitability Maps
                 </Link>
               </div>
@@ -290,8 +289,8 @@ export default function Home() {
                   { v: '46',    l: 'Priority Blocks' },
                   { v: '>0.70', l: 'Target AUC Score' },
                 ].map(s => (
-                  <div key={s.l} style={{ borderLeft: '3px solid rgba(102,187,106,0.4)', paddingLeft: 14 }}>
-                    <div style={{ color: '#66BB6A', fontSize: '1.55rem', fontWeight: 700, fontFamily: 'var(--font-heading)', lineHeight: 1 }}>{s.v}</div>
+                  <div key={s.l} style={{ borderLeft: '3px solid rgba(140,168,147,0.4)', paddingLeft: 14 }}>
+                    <div style={{ color: '#8CA893', fontSize: '1.55rem', fontWeight: 700, fontFamily: 'var(--font-heading)', lineHeight: 1 }}>{s.v}</div>
                     <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '0.72rem', marginTop: 4 }}>{s.l}</div>
                   </div>
                 ))}
@@ -299,13 +298,13 @@ export default function Home() {
             </div>
 
             {/* RIGHT: Latest Intelligence panel */}
-            <div style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(102,187,106,0.18)', borderRadius: 16, padding: '24px 22px', backdropFilter: 'blur(4px)' }}>
-              <div style={{ fontSize: '0.6rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1.5px', color: '#86EFAC', marginBottom: 18 }}>
+            <div style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(140,168,147,0.18)', borderRadius: 16, padding: '24px 22px', backdropFilter: 'blur(4px)' }}>
+              <div style={{ fontSize: '0.6rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1.5px', color: '#A8C4AC', marginBottom: 18 }}>
                 Latest Field Intelligence · June 2026
               </div>
 
               {[
-                { v: '235',   l: 'Farmers Surveyed',    n: 'Buckwheat field survey',          c: '#86EFAC' },
+                { v: '235',   l: 'Farmers Surveyed',    n: 'Buckwheat field survey',          c: '#A8C4AC' },
                 { v: '76.6%', l: 'Dropout Rate',         n: '180 of 235 farmers discontinued', c: '#FCA5A5' },
                 { v: '85%',   l: 'Will Return',           n: 'Given the right conditions',      c: '#6EE7B7' },
                 { v: '0.992', l: 'Model AUC Accuracy',   n: 'MaxEnt climate model — excellent', c: '#93C5FD' },
@@ -321,12 +320,12 @@ export default function Home() {
 
               <button onClick={downloadReport} style={{
                 width: '100%', marginTop: 18, padding: '11px 0',
-                background: 'rgba(102,187,106,0.15)', border: '1.5px solid rgba(102,187,106,0.35)',
-                color: '#86EFAC', borderRadius: 8, fontSize: '0.82rem', fontWeight: 700,
+                background: 'rgba(140,168,147,0.15)', border: '1.5px solid rgba(140,168,147,0.35)',
+                color: '#A8C4AC', borderRadius: 8, fontSize: '0.82rem', fontWeight: 700,
                 cursor: 'pointer', transition: 'background 0.2s',
               }}
-                onMouseEnter={e => e.currentTarget.style.background = 'rgba(102,187,106,0.25)'}
-                onMouseLeave={e => e.currentTarget.style.background = 'rgba(102,187,106,0.15)'}
+                onMouseEnter={e => e.currentTarget.style.background = 'rgba(140,168,147,0.25)'}
+                onMouseLeave={e => e.currentTarget.style.background = 'rgba(140,168,147,0.15)'}
               >
                 ↓ Download Executive PDF Brief
               </button>
@@ -339,11 +338,11 @@ export default function Home() {
       {/* ═══════════════════════════════════════════════════════════════════ */}
       {/* 3 DECISIONS THIS SEASON — action strip                            */}
       {/* ═══════════════════════════════════════════════════════════════════ */}
-      <div style={{ background: 'linear-gradient(90deg, #071208, #0F2210, #071208)', borderTop: '1px solid rgba(102,187,106,0.15)', borderBottom: '1px solid rgba(102,187,106,0.15)' }}>
+      <div style={{ background: 'linear-gradient(90deg, #141713, #1E241C, #141713)', borderTop: '1px solid rgba(140,168,147,0.15)', borderBottom: '1px solid rgba(140,168,147,0.15)' }}>
         <div className="container" style={{ padding: '22px 24px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: '180px 1fr 1fr 1fr', gap: 24, alignItems: 'center' }}>
             <div>
-              <div style={{ fontSize: '0.58rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1.5px', color: '#86EFAC', marginBottom: 5 }}>3 Decisions Needed</div>
+              <div style={{ fontSize: '0.58rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1.5px', color: '#A8C4AC', marginBottom: 5 }}>3 Decisions Needed</div>
               <div style={{ fontFamily: 'var(--font-heading)', color: '#fff', fontWeight: 700, fontSize: '1rem', lineHeight: 1.3 }}>This Programme Season</div>
             </div>
             {[
@@ -355,7 +354,7 @@ export default function Home() {
                 <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
                   <span style={{ fontSize: '1.3rem', lineHeight: 1, flexShrink: 0, marginTop: 2 }}>{a.icon}</span>
                   <div>
-                    <div style={{ color: '#66BB6A', fontWeight: 700, fontSize: '0.8rem', marginBottom: 5 }}>{a.label}</div>
+                    <div style={{ color: '#8CA893', fontWeight: 700, fontSize: '0.8rem', marginBottom: 5 }}>{a.label}</div>
                     <div style={{ color: 'rgba(255,255,255,0.48)', fontSize: '0.72rem', lineHeight: 1.6 }}>{a.note}</div>
                   </div>
                 </div>
@@ -372,7 +371,7 @@ export default function Home() {
         <div className="container">
           <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap', marginBottom: 16 }}>
             <div>
-              <div className="badge" style={{ background: '#E8F5E9', color: 'var(--primary)', border: '1px solid #A5D6A7', padding: '4px 14px', borderRadius: 50, fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.4px', display: 'inline-block', marginBottom: 8 }}>Interactive Map</div>
+              <div className="badge" style={{ background: '#E6ECE4', color: 'var(--primary)', border: '1px solid #B7C9BB', padding: '4px 14px', borderRadius: 50, fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.4px', display: 'inline-block', marginBottom: 8 }}>Interactive Map</div>
               <h2 className="section-title" style={{ marginBottom: 6 }}>District Suitability Overview</h2>
               <div className="divider" style={{ width: 56, height: 4, background: 'linear-gradient(90deg, var(--primary), var(--accent))', borderRadius: 2, margin: '8px 0 10px' }} />
               <p className="section-subtitle" style={{ marginBottom: 0 }}>Click any district to inspect crop scores. Toggle crops to compare suitability across all 4 programmes.</p>
@@ -395,21 +394,21 @@ export default function Home() {
               </p>
 
               {/* Glossary */}
-              <div style={{ background: '#F0FDF4', border: '1px solid #BBF7D0', borderRadius: 10, padding: '13px 15px', marginTop: 12 }}>
-                <div style={{ fontSize: '0.67rem', fontWeight: 700, color: '#065F46', textTransform: 'uppercase', letterSpacing: '0.4px', marginBottom: 10 }}>📖 What do these numbers mean?</div>
+              <div style={{ background: '#F0F2EF', border: '1px solid #BBF7D0', borderRadius: 10, padding: '13px 15px', marginTop: 12 }}>
+                <div style={{ fontSize: '0.67rem', fontWeight: 700, color: '#3F5A47', textTransform: 'uppercase', letterSpacing: '0.4px', marginBottom: 10 }}>📖 What do these numbers mean?</div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0 20px' }}>
                   {[
                     { icon: '🎯', term: 'Suitability Score (0–100)', def: 'How well a district matches ideal growing conditions — climate, elevation, rainfall. 90+ = near-perfect fit. Think of it as a "crop happiness index".' },
                     { icon: '📊', term: 'AUC Score (0–1)',            def: 'Model accuracy. 0.992 = 99.2% correct at predicting where crops grow. Above 0.70 is scientifically reliable; ours is excellent.' },
                     { icon: '🏆', term: 'Top District Score',         def: 'The highest score any single district achieved for that crop — showing exactly where farmers and policymakers should invest first.' },
                   ].map(({ icon, term, def }, i, arr) => (
-                    <div key={term} style={{ paddingRight: i < arr.length - 1 ? 20 : 0, borderRight: i < arr.length - 1 ? '1px solid #D1FAE5' : 'none' }}>
-                      <div style={{ fontWeight: 700, fontSize: '0.68rem', color: '#065F46', marginBottom: 3 }}>{icon} {term}</div>
+                    <div key={term} style={{ paddingRight: i < arr.length - 1 ? 20 : 0, borderRight: i < arr.length - 1 ? '1px solid #E1E8E2' : 'none' }}>
+                      <div style={{ fontWeight: 700, fontSize: '0.68rem', color: '#3F5A47', marginBottom: 3 }}>{icon} {term}</div>
                       <div style={{ fontSize: '0.66rem', color: '#374151', lineHeight: 1.55 }}>{def}</div>
                     </div>
                   ))}
                 </div>
-                <div style={{ marginTop: 10, fontSize: '0.6rem', color: '#6B7280', fontStyle: 'italic', borderTop: '1px solid #D1FAE5', paddingTop: 8 }}>
+                <div style={{ marginTop: 10, fontSize: '0.6rem', color: '#6B7280', fontStyle: 'italic', borderTop: '1px solid #E1E8E2', paddingTop: 8 }}>
                   Model: MaxEnt v3.4.4 · Climate: WorldClim v2.1 bioclim variables · Satellite: MODIS MOD13Q1, Sentinel-2
                 </div>
               </div>
@@ -420,7 +419,7 @@ export default function Home() {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 7 }}>
                 {[
                   { v: '22,429',    l: 'State Area (km²)',       n: 'Meghalaya total',          icon: '🗺', color: '#1565C0', bg: '#E3F2FD' },
-                  { v: '87/100',    l: 'Top Buckwheat Score',    n: 'East Khasi Hills',         icon: '🌾', color: '#1B5E20', bg: '#E8F5E9' },
+                  { v: '87/100',    l: 'Top Buckwheat Score',    n: 'East Khasi Hills',         icon: '🌾', color: '#5F7D68', bg: '#E6ECE4' },
                   { v: '91/100',    l: 'Top Plum Score',         n: 'East Khasi Hills',         icon: '🫐', color: '#4A148C', bg: '#F3E5F5' },
                   { v: '88/100',    l: 'Top Peach Score',        n: 'East Khasi Hills',         icon: '🍑', color: '#BF360C', bg: '#FBE9E7' },
                   { v: '82/100',    l: 'Top Passion Fruit',      n: 'Ri Bhoi District',         icon: '🥭', color: '#E65100', bg: '#FFF3E0' },
@@ -448,19 +447,19 @@ export default function Home() {
         <div className="container">
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 32, flexWrap: 'wrap', gap: 16 }}>
             <div>
-              <div style={{ fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', color: '#1B5E20', marginBottom: 7 }}>Evidence-Based · For Officials</div>
+              <div style={{ fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', color: '#5F7D68', marginBottom: 7 }}>Evidence-Based · For Officials</div>
               <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(1.6rem, 3vw, 2.2rem)', color: '#0F172A', lineHeight: 1.2, margin: 0 }}>
-                4 Decisions That <span style={{ color: '#1B5E20' }}>Cannot Wait</span>
+                4 Decisions That <span style={{ color: '#5F7D68' }}>Cannot Wait</span>
               </h2>
             </div>
             <button onClick={downloadReport} style={{
               display: 'flex', alignItems: 'center', gap: 8,
-              background: '#1B5E20', color: '#fff', border: 'none',
+              background: '#5F7D68', color: '#fff', border: 'none',
               borderRadius: 9, padding: '11px 22px', fontSize: '0.85rem',
               fontWeight: 700, cursor: 'pointer', transition: 'background 0.2s', flexShrink: 0,
             }}
-              onMouseEnter={e => e.currentTarget.style.background = '#145214'}
-              onMouseLeave={e => e.currentTarget.style.background = '#1B5E20'}
+              onMouseEnter={e => e.currentTarget.style.background = '#4B6352'}
+              onMouseLeave={e => e.currentTarget.style.background = '#5F7D68'}
             >
               ↓ Download PDF Brief
             </button>
@@ -515,13 +514,13 @@ export default function Home() {
       {/* ═══════════════════════════════════════════════════════════════════ */}
       {/* CROPS FEATURE BAND                                                 */}
       {/* ═══════════════════════════════════════════════════════════════════ */}
-      <section style={{ background: 'linear-gradient(160deg, #0D1B0E 0%, #1B3A1F 50%, #0A2614 100%)', padding: '52px 0' }}>
+      <section style={{ background: 'linear-gradient(160deg, #1E2420 0%, #2C362E 50%, #1A231C 100%)', padding: '52px 0' }}>
         <div className="container">
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 32, flexWrap: 'wrap', gap: 12 }}>
             <div>
-              <div style={{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', color: '#A5D6A7', marginBottom: 8 }}>MaxEnt · WorldClim v2.1 · GBIF Occurrences</div>
+              <div style={{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', color: '#B7C9BB', marginBottom: 8 }}>MaxEnt · WorldClim v2.1 · GBIF Occurrences</div>
               <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(1.6rem, 3vw, 2.2rem)', color: '#fff', margin: 0, lineHeight: 1.2 }}>
-                Crops Under <span style={{ color: '#66BB6A' }}>Analysis</span>
+                Crops Under <span style={{ color: '#8CA893' }}>Analysis</span>
               </h2>
             </div>
             <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.85rem', maxWidth: 380, lineHeight: 1.65, margin: 0 }}>

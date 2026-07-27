@@ -29,8 +29,8 @@ function triggerDownload(filename, content, type) {
 
 const BTN = {
   greenOutline: {
-    padding: '6px 14px', borderRadius: 7, border: '1.5px solid #2E7D32',
-    color: '#2E7D32', background: 'white', cursor: 'pointer', fontSize: '0.8rem',
+    padding: '6px 14px', borderRadius: 7, border: '1.5px solid #5F7D68',
+    color: '#5F7D68', background: 'white', cursor: 'pointer', fontSize: '0.8rem',
     fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: 5,
     fontFamily: 'inherit',
   },
@@ -48,7 +48,7 @@ const BTN = {
   },
   greenFill: {
     padding: '6px 14px', borderRadius: 7, border: 'none',
-    color: 'white', background: '#2E7D32', cursor: 'pointer', fontSize: '0.8rem',
+    color: 'white', background: '#5F7D68', cursor: 'pointer', fontSize: '0.8rem',
     fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: 5,
     fontFamily: 'inherit',
   },
@@ -65,8 +65,8 @@ const CARD = {
 
 const TH_STYLE = {
   padding: '7px 10px',
-  background: '#F0FDF4',
-  color: '#166534',
+  background: '#F0F2EF',
+  color: '#4B6352',
   fontSize: '0.68rem',
   textTransform: 'uppercase',
   fontWeight: 700,
@@ -78,9 +78,9 @@ const TH_STYLE = {
 // ─── KpiStrip ────────────────────────────────────────────────────────────────
 
 function KpiStrip({ items, color }) {
-  const bg   = color === 'purple' ? '#F5F3FF' : '#F0FDF4';
-  const bord = color === 'purple' ? '#DDD6FE' : '#BBF7D0';
-  const txt  = color === 'purple' ? '#4A148C' : '#166534';
+  const bg   = color === 'purple' ? '#F5F3FF' : '#F0F2EF';
+  const bord = color === 'purple' ? '#DDD6FE' : '#C7D6CB';
+  const txt  = color === 'purple' ? '#4A148C' : '#4B6352';
   return (
     <div style={{ display: 'grid', gridTemplateColumns: `repeat(${items.length}, 1fr)`, gap: 10, marginBottom: 14 }}>
       {items.map((item, i) => (
@@ -96,7 +96,7 @@ function KpiStrip({ items, color }) {
 // ─── InlineBarChart ───────────────────────────────────────────────────────────
 
 function InlineBarChart({ data, valueKey, labelKey, color }) {
-  const barColor = color || '#2E7D32';
+  const barColor = color || '#5F7D68';
   const top5 = [...data].sort((a, b) => (b[valueKey] || 0) - (a[valueKey] || 0)).slice(0, 5);
   const max = Math.max(...top5.map(d => d[valueKey] || 0), 1);
   return (
@@ -253,7 +253,7 @@ function DatasetPanel({ title, subtitle, data, columns, onSave, onReset, storage
           <div style={{ fontSize: '1rem', fontWeight: 700, color: '#1A2332', fontFamily: 'var(--font-heading)' }}>{title}</div>
           {subtitle && <div style={{ fontSize: '0.77rem', color: '#6B7280', marginTop: 3 }}>{subtitle}</div>}
         </div>
-        <span style={{ fontSize: '0.68rem', color: '#166534', background: '#DCFCE7', border: '1px solid #86EFAC', borderRadius: 20, padding: '3px 10px', whiteSpace: 'nowrap', flexShrink: 0 }}>
+        <span style={{ fontSize: '0.68rem', color: '#4B6352', background: '#E6ECE4', border: '1px solid #A8C4AC', borderRadius: 20, padding: '3px 10px', whiteSpace: 'nowrap', flexShrink: 0 }}>
           {formatTS(lastUpdated)}
         </span>
       </div>
@@ -365,7 +365,7 @@ function ScenarioPanel({ scenarioScores, setScenarioScores, resetScenarioScores,
   ];
 
   function scoreStyle(v) {
-    if (v >= 75) return { background: '#DCFCE7', color: '#166534' };
+    if (v >= 75) return { background: '#E6ECE4', color: '#4B6352' };
     if (v >= 50) return { background: '#FEF9C3', color: '#713F12' };
     return { background: '#FEE2E2', color: '#991B1B' };
   }
@@ -390,7 +390,7 @@ function ScenarioPanel({ scenarioScores, setScenarioScores, resetScenarioScores,
             MaxEnt climate-only model (AUC = 0.992) · Buckwheat suitability across three climate futures
           </div>
         </div>
-        <span style={{ fontSize: '0.68rem', color: '#166534', background: '#DCFCE7', border: '1px solid #86EFAC', borderRadius: 20, padding: '3px 10px', whiteSpace: 'nowrap', flexShrink: 0 }}>
+        <span style={{ fontSize: '0.68rem', color: '#4B6352', background: '#E6ECE4', border: '1px solid #A8C4AC', borderRadius: 20, padding: '3px 10px', whiteSpace: 'nowrap', flexShrink: 0 }}>
           {formatTS(lastUpdated && lastUpdated['scenario_scores'])}
         </span>
       </div>
@@ -479,6 +479,7 @@ export default function AdminDashboard() {
     scenarioScores,   setScenarioScores,   resetScenarioScores,
     activeFarmers,    setActiveFarmers,    resetActiveFarmers,
     dropoutFarmers,   setDropoutFarmers,   resetDropoutFarmers,
+    groundwaterStations, setGroundwaterStations, resetGroundwaterStations,
     lastUpdated,
   } = useData();
 
@@ -581,6 +582,20 @@ export default function AdminDashboard() {
     { key: 'lastYield_kg',   label: 'Last Yield (kg)', type: 'number' },
   ];
 
+  const COLS_GROUNDWATER = [
+    { key: 'id',           label: 'Station ID',    type: 'text', readonly: true },
+    { key: 'name',         label: 'Station Name',  type: 'text' },
+    { key: 'district',     label: 'District',      type: 'text' },
+    { key: 'block',        label: 'Block',         type: 'text' },
+    { key: 'lat',          label: 'Lat',           type: 'number' },
+    { key: 'lon',          label: 'Lon',           type: 'number' },
+    { key: 'agency',       label: 'Agency',        type: 'select', options: ['CGWB', 'Meghalaya'] },
+    { key: 'telemetric',   label: 'Telemetric',    type: 'select', options: ['true', 'false'] },
+    { key: 'basin',        label: 'River Basin',   type: 'text' },
+    { key: 'established',  label: 'Established',   type: 'text' },
+    { key: 'geologyCode',  label: 'Geology Code (CGWB)', type: 'text' },
+  ];
+
   // ── Derived KPIs ──────────────────────────────────────────────────────────
 
   const safeDistStats = Array.isArray(districtStats) ? districtStats : [];
@@ -600,7 +615,7 @@ export default function AdminDashboard() {
   function suitCellStyle(key, val) {
     if (!['buckwheat', 'plum', 'peach', 'passionFruit'].includes(key)) return {};
     const n = Number(val);
-    if (n >= 75) return { background: '#DCFCE7', color: '#166534', fontWeight: 700 };
+    if (n >= 75) return { background: '#E6ECE4', color: '#4B6352', fontWeight: 700 };
     if (n >= 50) return { background: '#FEF9C3', color: '#713F12', fontWeight: 700 };
     return { background: '#FEE2E2', color: '#991B1B', fontWeight: 700 };
   }
@@ -620,6 +635,7 @@ export default function AdminDashboard() {
     { name: 'Scenario Scores',         key: 'scenario_scores', data: scenarioScores,   reset: resetScenarioScores, isObj: true },
     { name: 'Active Farmers (GPS)',    key: 'active_farmers',  data: activeFarmers,    reset: resetActiveFarmers },
     { name: 'Dropout Farmers (GPS)',   key: 'dropout_farmers', data: dropoutFarmers,   reset: resetDropoutFarmers },
+    { name: 'Groundwater Stations',    key: 'groundwater_stations', data: groundwaterStations, reset: resetGroundwaterStations },
   ];
 
   function handleExportAll() {
@@ -666,7 +682,7 @@ export default function AdminDashboard() {
     { name: 'state.json',     desc: 'State boundary',   size: '~45 KB' },
   ];
 
-  const TABS = ['Buckwheat Programme', 'Wine Fruits Survey', 'Suitability Scores', 'Farmer GPS Data', 'System & Export'];
+  const TABS = ['Buckwheat Programme', 'Wine Fruits Survey', 'Suitability Scores', 'Farmer GPS Data', 'Groundwater Stations', 'System & Export'];
 
   // ── Render ────────────────────────────────────────────────────────────────
 
@@ -675,7 +691,7 @@ export default function AdminDashboard() {
 
       {/* ── Top bar ── */}
       <div style={{
-        background: 'linear-gradient(135deg, #0F1F10, #1B3A22)',
+        background: 'linear-gradient(135deg, #262E28, #384338)',
         height: 64,
         position: 'sticky',
         top: 0,
@@ -693,7 +709,7 @@ export default function AdminDashboard() {
             <div style={{ fontSize: '0.92rem', fontWeight: 700, color: 'white', fontFamily: 'var(--font-heading, sans-serif)', letterSpacing: '0.01em' }}>
               MFEC Admin Dashboard
             </div>
-            <div style={{ fontSize: '0.65rem', color: '#86EFAC', letterSpacing: '0.03em', marginTop: 1 }}>
+            <div style={{ fontSize: '0.65rem', color: '#A8C4AC', letterSpacing: '0.03em', marginTop: 1 }}>
               Data Management Panel
             </div>
           </div>
@@ -713,7 +729,7 @@ export default function AdminDashboard() {
             View Public Platform
           </button>
           <button
-            style={{ padding: '7px 16px', borderRadius: 8, border: 'none', color: '#0F1F10', background: '#86EFAC', cursor: 'pointer', fontSize: '0.8rem', fontWeight: 700, fontFamily: 'inherit' }}
+            style={{ padding: '7px 16px', borderRadius: 8, border: 'none', color: '#262E28', background: '#A8C4AC', cursor: 'pointer', fontSize: '0.8rem', fontWeight: 700, fontFamily: 'inherit' }}
             onClick={() => { logout(); navigate('/login'); }}
           >
             Sign Out
@@ -744,8 +760,8 @@ export default function AdminDashboard() {
               cursor: 'pointer',
               fontSize: '0.84rem',
               fontWeight: activeTab === i ? 700 : 500,
-              color: activeTab === i ? '#2E7D32' : '#374151',
-              borderBottom: activeTab === i ? '2.5px solid #2E7D32' : '2.5px solid transparent',
+              color: activeTab === i ? '#5F7D68' : '#374151',
+              borderBottom: activeTab === i ? '2.5px solid #5F7D68' : '2.5px solid transparent',
               marginBottom: -2,
               transition: 'color 0.15s',
               fontFamily: 'var(--font-body, sans-serif)',
@@ -798,7 +814,7 @@ export default function AdminDashboard() {
               storageKey="dropout_reasons"
               lastUpdated={lastUpdated && lastUpdated['dropout_reasons']}
               extraContent={
-                <InlineBarChart data={Array.isArray(dropoutReasons) ? dropoutReasons : []} valueKey="count" labelKey="reason" color="#2E7D32" />
+                <InlineBarChart data={Array.isArray(dropoutReasons) ? dropoutReasons : []} valueKey="count" labelKey="reason" color="#5F7D68" />
               }
             />
 
@@ -895,7 +911,7 @@ export default function AdminDashboard() {
               getCellStyle={suitCellStyle}
               extraContent={
                 <div style={{ display: 'flex', gap: 10, marginBottom: 12, flexWrap: 'wrap' }}>
-                  <span style={{ fontSize: '0.72rem', background: '#DCFCE7', color: '#166534', border: '1px solid #86EFAC', borderRadius: 12, padding: '2px 10px', fontWeight: 600 }}>
+                  <span style={{ fontSize: '0.72rem', background: '#E6ECE4', color: '#4B6352', border: '1px solid #A8C4AC', borderRadius: 12, padding: '2px 10px', fontWeight: 600 }}>
                     ≥ 75 — High suitability
                   </span>
                   <span style={{ fontSize: '0.72rem', background: '#FEF9C3', color: '#713F12', border: '1px solid #FCD34D', borderRadius: 12, padding: '2px 10px', fontWeight: 600 }}>
@@ -935,7 +951,7 @@ export default function AdminDashboard() {
               lastUpdated={lastUpdated && lastUpdated['active_farmers']}
               extraContent={
                 <div style={{ marginBottom: 12 }}>
-                  <span style={{ background: '#DCFCE7', color: '#166534', border: '1px solid #86EFAC', borderRadius: 20, padding: '4px 14px', fontSize: '0.8rem', fontWeight: 700 }}>
+                  <span style={{ background: '#E6ECE4', color: '#4B6352', border: '1px solid #A8C4AC', borderRadius: 20, padding: '4px 14px', fontSize: '0.8rem', fontWeight: 700 }}>
                     {Array.isArray(activeFarmers) ? activeFarmers.length : 0} active cultivators
                   </span>
                 </div>
@@ -962,8 +978,35 @@ export default function AdminDashboard() {
           </div>
         )}
 
-        {/* ════════════════ TAB 5 — SYSTEM & EXPORT ════════════════ */}
+        {/* ════════════════ TAB 5 — GROUNDWATER STATIONS ════════════════ */}
         {activeTab === 4 && (
+          <div>
+            <h2 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#1A2332', fontFamily: 'var(--font-heading)', marginBottom: 20, marginTop: 0 }}>
+              Groundwater Stations
+            </h2>
+
+            <DatasetPanel
+              title="Groundwater Monitoring Stations"
+              subtitle="Piezometer network — depth to water, trend, quality, aquifer type. Shown as a selectable layer on the Water Management map."
+              data={groundwaterStations}
+              columns={COLS_GROUNDWATER}
+              onSave={setGroundwaterStations}
+              onReset={resetGroundwaterStations}
+              storageKey="groundwater_stations"
+              lastUpdated={lastUpdated && lastUpdated['groundwater_stations']}
+              extraContent={
+                <div style={{ marginBottom: 12 }}>
+                  <span style={{ background: '#E3F2FD', color: '#1565C0', border: '1px solid #90CAF9', borderRadius: 20, padding: '4px 14px', fontSize: '0.8rem', fontWeight: 700 }}>
+                    {Array.isArray(groundwaterStations) ? groundwaterStations.length : 0} stations
+                  </span>
+                </div>
+              }
+            />
+          </div>
+        )}
+
+        {/* ════════════════ TAB 6 — SYSTEM & EXPORT ════════════════ */}
+        {activeTab === 5 && (
           <div>
             <h2 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#1A2332', fontFamily: 'var(--font-heading)', marginBottom: 20, marginTop: 0 }}>
               System & Export
@@ -1018,9 +1061,9 @@ export default function AdminDashboard() {
                           <td style={{ padding: '8px 12px', borderBottom: '1px solid #F0F4F0' }}>
                             <span style={{
                               fontSize: '0.68rem', fontWeight: 600, borderRadius: 12, padding: '2px 10px',
-                              background: hasCustom ? '#DCFCE7' : '#F3F4F6',
-                              color:      hasCustom ? '#166534' : '#374151',
-                              border:     hasCustom ? '1px solid #86EFAC' : '1px solid #E5E7EB',
+                              background: hasCustom ? '#E6ECE4' : '#F3F4F6',
+                              color:      hasCustom ? '#4B6352' : '#374151',
+                              border:     hasCustom ? '1px solid #A8C4AC' : '1px solid #E5E7EB',
                             }}>
                               {hasCustom ? 'Has custom data' : 'Using default'}
                             </span>
@@ -1048,7 +1091,7 @@ export default function AdminDashboard() {
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(210px, 1fr))', gap: 10, marginBottom: 14 }}>
                 {GIS_FILES.map((f, i) => (
-                  <div key={i} style={{ background: '#F0FDF4', border: '1px solid #BBF7D0', borderRadius: 10, padding: '12px 14px', display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <div key={i} style={{ background: '#F0F2EF', border: '1px solid #C7D6CB', borderRadius: 10, padding: '12px 14px', display: 'flex', alignItems: 'center', gap: 10 }}>
                     <span style={{ fontSize: '1.1rem', color: '#22C55E', flexShrink: 0 }}>✓</span>
                     <div>
                       <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#1A2332' }}>{f.name}</div>

@@ -77,9 +77,9 @@ export default function CropHealth() {
       {/* ── Page Header ─────────────────────────────────────── */}
       <div className="page-header" style={{ borderTop: '4px solid #00897B', background: "linear-gradient(135deg, rgba(232,245,233,0.70) 0%, rgba(241,248,233,0.70) 60%, rgba(250,255,248,0.70) 100%), url('/images/crop-health-aerial.jpg') center/cover no-repeat" }}>
         <div className="container">
-          <div className="badge">Deliverable 5 · Sentinel-2 · {ndviData[0]?.season}</div>
+          <div className="badge">Sentinel-2 & MODIS · {ndviData[0]?.season}</div>
           <h1>🛰 Crop Health Assessment (NDVI & NDWI)</h1>
-          <p>Sentinel-2 multispectral analysis for vegetation health (NDVI) and moisture stress (NDWI) across Meghalaya's buckwheat cultivation areas.</p>
+          <p>Sentinel-2 and MODIS multispectral analysis for vegetation health (NDVI) and moisture stress (NDWI) across Meghalaya's buckwheat cultivation areas.</p>
         </div>
       </div>
 
@@ -133,7 +133,7 @@ export default function CropHealth() {
                   onDistrictClick={d => setSelectedDistrict(d)}
                 />
               </div>
-              <p className="source-note">Sentinel-2 MSI · 10m · Google Earth Engine · {ndviData[0]?.sentinelDate} · Click district to select</p>
+              <p className="source-note">Sentinel-2 MSI & MODIS MOD13Q1 · 10m · Google Earth Engine · {ndviData[0]?.season} · Click district to select</p>
             </div>
 
             {/* Right panel — sticky, district list + inline detail */}
@@ -365,7 +365,7 @@ export default function CropHealth() {
             </table>
           </div>
           <p className="source-note" style={{ marginTop: 12 }}>
-            Source: Sentinel-2 MSI (ESA Copernicus) · 10m spatial resolution · Google Earth Engine · {ndviData[0]?.season}
+            Source: Sentinel-2 MSI (ESA Copernicus) & MODIS MOD13Q1 (NASA) · 10m spatial resolution · Google Earth Engine · {ndviData[0]?.season}
           </p>
         </div>
       </section>

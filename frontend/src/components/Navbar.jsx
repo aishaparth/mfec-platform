@@ -47,10 +47,10 @@ export default function Navbar() {
   }, []);
 
   const linkStyle = (active) => ({
-    color: active ? '#2E7D32' : '#374151',
+    color: active ? '#5F7D68' : '#374151',
     fontWeight: active ? 600 : 400,
     fontSize: '0.82rem', padding: '6px 11px', borderRadius: 6,
-    background: active ? '#E8F5E9' : 'transparent',
+    background: active ? '#E6ECE4' : 'transparent',
     transition: 'all 0.2s', textDecoration: 'none', cursor: 'pointer',
   });
 
@@ -60,17 +60,17 @@ export default function Navbar() {
       height: 'var(--nav-height)',
       background: 'rgba(255,255,255,0.97)',
       backdropFilter: 'blur(10px)',
-      boxShadow: scrolled ? '0 2px 16px rgba(0,0,0,0.08)' : '0 1px 0 #E4EBE4',
+      boxShadow: scrolled ? '0 2px 16px rgba(0,0,0,0.08)' : '0 1px 0 #E1E5E2',
       transition: 'all 0.3s ease',
     }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         {/* Logo */}
         <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
-          <div style={{ width: 38, height: 38, borderRadius: 10, background: '#E8F5E9', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem' }}>
+          <div style={{ width: 38, height: 38, borderRadius: 10, background: '#E6ECE4', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem' }}>
             🌿
           </div>
           <div>
-            <div style={{ color: '#2E7D32', fontWeight: 700, fontSize: '0.95rem', fontFamily: 'var(--font-heading)', lineHeight: 1.2 }}>MFEC Meghalaya</div>
+            <div style={{ color: '#5F7D68', fontWeight: 700, fontSize: '0.95rem', fontFamily: 'var(--font-heading)', lineHeight: 1.2 }}>MFEC Meghalaya</div>
             <div style={{ color: '#6B7280', fontSize: '0.68rem', letterSpacing: '0.5px', textTransform: 'uppercase' }}>Agricultural Analytics</div>
           </div>
         </Link>
@@ -85,7 +85,7 @@ export default function Navbar() {
               onClick={() => setCropsOpen(o => !o)}
               style={{
                 ...linkStyle(isCropActive),
-                border: 'none', background: isCropActive ? '#E8F5E9' : 'transparent',
+                border: 'none', background: isCropActive ? '#E6ECE4' : 'transparent',
                 display: 'flex', alignItems: 'center', gap: 4,
               }}
             >
@@ -97,7 +97,7 @@ export default function Navbar() {
                 position: 'absolute', top: 'calc(100% + 6px)', left: 0,
                 background: '#fff', borderRadius: 8, minWidth: 160,
                 boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
-                border: '1px solid #E4EBE4',
+                border: '1px solid #E1E5E2',
                 overflow: 'hidden', zIndex: 10,
               }}>
                 {CROP_LINKS.map(link => (
@@ -106,13 +106,13 @@ export default function Navbar() {
                     to={link.path}
                     style={{
                       display: 'block',
-                      color: location.pathname === link.path ? '#2E7D32' : '#374151',
+                      color: location.pathname === link.path ? '#5F7D68' : '#374151',
                       fontWeight: location.pathname === link.path ? 600 : 400,
                       fontSize: '0.82rem', padding: '10px 16px',
-                      background: location.pathname === link.path ? '#E8F5E9' : 'transparent',
+                      background: location.pathname === link.path ? '#E6ECE4' : 'transparent',
                       textDecoration: 'none', transition: 'background 0.15s',
                     }}
-                    onMouseEnter={e => { if (location.pathname !== link.path) e.currentTarget.style.background = '#F7FAF7'; }}
+                    onMouseEnter={e => { if (location.pathname !== link.path) e.currentTarget.style.background = '#F6F7F6'; }}
                     onMouseLeave={e => { if (location.pathname !== link.path) e.currentTarget.style.background = 'transparent'; }}
                   >
                     {link.label}
@@ -129,7 +129,7 @@ export default function Navbar() {
           ))}
 
           {session && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginLeft: 10, paddingLeft: 10, borderLeft: '1px solid #E4EBE4' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginLeft: 10, paddingLeft: 10, borderLeft: '1px solid #E1E5E2' }}>
               {session.role === 'admin' && (
                 <Link to="/admin/dashboard" style={{ ...linkStyle(location.pathname === '/admin/dashboard'), fontWeight: 600 }}>
                   Admin Panel
@@ -151,7 +151,7 @@ export default function Navbar() {
         {/* Hamburger */}
         <button
           onClick={() => setMenuOpen(m => !m)}
-          style={{ display: 'none', background: 'none', border: 'none', color: '#2E7D32', fontSize: '1.5rem', cursor: 'pointer' }}
+          style={{ display: 'none', background: 'none', border: 'none', color: '#5F7D68', fontSize: '1.5rem', cursor: 'pointer' }}
           className="hamburger"
           aria-label="Toggle menu"
         >
@@ -165,14 +165,14 @@ export default function Navbar() {
           position: 'absolute', top: 'var(--nav-height)', left: 0, right: 0,
           background: '#fff', padding: '12px 24px 20px',
           boxShadow: '0 8px 24px rgba(0,0,0,0.10)',
-          borderTop: '1px solid #E4EBE4',
+          borderTop: '1px solid #E1E5E2',
           display: 'flex', flexDirection: 'column', gap: 4,
         }}>
           <Link to="/" style={{
-            color: location.pathname === '/' ? '#2E7D32' : '#374151',
+            color: location.pathname === '/' ? '#5F7D68' : '#374151',
             fontWeight: location.pathname === '/' ? 600 : 400,
             fontSize: '0.9rem', padding: '10px 12px', borderRadius: 8,
-            background: location.pathname === '/' ? '#E8F5E9' : 'transparent',
+            background: location.pathname === '/' ? '#E6ECE4' : 'transparent',
             textDecoration: 'none', display: 'block',
           }}>Home</Link>
 
@@ -180,28 +180,28 @@ export default function Navbar() {
           <div style={{ padding: '6px 12px 2px', fontSize: '0.7rem', color: '#6B7280', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Crops</div>
           {CROP_LINKS.map(link => (
             <Link key={link.path} to={link.path} style={{
-              color: location.pathname === link.path ? '#2E7D32' : '#374151',
+              color: location.pathname === link.path ? '#5F7D68' : '#374151',
               fontWeight: location.pathname === link.path ? 600 : 400,
               fontSize: '0.9rem', padding: '10px 12px 10px 24px', borderRadius: 8,
-              background: location.pathname === link.path ? '#E8F5E9' : 'transparent',
+              background: location.pathname === link.path ? '#E6ECE4' : 'transparent',
               textDecoration: 'none', display: 'block',
             }}>{link.label}</Link>
           ))}
 
           {NAV_LINKS.filter(l => l.path !== '/').map(link => (
             <Link key={link.path} to={link.path} style={{
-              color: location.pathname === link.path ? '#2E7D32' : '#374151',
+              color: location.pathname === link.path ? '#5F7D68' : '#374151',
               fontWeight: location.pathname === link.path ? 600 : 400,
               fontSize: '0.9rem', padding: '10px 12px', borderRadius: 8,
-              background: location.pathname === link.path ? '#E8F5E9' : 'transparent',
+              background: location.pathname === link.path ? '#E6ECE4' : 'transparent',
               textDecoration: 'none', display: 'block',
             }}>{link.label}</Link>
           ))}
 
           {session && (
-            <div style={{ marginTop: 8, paddingTop: 12, borderTop: '1px solid #E4EBE4' }}>
+            <div style={{ marginTop: 8, paddingTop: 12, borderTop: '1px solid #E1E5E2' }}>
               {session.role === 'admin' && (
-                <Link to="/admin/dashboard" style={{ color: '#2E7D32', fontWeight: 600, fontSize: '0.9rem', padding: '10px 12px', display: 'block', textDecoration: 'none' }}>
+                <Link to="/admin/dashboard" style={{ color: '#5F7D68', fontWeight: 600, fontSize: '0.9rem', padding: '10px 12px', display: 'block', textDecoration: 'none' }}>
                   Admin Panel
                 </Link>
               )}

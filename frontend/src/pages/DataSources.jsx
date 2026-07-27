@@ -93,7 +93,7 @@ export default function DataSources() {
 
       <section className="section" style={{ background: '#fff' }}>
         <div className="container">
-          <h2 className="section-title">Output Formats (Deliverable 10)</h2>
+          <h2 className="section-title">Output Formats</h2>
           <div className="divider" style={{ width: 56, height: 4, background: 'linear-gradient(90deg, var(--primary), var(--accent))', borderRadius: 2, margin: '10px 0 24px' }} />
           <div className="grid-3">
             {[

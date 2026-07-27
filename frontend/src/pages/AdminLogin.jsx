@@ -28,19 +28,19 @@ export default function AdminLogin() {
   return (
     <div style={{
       minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
-      background: 'linear-gradient(135deg, #0A1628 0%, #0F2D1A 50%, #0A1628 100%)',
+      background: 'linear-gradient(135deg, #22282A 0%, #2E3830 50%, #22282A 100%)',
       padding: '24px', fontFamily: 'var(--font-body)',
     }}>
       {/* Background pattern */}
-      <div style={{ position: 'fixed', inset: 0, opacity: 0.05, backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%234CAF50' fill-rule='evenodd'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6z'/%3E%3C/g%3E%3C/svg%3E\")", pointerEvents: 'none' }} />
+      <div style={{ position: 'fixed', inset: 0, opacity: 0.05, backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2371917A' fill-rule='evenodd'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6z'/%3E%3C/g%3E%3C/svg%3E\")", pointerEvents: 'none' }} />
 
       <div style={{ width: '100%', maxWidth: 440, position: 'relative' }}>
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
-          <div style={{ width: 64, height: 64, borderRadius: 18, background: 'linear-gradient(135deg, #1B5E20, #2E7D32)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', margin: '0 auto 16px', boxShadow: '0 8px 24px rgba(46,125,50,0.4)' }}>
+          <div style={{ width: 64, height: 64, borderRadius: 18, background: 'linear-gradient(135deg, #5F7D68, #71917A)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', margin: '0 auto 16px', boxShadow: '0 8px 24px rgba(95,125,104,0.35)' }}>
             🌿
           </div>
-          <div style={{ color: '#86EFAC', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: 8 }}>
+          <div style={{ color: '#A8C4AC', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: 8 }}>
             MFEC / DSAI · Secure Portal
           </div>
           <h1 style={{ color: '#fff', fontSize: '1.6rem', fontWeight: 800, margin: 0, lineHeight: 1.2 }}>
@@ -125,18 +125,18 @@ export default function AdminLogin() {
               disabled={loading || !username || !password}
               style={{
                 width: '100%', padding: '13px', marginTop: 16, borderRadius: 10,
-                background: loading ? 'rgba(46,125,50,0.5)' : 'linear-gradient(135deg, #1B5E20, #2E7D32)',
+                background: loading ? 'rgba(95,125,104,0.5)' : 'linear-gradient(135deg, #5F7D68, #71917A)',
                 color: '#fff', fontWeight: 700, fontSize: '0.92rem', border: 'none',
                 cursor: loading ? 'wait' : (!username || !password ? 'not-allowed' : 'pointer'),
                 opacity: !username || !password ? 0.6 : 1,
                 transition: 'all 0.2s', letterSpacing: '0.3px',
-                boxShadow: loading ? 'none' : '0 4px 16px rgba(46,125,50,0.4)',
+                boxShadow: loading ? 'none' : '0 4px 16px rgba(95,125,104,0.35)',
               }}>
               {loading ? 'Authenticating…' : 'Sign In →'}
             </button>
           </form>
 
-          <div style={{ marginTop: 20, padding: '12px', background: 'rgba(255,255,255,0.02)', borderRadius: 8, borderLeft: '2px solid rgba(134,239,172,0.3)' }}>
+          <div style={{ marginTop: 20, padding: '12px', background: 'rgba(255,255,255,0.02)', borderRadius: 8, borderLeft: '2px solid rgba(168,196,172,0.3)' }}>
             <div style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.25)', lineHeight: 1.6 }}>
               This is a restricted government platform. Unauthorised access is prohibited.<br />
               All sessions are logged. Contact MFEC / DSAI for access credentials.

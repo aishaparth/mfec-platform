@@ -1,0 +1,999 @@
+{
+  "type": "FeatureCollection",
+  "properties": {
+    "name": "Buckwheat crop presence (active cultivation sites)",
+    "source": "MFEC field survey 2021-2023, active farmer GPS points"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.48,
+          25.561
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A001",
+        "district": "West Khasi Hills",
+        "block": "Mairang",
+        "area_ha": 0.32,
+        "yield_kg": 28
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.474,
+          25.558
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A002",
+        "district": "West Khasi Hills",
+        "block": "Mairang",
+        "area_ha": 0.18,
+        "yield_kg": 16
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.488,
+          25.555
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A003",
+        "district": "West Khasi Hills",
+        "block": "Mairang",
+        "area_ha": 0.4,
+        "yield_kg": 42
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.448,
+          25.278
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A004",
+        "district": "West Khasi Hills",
+        "block": "Mawkyrwat",
+        "area_ha": 0.25,
+        "yield_kg": 22
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.442,
+          25.274
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A005",
+        "district": "West Khasi Hills",
+        "block": "Mawkyrwat",
+        "area_ha": 0.2,
+        "yield_kg": 18
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.27,
+          25.522
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A006",
+        "district": "West Khasi Hills",
+        "block": "Nongstoin",
+        "area_ha": 0.28,
+        "yield_kg": 24
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.264,
+          25.516
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A007",
+        "district": "West Khasi Hills",
+        "block": "Nongstoin",
+        "area_ha": 0.15,
+        "yield_kg": 12
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.278,
+          25.524
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A008",
+        "district": "West Khasi Hills",
+        "block": "Nongstoin",
+        "area_ha": 0.35,
+        "yield_kg": 36
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.468,
+          25.564
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A009",
+        "district": "West Khasi Hills",
+        "block": "Mairang",
+        "area_ha": 0.22,
+        "yield_kg": 20
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.476,
+          25.549
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A010",
+        "district": "West Khasi Hills",
+        "block": "Mairang",
+        "area_ha": 0.3,
+        "yield_kg": 26
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.455,
+          25.265
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A011",
+        "district": "West Khasi Hills",
+        "block": "Mawkyrwat",
+        "area_ha": 0.18,
+        "yield_kg": 16
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.128,
+          25.378
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A012",
+        "district": "West Khasi Hills",
+        "block": "Ranikor",
+        "area_ha": 0.45,
+        "yield_kg": 48
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.12,
+          25.372
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A013",
+        "district": "West Khasi Hills",
+        "block": "Ranikor",
+        "area_ha": 0.22,
+        "yield_kg": 20
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.258,
+          25.519
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A014",
+        "district": "West Khasi Hills",
+        "block": "Nongstoin",
+        "area_ha": 0.28,
+        "yield_kg": 25
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.492,
+          25.552
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A015",
+        "district": "West Khasi Hills",
+        "block": "Mairang",
+        "area_ha": 0.16,
+        "yield_kg": 14
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.438,
+          25.272
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A016",
+        "district": "West Khasi Hills",
+        "block": "Mawkyrwat",
+        "area_ha": 0.24,
+        "yield_kg": 22
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.3,
+          25.61
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A017",
+        "district": "West Khasi Hills",
+        "block": "Rambrai Jyrngam",
+        "area_ha": 0.38,
+        "yield_kg": 38
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.292,
+          25.605
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A018",
+        "district": "West Khasi Hills",
+        "block": "Rambrai Jyrngam",
+        "area_ha": 0.2,
+        "yield_kg": 18
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.308,
+          25.614
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A019",
+        "district": "West Khasi Hills",
+        "block": "Rambrai Jyrngam",
+        "area_ha": 0.26,
+        "yield_kg": 24
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.482,
+          25.556
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A020",
+        "district": "West Khasi Hills",
+        "block": "Mairang",
+        "area_ha": 0.32,
+        "yield_kg": 30
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.45,
+          25.282
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A021",
+        "district": "West Khasi Hills",
+        "block": "Mawkyrwat",
+        "area_ha": 0.14,
+        "yield_kg": 11
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.268,
+          25.526
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A022",
+        "district": "West Khasi Hills",
+        "block": "Nongstoin",
+        "area_ha": 0.28,
+        "yield_kg": 25
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.126,
+          25.37
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A023",
+        "district": "West Khasi Hills",
+        "block": "Ranikor",
+        "area_ha": 0.2,
+        "yield_kg": 18
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.47,
+          25.56
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A024",
+        "district": "West Khasi Hills",
+        "block": "Mairang",
+        "area_ha": 0.36,
+        "yield_kg": 34
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.444,
+          25.268
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A025",
+        "district": "West Khasi Hills",
+        "block": "Mawkyrwat",
+        "area_ha": 0.18,
+        "yield_kg": 16
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.274,
+          25.518
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A026",
+        "district": "West Khasi Hills",
+        "block": "Nongstoin",
+        "area_ha": 0.22,
+        "yield_kg": 20
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.486,
+          25.554
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A027",
+        "district": "West Khasi Hills",
+        "block": "Mairang",
+        "area_ha": 0.28,
+        "yield_kg": 26
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.122,
+          25.376
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A028",
+        "district": "West Khasi Hills",
+        "block": "Ranikor",
+        "area_ha": 0.16,
+        "yield_kg": 14
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.446,
+          25.276
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A029",
+        "district": "West Khasi Hills",
+        "block": "Mawkyrwat",
+        "area_ha": 0.3,
+        "yield_kg": 28
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.266,
+          25.522
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A030",
+        "district": "West Khasi Hills",
+        "block": "Nongstoin",
+        "area_ha": 0.2,
+        "yield_kg": 18
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.478,
+          25.548
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A031",
+        "district": "West Khasi Hills",
+        "block": "Mairang",
+        "area_ha": 0.34,
+        "yield_kg": 32
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.298,
+          25.608
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A032",
+        "district": "West Khasi Hills",
+        "block": "Rambrai Jyrngam",
+        "area_ha": 0.22,
+        "yield_kg": 20
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.44,
+          25.27
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A033",
+        "district": "West Khasi Hills",
+        "block": "Mawkyrwat",
+        "area_ha": 0.24,
+        "yield_kg": 22
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.484,
+          25.562
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A034",
+        "district": "West Khasi Hills",
+        "block": "Mairang",
+        "area_ha": 0.18,
+        "yield_kg": 16
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.272,
+          25.52
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A035",
+        "district": "West Khasi Hills",
+        "block": "Nongstoin",
+        "area_ha": 0.28,
+        "yield_kg": 26
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.864,
+          25.458
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A036",
+        "district": "East Khasi Hills",
+        "block": "Mawphlang",
+        "area_ha": 0.22,
+        "yield_kg": 20
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.858,
+          25.454
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A037",
+        "district": "East Khasi Hills",
+        "block": "Mawphlang",
+        "area_ha": 0.16,
+        "yield_kg": 14
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.86,
+          25.536
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A038",
+        "district": "East Khasi Hills",
+        "block": "Mylliem",
+        "area_ha": 0.28,
+        "yield_kg": 26
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.854,
+          25.532
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A039",
+        "district": "East Khasi Hills",
+        "block": "Mylliem",
+        "area_ha": 0.2,
+        "yield_kg": 18
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.914,
+          25.599
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A040",
+        "district": "East Khasi Hills",
+        "block": "Mawlai",
+        "area_ha": 0.14,
+        "yield_kg": 12
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.906,
+          25.595
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A041",
+        "district": "East Khasi Hills",
+        "block": "Mawlai",
+        "area_ha": 0.3,
+        "yield_kg": 28
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.736,
+          25.256
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A042",
+        "district": "East Khasi Hills",
+        "block": "Sohra",
+        "area_ha": 0.18,
+        "yield_kg": 16
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.73,
+          25.252
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A043",
+        "district": "East Khasi Hills",
+        "block": "Sohra",
+        "area_ha": 0.24,
+        "yield_kg": 22
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.584,
+          25.3
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A044",
+        "district": "East Khasi Hills",
+        "block": "Mawsynram",
+        "area_ha": 0.2,
+        "yield_kg": 18
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.58,
+          25.296
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A045",
+        "district": "East Khasi Hills",
+        "block": "Mawsynram",
+        "area_ha": 0.34,
+        "yield_kg": 32
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.866,
+          25.46
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A046",
+        "district": "East Khasi Hills",
+        "block": "Mawphlang",
+        "area_ha": 0.22,
+        "yield_kg": 20
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.858,
+          25.534
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A047",
+        "district": "East Khasi Hills",
+        "block": "Mylliem",
+        "area_ha": 0.16,
+        "yield_kg": 14
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.91,
+          25.597
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A048",
+        "district": "East Khasi Hills",
+        "block": "Mawlai",
+        "area_ha": 0.26,
+        "yield_kg": 24
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.732,
+          25.254
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A049",
+        "district": "East Khasi Hills",
+        "block": "Sohra",
+        "area_ha": 0.18,
+        "yield_kg": 16
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          92.298,
+          25.343
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A050",
+        "district": "West Jaintia Hills",
+        "block": "Thadlaskein",
+        "area_ha": 0.12,
+        "yield_kg": 10
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          92.365,
+          25.415
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A051",
+        "district": "West Jaintia Hills",
+        "block": "Laskein",
+        "area_ha": 0.16,
+        "yield_kg": 14
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          92.457,
+          25.273
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A052",
+        "district": "West Jaintia Hills",
+        "block": "Saipung",
+        "area_ha": 0.1,
+        "yield_kg": 8
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          92.524,
+          25.222
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A053",
+        "district": "West Jaintia Hills",
+        "block": "Khliehriat",
+        "area_ha": 0.14,
+        "yield_kg": 11
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.255,
+          25.145
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A054",
+        "district": "South West Khasi Hills",
+        "block": "Mawkma",
+        "area_ha": 0.18,
+        "yield_kg": 15
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.26,
+          25.15
+        ]
+      },
+      "properties": {
+        "crop": "buckwheat",
+        "id": "A055",
+        "district": "South West Khasi Hills",
+        "block": "Mawkma",
+        "area_ha": 0.22,
+        "yield_kg": 19
+      }
+    }
+  ]
+}

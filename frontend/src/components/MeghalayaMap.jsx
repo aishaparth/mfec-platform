@@ -1,7 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { MapContainer, TileLayer, GeoJSON, LayersControl, ScaleControl, ZoomControl } from 'react-leaflet';
+import React, { useState } from 'react';
+import { MapContainer, TileLayer, GeoJSON, LayersControl, LayerGroup, CircleMarker, Popup, ScaleControl, ZoomControl } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import {
+  useGeoJSON, TILES,
+  styleElevation, styleSlope, styleAspect, styleLULC, terrainPopup, lulcPopup,
+  styleState, styleVillage, styleRoad, onEachVillage, onEachRoad,
+  styleCropPresencePoint, cropPresencePopup,
+  styleGroundwaterPoint, groundwaterPopup, GROUNDWATER_LEGEND,
+  OverlayLegendTracker, LegendBox, BUCKWHEAT_CROP_LEGEND, WINE_CROP_LEGEND,
+} from './mapOverlays';
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -13,63 +21,43 @@ L.Icon.Default.mergeOptions({
 const CENTER   = [25.47, 91.37];
 const ZOOM     = 8;
 
-const TILES = {
-  topo:      { url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',                                                           attribution: '© OpenTopoMap (CC-BY-SA)',       label: 'Topographic' },
-  streets:   { url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',                                                         attribution: '© OpenStreetMap contributors',   label: 'Street Map'  },
-  carto:     { url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',                                             attribution: '© CartoDB',                      label: 'CartoDB Light' },
-  satellite: { url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',              attribution: '© Esri World Imagery',           label: 'Satellite'   },
-};
-
-// Cache GeoJSON so repeated renders don't re-fetch
-const geoCache = {};
-
-function useGeoJSON(url) {
-  const [data, setData] = useState(geoCache[url] || null);
-  useEffect(() => {
-    if (geoCache[url]) { setData(geoCache[url]); return; }
-    fetch(url).then(r => r.json()).then(json => { geoCache[url] = json; setData(json); }).catch(console.error);
-  }, [url]);
-  return data;
-}
-
 /**
  * MeghalayaMap – reusable choropleth map using real shapefiles.
  * Props:
  *   colorFn(feature) → string      fill color for each district
  *   popupFn(feature) → HTML string popup content
- *   blockColorFn(feature) → string optional block-level coloring
+ *   blockColorFn(feature) → string optional block-level coloring (used together with showBlocks fill)
  *   blockPopupFn(feature) → string optional block popup
- *   showBlocks    – show Blocks_46 overlay (default false)
  *   showState     – show State_Boundary outline (default true)
- *   showVillages  – show meghalaya_Village overlay (default false, lazy-loaded)
- *   showRoads     – show Roads_OSM major roads overlay (default false, lazy-loaded)
  *   height        – CSS height (default '520px')
- *   showLayerControl – tile switcher (default true)
+ *   showLayerControl – tile switcher + overlay layers (default true)
  *   defaultTile   – 'topo'|'streets'|'carto'|'satellite'
- *   legendItems   – [{ color, label }]
+ *   legendItems   – [{ color, label }]  (legend for the primary colorFn layer)
  *   legendTitle
+ *   cropPresence  – 'buckwheat' | 'wine' | null — offers a selectable crop-presence points overlay
  */
 export default function MeghalayaMap({
   colorFn,
   popupFn,
   blockColorFn,
   blockPopupFn,
-  showBlocks    = false,
   showState     = true,
-  showVillages  = false,
-  showRoads     = false,
   height = '520px',
   showLayerControl = true,
   defaultTile = 'topo',
   legendItems = [],
   legendTitle = 'Legend',
   onDistrictClick,
+  cropPresence = null,
+  groundwaterStations = null,
 }) {
   const districts = useGeoJSON('/geojson/districts.json');
-  const blocks    = useGeoJSON(showBlocks   ? '/geojson/blocks.json'   : null);
-  const state     = useGeoJSON(showState    ? '/geojson/state.json'    : null);
-  const villages  = useGeoJSON(showVillages ? '/geojson/villages.json' : null);
-  const roads     = useGeoJSON(showRoads    ? '/geojson/roads.json'    : null);
+  const blocks    = useGeoJSON('/geojson/blocks.json');
+  const state     = useGeoJSON(showState ? '/geojson/state.json' : null);
+  const villages  = useGeoJSON('/geojson/villages.json');
+  const roads     = useGeoJSON('/geojson/roads.json');
+  const cropGeo   = useGeoJSON(cropPresence ? `/geojson/${cropPresence}_crop_presence.json` : null);
+  const [activeOverlays, setActiveOverlays] = useState(new Set());
 
   const districtKey = colorFn ? colorFn.toString().slice(0, 60) : 'default';
 
@@ -78,26 +66,10 @@ export default function MeghalayaMap({
     weight: 1.8, opacity: 1, color: '#ffffff', fillOpacity: 0.78,
   });
 
-  const styleBlock = (f) => ({
+  const styleBlockFill = (f) => ({
     fillColor: blockColorFn ? blockColorFn(f) : 'transparent',
-    weight: 0.8, opacity: 1, color: '#ffffff88', fillOpacity: 0.5,
+    weight: 0.8, opacity: 1, color: '#ffffff88', fillOpacity: blockColorFn ? 0.5 : 0,
   });
-
-  const styleState = () => ({
-    fill: false, weight: 3, color: '#1B5E20', opacity: 0.9,
-  });
-
-  const styleVillage = () => ({
-    fillColor: '#FFF9C4', fillOpacity: 0.5,
-    weight: 0.5, color: '#F9A825', opacity: 0.7,
-  });
-
-  const styleRoad = (f) => {
-    const hw = f?.properties?.highway || '';
-    const colors = { trunk: '#C62828', primary: '#E65100', secondary: '#F9A825', tertiary: '#4CAF50', trunk_link: '#C62828', primary_link: '#E65100', secondary_link: '#F9A825', tertiary_link: '#4CAF50' };
-    const widths = { trunk: 3, primary: 2.5, secondary: 2, tertiary: 1.5, trunk_link: 2, primary_link: 2, secondary_link: 1.5, tertiary_link: 1 };
-    return { fill: false, weight: widths[hw] || 1.5, color: colors[hw] || '#9CA3AF', opacity: 0.85 };
-  };
 
   const onEachDistrict = (feature, layer) => {
     const p = feature.properties;
@@ -116,11 +88,11 @@ export default function MeghalayaMap({
     layer.bindTooltip(p.district || p.name, { permanent: false, sticky: true, className: 'district-tooltip' });
   };
 
-  const onEachBlock = (feature, layer) => {
+  const onEachBlockFill = (feature, layer) => {
     const p = feature.properties;
     layer.on({
-      mouseover: e => { e.target.setStyle({ weight: 2, fillOpacity: 0.85 }); e.target.bringToFront(); },
-      mouseout:  e => { e.target.setStyle({ weight: 0.8, fillOpacity: 0.5 }); },
+      mouseover: e => { e.target.setStyle({ weight: 2, fillOpacity: blockColorFn ? 0.85 : 0.15 }); e.target.bringToFront(); },
+      mouseout:  e => { e.target.setStyle({ weight: 0.8, fillOpacity: blockColorFn ? 0.5 : 0 }); },
     });
     const html = blockPopupFn
       ? blockPopupFn(feature)
@@ -129,18 +101,83 @@ export default function MeghalayaMap({
     layer.bindTooltip(`${p.block} (${p.district})`, { permanent: false, sticky: true, className: 'district-tooltip' });
   };
 
+  const onEachTerrain = (label, popupFn2) => (feature, layer) => {
+    layer.bindPopup(popupFn2(feature), { maxWidth: 280, className: 'mfec-popup' });
+    layer.bindTooltip(feature.properties?.district || feature.properties?.name, { sticky: true, className: 'district-tooltip' });
+  };
+
+  const cropPointToLayer = (feature, latlng) => L.circleMarker(latlng, styleCropPresencePoint(feature));
+  const onEachCropPoint = (feature, layer) => {
+    layer.bindPopup(cropPresencePopup(feature), { maxWidth: 260, className: 'mfec-popup' });
+  };
+
   const tile = TILES[defaultTile] || TILES.topo;
 
   return (
     <div style={{ position: 'relative' }}>
       <MapContainer center={CENTER} zoom={ZOOM} style={{ height, width: '100%', borderRadius: '12px' }} zoomControl={false} scrollWheelZoom>
+        <OverlayLegendTracker onChange={setActiveOverlays} />
         {showLayerControl ? (
-          <LayersControl position="topright">
+          <LayersControl position="topright" collapsed={false}>
             {Object.entries(TILES).map(([key, t]) => (
               <LayersControl.BaseLayer key={key} checked={key === defaultTile} name={t.label}>
                 <TileLayer url={t.url} attribution={t.attribution} maxZoom={18} />
               </LayersControl.BaseLayer>
             ))}
+
+            {blocks && (
+              <LayersControl.Overlay name="🗺 Blocks">
+                <GeoJSON key={`blk-outline-${districtKey}`} data={blocks} style={styleBlockFill} onEachFeature={onEachBlockFill} />
+              </LayersControl.Overlay>
+            )}
+            {villages && (
+              <LayersControl.Overlay name="🏘 Villages">
+                <GeoJSON key="villages" data={villages} style={styleVillage} onEachFeature={onEachVillage} />
+              </LayersControl.Overlay>
+            )}
+            {roads && (
+              <LayersControl.Overlay name="🛣 Roads">
+                <GeoJSON key="roads" data={roads} style={styleRoad} onEachFeature={onEachRoad} />
+              </LayersControl.Overlay>
+            )}
+            {districts && (
+              <LayersControl.Overlay name="⛰ Elevation (DEM)">
+                <GeoJSON key={`dem-${districtKey}`} data={districts} style={styleElevation} onEachFeature={onEachTerrain('dem', terrainPopup)} />
+              </LayersControl.Overlay>
+            )}
+            {districts && (
+              <LayersControl.Overlay name="📐 Slope">
+                <GeoJSON key={`slope-${districtKey}`} data={districts} style={styleSlope} onEachFeature={onEachTerrain('slope', terrainPopup)} />
+              </LayersControl.Overlay>
+            )}
+            {districts && (
+              <LayersControl.Overlay name="🧭 Aspect">
+                <GeoJSON key={`aspect-${districtKey}`} data={districts} style={styleAspect} onEachFeature={onEachTerrain('aspect', terrainPopup)} />
+              </LayersControl.Overlay>
+            )}
+            {districts && (
+              <LayersControl.Overlay name="🌿 Land Use / Land Cover">
+                <GeoJSON key={`lulc-${districtKey}`} data={districts} style={styleLULC} onEachFeature={onEachTerrain('lulc', lulcPopup)} />
+              </LayersControl.Overlay>
+            )}
+            {cropGeo && (
+              <LayersControl.Overlay name={cropPresence === 'wine' ? '🍇 Wine Crop Presence' : '🌾 Buckwheat Crop Presence'} checked>
+                <GeoJSON key={`crop-${cropPresence}`} data={cropGeo} pointToLayer={cropPointToLayer} onEachFeature={onEachCropPoint} />
+              </LayersControl.Overlay>
+            )}
+            {groundwaterStations && groundwaterStations.length > 0 && (
+              <LayersControl.Overlay name="💧 Groundwater Stations" checked>
+                <LayerGroup>
+                  {groundwaterStations.map(st => (
+                    <CircleMarker key={st.id} center={[st.lat, st.lon]} pathOptions={styleGroundwaterPoint({ properties: st })}>
+                      <Popup>
+                        <div dangerouslySetInnerHTML={{ __html: groundwaterPopup({ properties: st }) }} />
+                      </Popup>
+                    </CircleMarker>
+                  ))}
+                </LayerGroup>
+              </LayersControl.Overlay>
+            )}
           </LayersControl>
         ) : (
           <TileLayer url={tile.url} attribution={tile.attribution} maxZoom={18} />
@@ -152,55 +189,31 @@ export default function MeghalayaMap({
         {/* State boundary outline */}
         {state && <GeoJSON key="state" data={state} style={styleState} />}
 
-        {/* District choropleth */}
+        {/* District choropleth (primary data layer) */}
         {districts && (
           <GeoJSON key={`dist-${districtKey}`} data={districts} style={styleDistrict} onEachFeature={onEachDistrict} />
         )}
 
-        {/* Block overlay */}
-        {showBlocks && blocks && (
-          <GeoJSON key={`blk-${districtKey}`} data={blocks} style={styleBlock} onEachFeature={onEachBlock} />
-        )}
-
-        {/* Village overlay (lazy-loaded on toggle) */}
-        {showVillages && villages && (
-          <GeoJSON key="villages" data={villages} style={styleVillage}
-            onEachFeature={(f, l) => l.bindTooltip(f.properties?.name || f.properties?.villagenam || 'Village', { sticky: true, className: 'district-tooltip' })}
-          />
-        )}
-
-        {/* Roads overlay — major roads only (lazy-loaded on toggle) */}
-        {showRoads && roads && (
-          <GeoJSON key="roads" data={roads} style={styleRoad}
-            onEachFeature={(f, l) => {
-              const p = f.properties || {};
-              l.bindTooltip(`${p.highway?.toUpperCase() || 'ROAD'}${p.ref ? ' · ' + p.ref : ''}`, { sticky: true, className: 'district-tooltip' });
-            }}
-          />
-        )}
-
         {!districts && (
-          <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 999, background: '#fff', padding: '12px 20px', borderRadius: 10, fontWeight: 600, color: '#1B5E20', fontSize: '0.9rem' }}>
+          <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 999, background: '#fff', padding: '12px 20px', borderRadius: 10, fontWeight: 600, color: '#71917A', fontSize: '0.9rem' }}>
             Loading map data…
           </div>
         )}
       </MapContainer>
 
-      {legendItems.length > 0 && (
-        <div style={{ position: 'absolute', bottom: 40, left: 12, zIndex: 999, background: 'rgba(255,255,255,0.96)', borderRadius: 10, padding: '12px 16px', boxShadow: '0 4px 16px rgba(0,0,0,0.12)', minWidth: 148, border: '1px solid #e2e8f0' }}>
-          <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#374151', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.4px' }}>{legendTitle}</div>
-          {legendItems.map(item => (
-            <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 5, fontSize: '0.78rem', color: '#374151' }}>
-              <div style={{ width: 14, height: 14, borderRadius: 3, background: item.color, flexShrink: 0, border: '1px solid rgba(0,0,0,0.1)' }} />
-              {item.label}
-            </div>
-          ))}
-          <div style={{ marginTop: 8, fontSize: '0.65rem', color: '#9CA3AF', lineHeight: 1.4 }}>Click district to zoom · Hover for name</div>
-        </div>
-      )}
+      <LegendBox
+        title={legendTitle}
+        items={legendItems}
+        activeOverlayNames={activeOverlays}
+        extraLegends={[
+          cropGeo ? { title: cropPresence === 'wine' ? 'Wine Crop Presence' : 'Buckwheat Crop Presence', items: cropPresence === 'wine' ? WINE_CROP_LEGEND : BUCKWHEAT_CROP_LEGEND } : null,
+          groundwaterStations && groundwaterStations.length > 0 ? { title: 'Groundwater Stations', items: GROUNDWATER_LEGEND } : null,
+        ]}
+        hint="Click district to zoom · Layers icon (top right) for terrain, LULC, roads, blocks & villages"
+      />
 
       <style>{`
-        .district-tooltip { background: rgba(27,94,32,0.95) !important; border: none !important; color: white !important; font-size: 0.8rem !important; font-weight: 600 !important; border-radius: 6px !important; padding: 5px 10px !important; box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important; }
+        .district-tooltip { background: rgba(95,125,104,0.95) !important; border: none !important; color: white !important; font-size: 0.8rem !important; font-weight: 600 !important; border-radius: 6px !important; padding: 5px 10px !important; box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important; }
         .district-tooltip::before { display: none !important; }
         .leaflet-popup-content-wrapper { padding: 0 !important; border-radius: 12px !important; overflow: hidden; }
         .leaflet-popup-content { margin: 0 !important; }

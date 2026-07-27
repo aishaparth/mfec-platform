@@ -549,8 +549,6 @@ export default function BuckwheatSuitability() {
   const [districtsGeo, setDistrictsGeo] = useState(null);
   const [mapMode, setMapMode] = useState('farmers');
   const [showBioCodes, setShowBioCodes] = useState(false);
-  const [showVillages, setShowVillages] = useState(false);
-  const [showRoads, setShowRoads]       = useState(false);
 
   useEffect(() => {
     fetch('/geojson/districts.json').then(r => r.json()).then(setDistrictsGeo).catch(console.error);
@@ -678,7 +676,7 @@ export default function BuckwheatSuitability() {
       {/* ── Page Header ──────────────────────────────────────────────────── */}
       <div className="page-header" style={{ background: "linear-gradient(135deg, rgba(240,248,220,0.65) 0%, rgba(245,250,225,0.65) 60%, rgba(250,255,235,0.65) 100%), url('/images/buckwheat-field.jpg') center/cover no-repeat", borderTop: '4px solid #2E7D32', position: 'relative' }}>
         <div className="container">
-          <div className="badge">Deliverable 1 · MaxEnt Model</div>
+          <div className="badge">MaxEnt Model</div>
           <h1>🌾 Buckwheat Habitat Suitability</h1>
           <p>
             MaxEnt habitat suitability modelling across 12 Meghalaya districts, climate scenario projections
@@ -1226,7 +1224,7 @@ export default function BuckwheatSuitability() {
           {/* ── Model Validation ─────────────────────────────────────────── */}
           <section className="section-sm" style={{ background: '#fff' }}>
             <div className="container">
-              <h2 className="section-title">Model Validation (Deliverable 3)</h2>
+              <h2 className="section-title">Model Validation</h2>
               <div className="divider" style={{ width: 56, height: 4, background: 'linear-gradient(90deg, var(--primary), var(--accent))', borderRadius: 2, margin: '10px 0 24px' }} />
               <div style={{ display: 'flex', alignItems: 'center', gap: 24, background: 'linear-gradient(135deg, #E8F5E9, #F1F8E9)', borderRadius: 16, padding: '24px 32px', marginBottom: 28, border: '1.5px solid #A5D6A7', flexWrap: 'wrap' }}>
                 <div style={{ textAlign: 'center', minWidth: 120 }}>
@@ -1465,21 +1463,6 @@ export default function BuckwheatSuitability() {
                       </button>
                     ))}
                   </div>
-                  <div style={{ display: 'flex', gap: 6 }}>
-                    {[
-                      { key: 'villages', label: '🏘 Villages', state: showVillages, set: setShowVillages, activeColor: '#F9A825' },
-                      { key: 'roads',    label: '🛣 Roads',    state: showRoads,    set: setShowRoads,    activeColor: '#E65100' },
-                    ].map(t => (
-                      <button key={t.key} onClick={() => t.set(v => !v)}
-                        style={{ flex: 1, padding: '5px 8px', fontSize: '0.72rem', fontWeight: 600, cursor: 'pointer', borderRadius: 6,
-                          border: `1.5px solid ${t.state ? t.activeColor : '#D1D5DB'}`,
-                          background: t.state ? `${t.activeColor}15` : '#fff',
-                          color: t.state ? t.activeColor : '#6B7280',
-                        }}>
-                        {t.label}
-                      </button>
-                    ))}
-                  </div>
                 </div>
 
                 {/* Map mode toggle (hidden — replaced above) */}
@@ -1540,8 +1523,7 @@ export default function BuckwheatSuitability() {
                     segmentMeta={SEGMENT_META}
                     showBRIC={false}
                     bricHubs={BRIC_HUBS}
-                    showVillages={showVillages}
-                    showRoads={showRoads}
+                    cropPresence="buckwheat"
                     height="520px"
                     onDistrictClick={d => setFarmerDistrict(prev => prev === d ? null : d)}
                     selectedDistrict={farmerDistrict}

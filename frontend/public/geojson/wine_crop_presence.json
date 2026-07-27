@@ -1,0 +1,199 @@
+{
+  "type": "FeatureCollection",
+  "properties": {
+    "name": "Wine fruit enterprise presence (winemaker locations)",
+    "source": "NEFWIC Wine Makers Survey 2026 — geocoded to district centroid + jitter (no GPS captured in survey)"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.72361683168263,
+          25.12692607260716
+        ]
+      },
+      "properties": {
+        "crop": "wine",
+        "name": "Kynjai Wine",
+        "district": "East Khasi Hills",
+        "setup": "Commercial",
+        "capacity": 20000,
+        "actual": 8000,
+        "revenue": 1500000
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.71661683168263,
+          25.19522607260716
+        ]
+      },
+      "properties": {
+        "crop": "wine",
+        "name": "Jonghi Wines",
+        "district": "East Khasi Hills",
+        "setup": "Home-based",
+        "capacity": 5000,
+        "actual": 0,
+        "revenue": 700000
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.76071683168263,
+          25.12392607260716
+        ]
+      },
+      "properties": {
+        "crop": "wine",
+        "name": "Umpohliew Wines",
+        "district": "East Khasi Hills",
+        "setup": "Home-based",
+        "capacity": 5000,
+        "actual": 4200,
+        "revenue": 1450000
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          90.16286511871535,
+          25.659504224860186
+        ]
+      },
+      "properties": {
+        "crop": "wine",
+        "name": "Asame Wines",
+        "district": "West Garo Hills",
+        "setup": "Home-based",
+        "capacity": 5000,
+        "actual": 4000,
+        "revenue": 1400000
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.72921683168263,
+          25.14642607260716
+        ]
+      },
+      "properties": {
+        "crop": "wine",
+        "name": "Daly's Fruit Wine",
+        "district": "East Khasi Hills",
+        "setup": "Commercial",
+        "capacity": 6000,
+        "actual": 0,
+        "revenue": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.76211683168263,
+          25.225626072607156
+        ]
+      },
+      "properties": {
+        "crop": "wine",
+        "name": "KevEll Wine",
+        "district": "East Khasi Hills",
+        "setup": "Home-based",
+        "capacity": 5000,
+        "actual": 5000,
+        "revenue": 2000000
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.77561683168263,
+          25.124726072607157
+        ]
+      },
+      "properties": {
+        "crop": "wine",
+        "name": "Khasi Wine",
+        "district": "East Khasi Hills",
+        "setup": "Home-based",
+        "capacity": 10000,
+        "actual": 8000,
+        "revenue": 3000000
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.74061683168263,
+          25.28842607260716
+        ]
+      },
+      "properties": {
+        "crop": "wine",
+        "name": "Emsan Wine",
+        "district": "East Khasi Hills",
+        "setup": "Home-based",
+        "capacity": 500,
+        "actual": 0,
+        "revenue": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.71401683168263,
+          25.302726072607157
+        ]
+      },
+      "properties": {
+        "crop": "wine",
+        "name": "Neski Wine",
+        "district": "East Khasi Hills",
+        "setup": "Home-based",
+        "capacity": 10000,
+        "actual": 3000,
+        "revenue": 1120000
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.75941683168263,
+          25.29902607260716
+        ]
+      },
+      "properties": {
+        "crop": "wine",
+        "name": "Mannari Wine",
+        "district": "East Khasi Hills",
+        "setup": "Home-based",
+        "capacity": 1500,
+        "actual": 600,
+        "revenue": 700000
+      }
+    }
+  ]
+}

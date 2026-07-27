@@ -195,21 +195,22 @@ export function getWaterColor(cls) {
 
 // ── Terrain (DEM) Data · SRTM · Zonal Stats per District ────────────────────
 // Source: data/DEM, Slope & Aspect rasters (EPSG:32646) · rasterstats.zonal_stats()
-// elevMin/Max/Mean in metres · slopeMean/Max in degrees
+// elevMin/Max/Mean in metres · slopeMean/Max in degrees · aspectDeg = dominant slope-facing direction (0-360, N=0)
 // terrainClass: Optimal ≥1000m | Good ≥700m | Marginal ≥400m | Unsuitable <400m
+// Aspect is an estimated dominant direction pending full raster zonal-stats — replace with real aspect rasters when available
 export const demData = [
-  { district: 'East Khasi Hills',         elevMin: 4,   elevMax: 1964, elevMean: 1105, slopeMean: 17.0, slopeMax: 72.9, slopeClass: 'Steep',    terrainClass: 'Optimal',    buckwheatElevSuit: 'High'     },
-  { district: 'West Khasi Hills',         elevMin: 60,  elevMax: 1924, elevMean: 880,  slopeMean: 12.9, slopeMax: 71.0, slopeClass: 'Moderate', terrainClass: 'Good',       buckwheatElevSuit: 'High'     },
-  { district: 'West Jaintia Hills',       elevMin: 2,   elevMax: 1525, elevMean: 1006, slopeMean: 10.9, slopeMax: 65.6, slopeClass: 'Moderate', terrainClass: 'Optimal',    buckwheatElevSuit: 'High'     },
-  { district: 'South West Khasi Hills',   elevMin: 4,   elevMax: 1703, elevMean: 819,  slopeMean: 14.7, slopeMax: 72.8, slopeClass: 'Moderate', terrainClass: 'Good',       buckwheatElevSuit: 'High'     },
-  { district: 'Eastern West Khasi Hills', elevMin: 143, elevMax: 1888, elevMean: 1217, slopeMean: 13.3, slopeMax: 66.8, slopeClass: 'Moderate', terrainClass: 'Optimal',    buckwheatElevSuit: 'High'     },
-  { district: 'East Jaintia Hills',       elevMin: 10,  elevMax: 1630, elevMean: 866,  slopeMean: 13.0, slopeMax: 76.1, slopeClass: 'Moderate', terrainClass: 'Good',       buckwheatElevSuit: 'High'     },
-  { district: 'Ri Bhoi',                  elevMin: 58,  elevMax: 1849, elevMean: 607,  slopeMean: 13.7, slopeMax: 62.7, slopeClass: 'Moderate', terrainClass: 'Marginal',   buckwheatElevSuit: 'Medium'   },
-  { district: 'North Garo Hills',         elevMin: 33,  elevMax: 789,  elevMean: 223,  slopeMean: 12.7, slopeMax: 63.1, slopeClass: 'Moderate', terrainClass: 'Unsuitable', buckwheatElevSuit: 'Low'      },
-  { district: 'East Garo Hills',          elevMin: 65,  elevMax: 1418, elevMean: 444,  slopeMean: 11.2, slopeMax: 65.1, slopeClass: 'Moderate', terrainClass: 'Marginal',   buckwheatElevSuit: 'Low'      },
-  { district: 'West Garo Hills',          elevMin: 9,   elevMax: 1379, elevMean: 222,  slopeMean: 9.0,  slopeMax: 63.2, slopeClass: 'Gentle',   terrainClass: 'Unsuitable', buckwheatElevSuit: 'Low'      },
-  { district: 'South Garo Hills',         elevMin: 8,   elevMax: 1420, elevMean: 245,  slopeMean: 13.1, slopeMax: 69.1, slopeClass: 'Moderate', terrainClass: 'Unsuitable', buckwheatElevSuit: 'Low'      },
-  { district: 'South West Garo Hills',    elevMin: 15,  elevMax: 674,  elevMean: 89,   slopeMean: 8.3,  slopeMax: 51.4, slopeClass: 'Gentle',   terrainClass: 'Unsuitable', buckwheatElevSuit: 'Very Low' },
+  { district: 'East Khasi Hills',         elevMin: 4,   elevMax: 1964, elevMean: 1105, slopeMean: 17.0, slopeMax: 72.9, slopeClass: 'Steep',    terrainClass: 'Optimal',    buckwheatElevSuit: 'High',     aspectDeg: 165, aspect: 'South' },
+  { district: 'West Khasi Hills',         elevMin: 60,  elevMax: 1924, elevMean: 880,  slopeMean: 12.9, slopeMax: 71.0, slopeClass: 'Moderate', terrainClass: 'Good',       buckwheatElevSuit: 'High',     aspectDeg: 315, aspect: 'Northwest' },
+  { district: 'West Jaintia Hills',       elevMin: 2,   elevMax: 1525, elevMean: 1006, slopeMean: 10.9, slopeMax: 65.6, slopeClass: 'Moderate', terrainClass: 'Optimal',    buckwheatElevSuit: 'High',     aspectDeg: 135, aspect: 'Southeast' },
+  { district: 'South West Khasi Hills',   elevMin: 4,   elevMax: 1703, elevMean: 819,  slopeMean: 14.7, slopeMax: 72.8, slopeClass: 'Moderate', terrainClass: 'Good',       buckwheatElevSuit: 'High',     aspectDeg: 180, aspect: 'South' },
+  { district: 'Eastern West Khasi Hills', elevMin: 143, elevMax: 1888, elevMean: 1217, slopeMean: 13.3, slopeMax: 66.8, slopeClass: 'Moderate', terrainClass: 'Optimal',    buckwheatElevSuit: 'High',     aspectDeg: 0,   aspect: 'North' },
+  { district: 'East Jaintia Hills',       elevMin: 10,  elevMax: 1630, elevMean: 866,  slopeMean: 13.0, slopeMax: 76.1, slopeClass: 'Moderate', terrainClass: 'Good',       buckwheatElevSuit: 'High',     aspectDeg: 90,  aspect: 'East' },
+  { district: 'Ri Bhoi',                  elevMin: 58,  elevMax: 1849, elevMean: 607,  slopeMean: 13.7, slopeMax: 62.7, slopeClass: 'Moderate', terrainClass: 'Marginal',   buckwheatElevSuit: 'Medium',   aspectDeg: 0,   aspect: 'North' },
+  { district: 'North Garo Hills',         elevMin: 33,  elevMax: 789,  elevMean: 223,  slopeMean: 12.7, slopeMax: 63.1, slopeClass: 'Moderate', terrainClass: 'Unsuitable', buckwheatElevSuit: 'Low',      aspectDeg: 0,   aspect: 'North' },
+  { district: 'East Garo Hills',          elevMin: 65,  elevMax: 1418, elevMean: 444,  slopeMean: 11.2, slopeMax: 65.1, slopeClass: 'Moderate', terrainClass: 'Marginal',   buckwheatElevSuit: 'Low',      aspectDeg: 90,  aspect: 'East' },
+  { district: 'West Garo Hills',          elevMin: 9,   elevMax: 1379, elevMean: 222,  slopeMean: 9.0,  slopeMax: 63.2, slopeClass: 'Gentle',   terrainClass: 'Unsuitable', buckwheatElevSuit: 'Low',      aspectDeg: 270, aspect: 'West' },
+  { district: 'South Garo Hills',         elevMin: 8,   elevMax: 1420, elevMean: 245,  slopeMean: 13.1, slopeMax: 69.1, slopeClass: 'Moderate', terrainClass: 'Unsuitable', buckwheatElevSuit: 'Low',      aspectDeg: 180, aspect: 'South' },
+  { district: 'South West Garo Hills',    elevMin: 15,  elevMax: 674,  elevMean: 89,   slopeMean: 8.3,  slopeMax: 51.4, slopeClass: 'Gentle',   terrainClass: 'Unsuitable', buckwheatElevSuit: 'Very Low', aspectDeg: 225, aspect: 'Southwest' },
 ];
 
 // ── LULC 2025-26 · ESRI 10m Annual Land Cover · Zonal Stats per District ────

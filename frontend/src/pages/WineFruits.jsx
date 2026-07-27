@@ -360,8 +360,6 @@ export default function WineFruits() {
   const [selectedDistrict,          setSelectedDistrict]          = useState('East Khasi Hills');
   const [activeLayers,              setActiveLayers]              = useState(['suitability']);
   const [selectedEnterpriseDistrict, setSelectedEnterpriseDistrict] = useState('East Khasi Hills');
-  const [showVillages,              setShowVillages]              = useState(false);
-  const [showRoads,                 setShowRoads]                 = useState(false);
 
   // ── Winemaker survey derivations (reactive to admin edits) ────────────────
   const winemakersByDistrict = useMemo(() => winemakers.reduce((acc, w) => {
@@ -550,7 +548,7 @@ export default function WineFruits() {
       {/* ── Page header ─────────────────────────────────────────────────── */}
       <div className="page-header" style={{ background: "linear-gradient(135deg, rgba(74,20,140,0.88) 0%, rgba(126,50,133,0.88) 100%), url('https://images.unsplash.com/photo-1474722883778-792e7990302f?w=1600&q=60&fit=crop&crop=center') center/cover no-repeat" }}>
         <div className="container">
-          <div className="badge" style={{ color: '#E77D22', borderColor: '#E77D22', background: 'rgba(231,125,34,0.15)' }}>Deliverable 2 · MaxEnt Suitability · NEFWIC Winemakers Survey</div>
+          <div className="badge" style={{ color: '#E77D22', borderColor: '#E77D22', background: 'rgba(231,125,34,0.15)' }}>MaxEnt Suitability · NEFWIC Winemakers Survey</div>
           <h1 style={{ color: '#E77D22' }}>🍷 Wine Fruits — Suitability & Enterprise Analysis</h1>
           <p style={{ color: '#E77D22' }}>MaxEnt suitability models for Plum, Peach & Passion Fruit · Multi-layer geo-intelligence (LULC, NDVI/NDWI, Water, Climate) · Insights from 10 licensed winemakers under MFEC.</p>
         </div>
@@ -714,28 +712,13 @@ export default function WineFruits() {
                   </div>
                 )}
                 {activeLayers.length === 1 && <div style={{ marginTop: 6, fontSize: '0.74rem', color: '#6B7280' }}>{LAYERS.find(l => l.key === activeLayers[0])?.desc} · Add more layers to see composite overlap</div>}
-                <div style={{ marginTop: 8, display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', borderTop: '1px solid #E5E7EB', paddingTop: 8 }}>
-                  <span style={{ fontSize: '0.65rem', fontWeight: 700, color: '#9CA3AF', textTransform: 'uppercase', letterSpacing: '0.05em' }}>GIS Overlays</span>
-                  {[
-                    { key: 'villages', label: '🏘 Villages', state: showVillages, set: setShowVillages, color: '#F9A825' },
-                    { key: 'roads',    label: '🛣 Roads',    state: showRoads,    set: setShowRoads,    color: '#E65100' },
-                  ].map(t => (
-                    <button key={t.key} onClick={() => t.set(v => !v)}
-                      style={{ padding: '4px 12px', borderRadius: 20, border: `2px solid ${t.state ? t.color : '#D1D5DB'}`,
-                        background: t.state ? `${t.color}15` : 'transparent',
-                        color: t.state ? t.color : '#9CA3AF', fontWeight: 600, fontSize: '0.76rem', cursor: 'pointer', transition: 'all 0.18s' }}>
-                      {t.label} {t.state ? '✓' : '+'}
-                    </button>
-                  ))}
-                  <span style={{ fontSize: '0.62rem', color: '#9CA3AF' }}>Loaded on-demand</span>
-                </div>
               </div>
 
               {/* Map + right panel */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: 20, alignItems: 'start' }}>
                 <div>
                   <div className="map-container">
-                    <MeghalayaMap colorFn={colorFn} popupFn={popupFn} height="520px" legendItems={legendItems} legendTitle={legendTitle} defaultTile="topo" onDistrictClick={d => setSelectedDistrict(d)} showVillages={showVillages} showRoads={showRoads} />
+                    <MeghalayaMap colorFn={colorFn} popupFn={popupFn} height="520px" legendItems={legendItems} legendTitle={legendTitle} defaultTile="topo" onDistrictClick={d => setSelectedDistrict(d)} />
                   </div>
                   <p className="source-note">MaxEnt v3.4.4 · WorldClim v2.1 · SRTM DEM 30m · ESRI LULC 10m · MODIS MOD13Q1 Jan–Jun 2026 · Click district for geo-intelligence breakdown</p>
                 </div>
@@ -1094,8 +1077,7 @@ export default function WineFruits() {
                       legendTitle="🍷 Wine Enterprise Density"
                       defaultTile="topo"
                       onDistrictClick={d => setSelectedEnterpriseDistrict(d)}
-                      showVillages={showVillages}
-                      showRoads={showRoads}
+                      cropPresence="wine"
                     />
                   </div>
                   <p className="source-note">Source: NEFWIC Wine Makers Survey 2026 · 10 licensed winemakers across 2 districts · Click district to explore</p>

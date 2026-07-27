@@ -113,7 +113,7 @@ export default function Dashboard() {
       <LiveWeatherStrip />
       <div className="page-header" style={{ borderTop: '4px solid #1B5E20', background: "linear-gradient(135deg, rgba(232,245,233,0.68) 0%, rgba(241,248,233,0.68) 60%, rgba(250,255,248,0.68) 100%), url('/images/dashboard-farmers.jpg') center/cover no-repeat" }}>
         <div className="container">
-          <div className="badge">Interactive GIS Dashboard · Deliverable 9</div>
+          <div className="badge">Interactive GIS Dashboard</div>
           <h1>📊 Analytics Dashboard</h1>
           <p>Consolidated view of all analytical outputs. Switch layers to explore suitability, vegetation health, climate risk, and water availability across Meghalaya's 12 districts.</p>
         </div>
@@ -395,12 +395,12 @@ export default function Dashboard() {
           <h2 className="section-title">Navigate Analytics Modules</h2>
           <div className="grid-3" style={{ marginTop: 24 }}>
             {[
-              { icon: '🌾', title: 'Buckwheat Suitability', sub: 'MaxEnt · 9 Districts · Deliverable 1', path: '/buckwheat-suitability', c: '#1B5E20' },
-              { icon: '🍷', title: 'Wine Fruits Analysis', sub: 'Plum · Peach · Passion Fruit · Del. 2', path: '/wine-fruits', c: '#4A148C' },
-              { icon: '🛰', title: 'Crop Health (NDVI)', sub: 'Sentinel-2 · Rabi 2025 · Del. 5', path: '/crop-health', c: '#004D40' },
-              { icon: '🌡', title: 'Climate Risk', sub: 'Frost · Rainfall · Temperature · Del. 6', path: '/climate-risk', c: '#C62828' },
-              { icon: '💧', title: 'Water Management', sub: 'CWR · Rainfall Adequacy · Del. 7', path: '/water-management', c: '#1565C0' },
-              { icon: '🏆', title: 'Priority Zones', sub: 'Top 5 Blocks per District · Del. 8', path: '/priority-zones', c: '#E65100' },
+              { icon: '🌾', title: 'Buckwheat Suitability', sub: 'MaxEnt · 12 Districts', path: '/buckwheat-suitability', c: '#1B5E20' },
+              { icon: '🍷', title: 'Wine Fruits Analysis', sub: 'Plum · Peach · Passion Fruit', path: '/wine-fruits', c: '#4A148C' },
+              { icon: '🛰', title: 'Crop Health (NDVI)', sub: 'Sentinel-2 & MODIS · Rabi 2025', path: '/crop-health', c: '#004D40' },
+              { icon: '🌡', title: 'Climate Risk', sub: 'Frost · Rainfall · Temperature', path: '/climate-risk', c: '#C62828' },
+              { icon: '💧', title: 'Water Management', sub: 'CWR · Rainfall Adequacy', path: '/water-management', c: '#1565C0' },
+              { icon: '🏆', title: 'Priority Zones', sub: 'Top 5 Blocks per District', path: '/priority-zones', c: '#E65100' },
             ].map(m => (
               <Link to={m.path} key={m.path} style={{ textDecoration: 'none' }}>
                 <div className="card" style={{ borderTop: `4px solid ${m.c}`, cursor: 'pointer' }}

@@ -11,6 +11,7 @@ const KEYS = [
   'scenario_scores',
   'active_farmers',
   'dropout_farmers',
+  'groundwater_stations',
 ];
 
 module.exports = { KEYS };
